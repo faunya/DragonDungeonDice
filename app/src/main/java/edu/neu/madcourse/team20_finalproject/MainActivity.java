@@ -3,96 +3,60 @@ package edu.neu.madcourse.team20_finalproject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.view.View;
-import android.widget.Toast;
+
+import edu.neu.madcourse.team20_finalproject.perfomance.Sound;
+import edu.neu.madcourse.team20_finalproject.perfomance.Vibration;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private MediaPlayer bgm;
-    private MediaPlayer se;
-    private Vibrator vibrator;
+    private Sound bgm;
+    private Sound se;
+    private Vibration vb;
     private boolean muteBgm;
     private boolean muteSe;
     private boolean stopVb;
-    private static final int VIB_MILLISECONDS = 100;
-    private static final int VIB_AMPLITUDE = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        playBgm(muteBgm);
+        bgm = new Sound();
+        se = new Sound();
+
+        bgm.playSound(muteBgm, this, R.raw.menu, true);
+        vb = new Vibration(this);
     }
 
     public void diceRolling(View view) {
-        playSoundEffect(muteSe);
-        vibrate(stopVb);
+        se.playSound(muteSe, this, R.raw.click, false);
+        vb.vibrate(stopVb);
         Intent intent = new Intent(MainActivity.this, DiceRolling.class);
         startActivity(intent);
     }
 
     public void startGame(View view) {
-        playSoundEffect(muteSe);
-        vibrate(stopVb);
+        se.playSound(muteSe, this, R.raw.click, false);
+        vb.vibrate(stopVb);
     }
 
     public void setting(View view) {
-        playSoundEffect(muteSe);
-        vibrate(stopVb);
-    }
-
-    private void playSoundEffect(boolean mute) {
-        if (mute) return;
-        if (se == null) {
-            se = MediaPlayer.create(this, R.raw.click);
-        }
-        se.start();
-        se.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                se.release();
-                se = null;
-            }
-        });
-    }
-
-    private void stopBgm() {
-        if (bgm != null) {
-            bgm.release();
-            bgm = null;
-        }
-    }
-
-    private void playBgm(boolean mute) {
-        if (mute) return;
-        if (bgm == null) {
-            bgm = MediaPlayer.create(this, R.raw.menu);
-        }
-        bgm.start();
-        bgm.setLooping(true);
-    }
-
-    private void vibrate(boolean disabled) {
-        if (disabled) return;
-        vibrator.vibrate(VibrationEffect.createOneShot(VIB_MILLISECONDS,VIB_AMPLITUDE));
+        se.playSound(muteSe, this, R.raw.click, false);
+        vb.vibrate(stopVb);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        stopBgm();
+        bgm.stopSound();
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        playBgm(false);
+        bgm.playSound(muteBgm, this, R.raw.menu, true);
     }
 }
