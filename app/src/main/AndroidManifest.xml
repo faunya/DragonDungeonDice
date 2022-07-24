@@ -16,9 +16,14 @@
         android:theme="@style/Theme.Team20FinalProject"
         tools:targetApi="31">
         <activity
-            android:name=".DiceRolling"
+            android:name=".Settings"
+            android:theme="@style/SettingsTheme"
             android:exported="false"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".DiceRolling"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".GameActivity"
             android:exported="false" />

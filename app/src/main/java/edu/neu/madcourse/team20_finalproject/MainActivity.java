@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     public void setting(View view) {
         se.playSound(muteSe, this, R.raw.click, false);
         vb.vibrate(stopVb);
+        Intent intent = new Intent(MainActivity.this, Settings.class);
+        startActivity(intent);
     }
 
     @Override
