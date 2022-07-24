@@ -3,4 +3,6 @@
     <string name="start_game">START GAME</string>
     <string name="roll_a_die">ROLL A DIE</string>
     <string name="settings">SETTINGS</string>
+    <string name="current_point">Current Point:</string>
+    <string name="menu">menu</string>
 </resources>
