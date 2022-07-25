@@ -10,9 +10,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-
-import java.util.Timer;
-import java.util.TimerTask;
+import android.widget.Toast;
 
 import edu.neu.madcourse.team20_finalproject.dice.*;
 import edu.neu.madcourse.team20_finalproject.perfomance.Sound;
@@ -26,6 +24,7 @@ public class DiceRolling extends AppCompatActivity {
     private static final String SOUND_EFFECT = "soundEffect";
     private static final String VIBRATION = "vibration";
     private static final int ROLLING_TIME = 2000;
+    private static final int BLINK_TIME = 300;
 
     private Sound bgm;
     private Sound se;
@@ -36,6 +35,7 @@ public class DiceRolling extends AppCompatActivity {
     private boolean stopVb;
 
     private Handler handler;
+    private Thread blink;
     private GifImageView gif;
     private TextView point;
     private TextView result;
@@ -74,6 +74,7 @@ public class DiceRolling extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         rollingSound.stopSound();
+        blink.interrupt();
     }
 
     @Override
@@ -81,6 +82,31 @@ public class DiceRolling extends AppCompatActivity {
         super.onResume();
         loadData();
         bgm.playSound(muteBgm, this, R.raw.dicerolling, true);
+        point.setText("");
+        result.setText(R.string.start_rolling);
+        blink = new Thread() {
+            @Override
+            public void run() {
+                while (!isInterrupted()) {
+                    try {
+                        Thread.sleep(BLINK_TIME);
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (result.getVisibility() == View.VISIBLE) {
+                                    result.setVisibility(View.INVISIBLE);
+                                } else {
+                                    result.setVisibility(View.VISIBLE);
+                                }
+                            }
+                        });
+                    } catch (InterruptedException e) {
+                        break;
+                    }
+                }
+            }
+        };
+        blink.start();
     }
 
     public void tap(View view) {
@@ -88,30 +114,32 @@ public class DiceRolling extends AppCompatActivity {
     }
 
     private void roll() {
+        blink.interrupt();
+        vb.vibrate(stopVb);
+        result.setVisibility(View.VISIBLE);
         result.setText("");
         rollingSound.playSound(muteSe, this, R.raw.dice_sound, false);
         gif.setImageResource(die.getRotateImgId());
-        DiceRoller diceRoller = new DiceRoller();
+        Thread diceRoller = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(ROLLING_TIME);
+                } catch (InterruptedException e) {
+                    Log.d(TAG, "interrupted");
+                }
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        gif.setImageResource(die.getImgId());
+                        String number = String.valueOf(die.roll());
+                        result.setText(number);
+                        point.setText(number);
+                    }
+                });
+            }
+        };
         diceRoller.start();
     }
 
-    private class DiceRoller extends Thread {
-        @Override
-        public void run() {
-            try {
-                Thread.sleep(ROLLING_TIME);
-            } catch (InterruptedException e) {
-                Log.d(TAG, "interrupted");
-            }
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    gif.setImageResource(die.getImgId());
-                    String number = String.valueOf(die.roll());
-                    result.setText(number);
-                    point.setText(number);
-                }
-            });
-        }
-    }
 }
