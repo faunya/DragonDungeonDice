@@ -7,6 +7,8 @@ public abstract class Entity {
     protected String name;;
 
     //stats
+    protected int armorClass;
+
     protected int maxHp;
     protected int hp; //health
 
@@ -48,6 +50,18 @@ public abstract class Entity {
      */
     public boolean isDead() {
         return hp <= 0;
+    }
+
+    public void setArmorClass(int ac) {
+        this.armorClass = ac;
+    }
+
+    public int getArmorClass() {
+        return armorClass;
+    }
+
+    public String getName() {
+        return name;
     }
 
     //item setters
