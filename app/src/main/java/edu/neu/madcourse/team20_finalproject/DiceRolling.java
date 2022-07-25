@@ -3,6 +3,7 @@ package edu.neu.madcourse.team20_finalproject;
 import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,9 +24,11 @@ public class DiceRolling extends AppCompatActivity {
     private static final String MUSIC = "music";
     private static final String SOUND_EFFECT = "soundEffect";
     private static final String VIBRATION = "vibration";
+    private static final String BACKGROUND = "background";
     private static final int ROLLING_TIME = 2000;
     private static final int BLINK_TIME = 300;
 
+    private ConstraintLayout layout;
     private Sound bgm;
     private Sound se;
     private Sound rollingSound;
@@ -33,9 +36,11 @@ public class DiceRolling extends AppCompatActivity {
     private boolean muteBgm;
     private boolean muteSe;
     private boolean stopVb;
+    private int backgroundId;
 
     private Handler handler;
     private Thread blink;
+    private Thread diceRoller;
     private GifImageView gif;
     private TextView point;
     private TextView result;
@@ -46,6 +51,7 @@ public class DiceRolling extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dice_rolling);
 
+        layout = findViewById(R.id.dice_layout);
         bgm = new Sound();
         se = new Sound();
         rollingSound = new Sound();
@@ -62,6 +68,7 @@ public class DiceRolling extends AppCompatActivity {
         muteBgm = sharedPreferences.getBoolean(MUSIC, false);
         muteSe = sharedPreferences.getBoolean(SOUND_EFFECT, false);
         stopVb = sharedPreferences.getBoolean(VIBRATION, false);
+        backgroundId = sharedPreferences.getInt(BACKGROUND, R.drawable.default_background);
     }
 
     @Override
@@ -77,10 +84,12 @@ public class DiceRolling extends AppCompatActivity {
         blink.interrupt();
     }
 
+    // load settings and set blinking effect
     @Override
     protected void onResume() {
         super.onResume();
         loadData();
+        layout.setBackgroundResource(backgroundId);
         bgm.playSound(muteBgm, this, R.raw.dicerolling, true);
         point.setText("");
         result.setText(R.string.start_rolling);
@@ -114,32 +123,41 @@ public class DiceRolling extends AppCompatActivity {
     }
 
     private void roll() {
+        terminateRolling();
         blink.interrupt();
         vb.vibrate(stopVb);
-        result.setVisibility(View.VISIBLE);
-        result.setText("");
         rollingSound.playSound(muteSe, this, R.raw.dice_sound, false);
         gif.setImageResource(die.getRotateImgId());
-        Thread diceRoller = new Thread() {
+        diceRoller = new Thread() {
             @Override
             public void run() {
                 try {
                     Thread.sleep(ROLLING_TIME);
+                    String number = String.valueOf(die.roll());
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            gif.setImageResource(die.getImgId());
+                            result.setText(number);
+                            point.setText(number);
+                        }
+                    });
                 } catch (InterruptedException e) {
                     Log.d(TAG, "interrupted");
                 }
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        gif.setImageResource(die.getImgId());
-                        String number = String.valueOf(die.roll());
-                        result.setText(number);
-                        point.setText(number);
-                    }
-                });
             }
         };
         diceRoller.start();
+    }
+
+    private void terminateRolling() {
+        result.setVisibility(View.VISIBLE);
+        result.setText("");
+        point.setText("");
+        if (diceRoller != null) {
+            diceRoller.interrupt();
+            rollingSound.stopSound();
+        }
     }
 
 }
