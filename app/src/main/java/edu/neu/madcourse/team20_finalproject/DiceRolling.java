@@ -11,7 +11,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import edu.neu.madcourse.team20_finalproject.dice.*;
 import edu.neu.madcourse.team20_finalproject.perfomance.Sound;
@@ -25,6 +24,7 @@ public class DiceRolling extends AppCompatActivity {
     private static final String SOUND_EFFECT = "soundEffect";
     private static final String VIBRATION = "vibration";
     private static final String BACKGROUND = "background";
+    private static final String DIE_TYPE = "dieType";
     private static final int ROLLING_TIME = 2000;
     private static final int BLINK_TIME = 300;
 
@@ -37,6 +37,7 @@ public class DiceRolling extends AppCompatActivity {
     private boolean muteSe;
     private boolean stopVb;
     private int backgroundId;
+    private int type;
 
     private Handler handler;
     private Thread blink;
@@ -44,7 +45,9 @@ public class DiceRolling extends AppCompatActivity {
     private GifImageView gif;
     private TextView point;
     private TextView result;
-    private Die die = new D6();
+    private DiceList diceList;
+    private Die die;
+    private TextView label;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,14 +64,17 @@ public class DiceRolling extends AppCompatActivity {
         gif = findViewById(R.id.dice_display);
         point = findViewById(R.id.dice_point);
         result = findViewById(R.id.dice_result);
+        label = findViewById(R.id.dice_dice);
+        diceList = new DiceList();
     }
 
-    public void loadData() {
+    private void loadData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SETTINGS,MODE_PRIVATE);
         muteBgm = sharedPreferences.getBoolean(MUSIC, false);
         muteSe = sharedPreferences.getBoolean(SOUND_EFFECT, false);
         stopVb = sharedPreferences.getBoolean(VIBRATION, false);
         backgroundId = sharedPreferences.getInt(BACKGROUND, R.drawable.default_background);
+        type = sharedPreferences.getInt(DIE_TYPE, 1);
     }
 
     @Override
@@ -77,22 +83,22 @@ public class DiceRolling extends AppCompatActivity {
         bgm.stopSound();
     }
 
+    // save the lasted used die type
     @Override
     protected void onPause() {
         super.onPause();
-        rollingSound.stopSound();
-        blink.interrupt();
+        terminateBlink();
+        terminateRolling();
+        SharedPreferences sharedPreferences = getSharedPreferences(SETTINGS,MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(DIE_TYPE, diceList.getCurrDie());
+        editor.apply();
     }
 
     // load settings and set blinking effect
     @Override
     protected void onResume() {
         super.onResume();
-        loadData();
-        layout.setBackgroundResource(backgroundId);
-        bgm.playSound(muteBgm, this, R.raw.dicerolling, true);
-        point.setText("");
-        result.setText(R.string.start_rolling);
         blink = new Thread() {
             @Override
             public void run() {
@@ -116,6 +122,12 @@ public class DiceRolling extends AppCompatActivity {
             }
         };
         blink.start();
+        loadData();
+        layout.setBackgroundResource(backgroundId);
+        bgm.playSound(muteBgm, this, R.raw.dicerolling, true);
+        result.setText(R.string.start_rolling);
+        die = diceList.getDie(type);
+        updateDie();
     }
 
     public void tap(View view) {
@@ -123,8 +135,10 @@ public class DiceRolling extends AppCompatActivity {
     }
 
     private void roll() {
+        terminateBlink();
         terminateRolling();
-        blink.interrupt();
+        result.setVisibility(View.VISIBLE);
+        result.setText("");
         vb.vibrate(stopVb);
         rollingSound.playSound(muteSe, this, R.raw.dice_sound, false);
         gif.setImageResource(die.getRotateImgId());
@@ -151,13 +165,42 @@ public class DiceRolling extends AppCompatActivity {
     }
 
     private void terminateRolling() {
-        result.setVisibility(View.VISIBLE);
-        result.setText("");
         point.setText("");
         if (diceRoller != null) {
             diceRoller.interrupt();
             rollingSound.stopSound();
+            diceRoller = null;
         }
+    }
+
+    private void terminateBlink() {
+        if (blink != null) {
+            blink.interrupt();
+            blink = null;
+        }
+    }
+
+    private void updateDie() {
+        terminateRolling();
+        if (blink == null) {
+            result.setText("");
+        }
+        gif.setImageResource(die.getImgId());
+        label.setText(die.toString());
+    }
+
+    public void leftArrow(View view) {
+        vb.vibrate(stopVb);
+        se.playSound(muteSe, this, R.raw.click, false);
+        die = diceList.getPrevious();
+        updateDie();
+    }
+
+    public void rightArrow(View view) {
+        vb.vibrate(stopVb);
+        se.playSound(muteSe, this, R.raw.click, false);
+        die = diceList.getNext();
+        updateDie();
     }
 
 }

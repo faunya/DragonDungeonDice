@@ -9,4 +9,9 @@ public class D6 extends Die {
         this.imgId = R.drawable.d6;
         this.rotateImgId = R.drawable.d6_rotate;
     }
+
+    @Override
+    public String toString() {
+        return "D6";
+    }
 }

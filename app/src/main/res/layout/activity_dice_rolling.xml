@@ -70,7 +70,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.51" />
 
     <TextView
         android:id="@+id/dice_dice"
@@ -94,21 +95,25 @@
         android:id="@+id/dice_leftArrow"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:onClick="leftArrow"
         app:layout_constraintBottom_toBottomOf="@+id/dice_dice"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/dice_display"
-        app:srcCompat="@drawable/left_arrow" />
+        app:srcCompat="@drawable/left_arrow"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageView
         android:id="@+id/dice_rightArrow"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:onClick="rightArrow"
         app:layout_constraintBottom_toBottomOf="@+id/dice_dice"
         app:layout_constraintEnd_toEndOf="@+id/dice_display"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/right_arrow" />
+        app:srcCompat="@drawable/right_arrow"
+        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <ImageView
         android:id="@+id/dice_menu"
