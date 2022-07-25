@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
@@ -69,6 +69,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:fontFamily="@font/press_start_2p"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:onClick="setSoundEffect"
         android:text="@string/on"
         android:textColor="#6D4C41"
         android:textSize="16sp"
@@ -81,6 +84,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:fontFamily="@font/press_start_2p"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:onClick="setMusic"
         android:text="@string/on"
         android:textColor="#6D4C41"
         android:textSize="16sp"
@@ -93,6 +99,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:fontFamily="@font/press_start_2p"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:onClick="setVibration"
         android:text="@string/on"
         android:textColor="#6D4C41"
         android:textSize="16sp"
@@ -100,17 +109,19 @@
         app:layout_constraintTop_toTopOf="@+id/settings_vibration" />
 
     <TextView
-        android:id="@+id/settings_confirm"
+        android:id="@+id/settings_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/press_start_2p"
-        android:text="@string/confirm"
+        android:minHeight="48dp"
+        android:onClick="saveData"
+        android:text="@string/save"
         android:textColor="#6D4C41"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.75" />
+        app:layout_constraintTop_toBottomOf="@+id/settings_vibration"
+        app:layout_constraintVertical_bias="0.3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

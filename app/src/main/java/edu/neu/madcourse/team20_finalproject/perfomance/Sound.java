@@ -32,13 +32,16 @@ public class Sound {
     }
 
     /**
-     * If boolean mute is false, play sound. Else do nothing and return
+     * If boolean mute is false, play sound
      * @param id resource id
      * @param loop true: keep playing;
      *             false: release and set the MediaPlayer to null after completion
      */
     public void playSound(boolean mute, Context context, int id, boolean loop) {
-        if (mute) return;
+        if (mute) {
+            stopSound();
+            return;
+        }
         if (mp == null) {
             createMp(context, id, loop);
         }
