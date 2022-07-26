@@ -25,6 +25,9 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         actLog = new ArrayList<Message>();
+
+        player = new Player("Test", 15, 0, 1);
+        player.setArmorClass(12);
     }
 
     public void onAttack(View view) {
