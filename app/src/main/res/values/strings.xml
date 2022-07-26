@@ -12,4 +12,7 @@
     <string name="vibration">VIBRATION:</string>
     <string name="save">SAVE</string>
     <string name="music">MUSIC:</string>
+    <string name="background_skin">BACKGROUND SKIN</string>
+    <string name="log">LOG</string>
+    <string name="home">HOME</string>
 </resources>

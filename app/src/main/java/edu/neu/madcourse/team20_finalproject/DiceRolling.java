@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -13,8 +14,11 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import edu.neu.madcourse.team20_finalproject.dice.*;
 import edu.neu.madcourse.team20_finalproject.perfomance.Sound;
@@ -246,5 +250,38 @@ public class DiceRolling extends AppCompatActivity implements SensorEventListene
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    public void menu(View view) {
+        vb.vibrate(stopVb);
+        se.playSound(muteSe, this, R.raw.click, false);
+        showMenu(view);
+    }
+
+    private void showMenu(View view) {
+        PopupMenu popupMenu = new PopupMenu(this, view);
+        popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                vb.vibrate(stopVb);
+                se.playSound(muteSe, DiceRolling.this, R.raw.click, false);
+                if (item.getItemId() == R.id.menu_background) {
+                    // start background skin activity
+                    Toast.makeText(DiceRolling.this, "background skin", Toast.LENGTH_SHORT).show();
+                } else if (item.getItemId() == R.id.menu_home) {
+                    Intent intent = new Intent(DiceRolling.this, MainActivity.class);
+                    startActivity(intent);
+                } else if (item.getItemId() == R.id.menu_log) {
+                    // start log activity
+                    Toast.makeText(DiceRolling.this, "log", Toast.LENGTH_SHORT).show();
+                } else if (item.getItemId() == R.id.menu_settings) {
+                    Intent intent = new Intent(DiceRolling.this, Settings.class);
+                    startActivity(intent);
+                }
+                return true;
+            }
+        });
+        popupMenu.show();
     }
 }
