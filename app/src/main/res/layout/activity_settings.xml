@@ -20,9 +20,11 @@
 
     <TextView
         android:id="@+id/settings_music"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/press_start_2p"
+        android:minHeight="48dp"
+        android:onClick="setMusic"
         android:text="@string/music"
         android:textColor="#6D4C41"
         android:textSize="16sp"
@@ -38,6 +40,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/press_start_2p"
+        android:minHeight="48dp"
+        android:onClick="setSoundEffect"
         android:text="@string/sound_effect"
         android:textColor="#6D4C41"
         android:textSize="16sp"
@@ -50,9 +54,11 @@
 
     <TextView
         android:id="@+id/settings_vibration"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/press_start_2p"
+        android:minHeight="48dp"
+        android:onClick="setVibration"
         android:text="@string/vibration"
         android:textColor="#6D4C41"
         android:textSize="16sp"
@@ -76,7 +82,8 @@
         android:textColor="#6D4C41"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/settings_soundEffect"
-        app:layout_constraintTop_toTopOf="@+id/settings_soundEffect" />
+        app:layout_constraintTop_toTopOf="@+id/settings_soundEffect"
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
     <TextView
         android:id="@+id/settings_statusM"

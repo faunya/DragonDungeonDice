@@ -4,25 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@drawable/bg_homescreen"
     tools:context=".MainActivity">
-
-    <ImageView
-        android:id="@+id/main_title"
-        android:layout_width="match_parent"
-        android:layout_height="280dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:src="@drawable/title"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.10" />
 
     <TextView
         android:id="@+id/main_startGame"
+        android:shadowColor="#000000"
+        android:shadowDx="1.5"
+        android:shadowDy="1.3"
+        android:shadowRadius="1.6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/press_start_2p"
@@ -30,14 +20,19 @@
         android:onClick="startGame"
         android:text="@string/start_game"
         android:textColor="@color/white"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/main_rollDice"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_title" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7" />
 
     <TextView
         android:id="@+id/main_rollDice"
+        android:shadowColor="#000000"
+        android:shadowDx="1.5"
+        android:shadowDy="1.3"
+        android:shadowRadius="1.6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/press_start_2p"
@@ -45,7 +40,7 @@
         android:onClick="diceRolling"
         android:text="@string/roll_a_die"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/main_settings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,6 +48,10 @@
 
     <TextView
         android:id="@+id/main_settings"
+        android:shadowColor="#000000"
+        android:shadowDx="1.5"
+        android:shadowDy="1.3"
+        android:shadowRadius="1.6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/press_start_2p"
@@ -60,7 +59,7 @@
         android:onClick="setting"
         android:text="@string/settings"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
