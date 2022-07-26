@@ -19,6 +19,10 @@ public class Vibration {
         vibrator = (Vibrator) context.getSystemService(VIBRATOR_SERVICE);
     }
 
+    /**
+     * Control the vibrator to vibrate
+     * @param disabled true: do nothing and return; false: vibrate
+     */
     public void vibrate(boolean disabled) {
         if (disabled) return;
         vibrator.vibrate(VibrationEffect.createOneShot(VIB_MILLISECONDS,VIB_AMPLITUDE));

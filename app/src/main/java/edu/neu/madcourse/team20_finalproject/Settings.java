@@ -12,11 +12,13 @@ import edu.neu.madcourse.team20_finalproject.perfomance.Vibration;
 
 public class Settings extends AppCompatActivity {
 
+    // keys in preferences
     private static final String SETTINGS = "settings";
     private static final String MUSIC = "music";
     private static final String SOUND_EFFECT = "soundEffect";
     private static final String VIBRATION = "vibration";
 
+    // values in preferences
     private boolean music;
     private boolean soundEffect;
     private boolean vibration;
@@ -87,6 +89,7 @@ public class Settings extends AppCompatActivity {
         }
     }
 
+    // load previous settings
     public void loadData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SETTINGS,MODE_PRIVATE);
         music = sharedPreferences.getBoolean(MUSIC, false);

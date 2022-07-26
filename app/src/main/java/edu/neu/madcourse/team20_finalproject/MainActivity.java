@@ -13,6 +13,7 @@ import edu.neu.madcourse.team20_finalproject.perfomance.Vibration;
 
 public class MainActivity extends AppCompatActivity {
 
+    // keys in preferences
     private static final String SETTINGS = "settings";
     private static final String MUSIC = "music";
     private static final String SOUND_EFFECT = "soundEffect";
@@ -21,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     private Sound bgm;
     private Sound se;
     private Vibration vb;
+
+    // values in preferences
     private boolean muteBgm;
     private boolean muteSe;
     private boolean stopVb;
@@ -45,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     public void startGame(View view) {
         se.playSound(muteSe, this, R.raw.click, false);
         vb.vibrate(stopVb);
+        Intent intent = new Intent(MainActivity.this, GameActivity.class);
+        startActivity(intent);
     }
 
     public void setting(View view) {

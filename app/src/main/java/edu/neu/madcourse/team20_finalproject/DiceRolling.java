@@ -6,6 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.SharedPreferences;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -17,14 +21,16 @@ import edu.neu.madcourse.team20_finalproject.perfomance.Sound;
 import edu.neu.madcourse.team20_finalproject.perfomance.Vibration;
 import pl.droidsonroids.gif.GifImageView;
 
-public class DiceRolling extends AppCompatActivity {
+public class DiceRolling extends AppCompatActivity implements SensorEventListener {
 
+    // // keys in preferences
     private static final String SETTINGS = "settings";
     private static final String MUSIC = "music";
     private static final String SOUND_EFFECT = "soundEffect";
     private static final String VIBRATION = "vibration";
     private static final String BACKGROUND = "background";
     private static final String DIE_TYPE = "dieType";
+
     private static final int ROLLING_TIME = 2000;
     private static final int BLINK_TIME = 300;
 
@@ -33,6 +39,8 @@ public class DiceRolling extends AppCompatActivity {
     private Sound se;
     private Sound rollingSound;
     private Vibration vb;
+
+    // values in preferences
     private boolean muteBgm;
     private boolean muteSe;
     private boolean stopVb;
@@ -45,9 +53,16 @@ public class DiceRolling extends AppCompatActivity {
     private GifImageView gif;
     private TextView point;
     private TextView result;
-    private DiceList diceList;
+    private DiceList diceList; // all 6 types of dices
     private Die die;
     private TextView label;
+
+    // sensor
+    private Sensor sensor;
+    private SensorManager sensorManager;
+    private static final int SHAKE_THRESHOLD = 15;
+    private Long lastUpdatedTime;
+    private static final int TIME_INTERVAL = 300;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +74,15 @@ public class DiceRolling extends AppCompatActivity {
         se = new Sound();
         rollingSound = new Sound();
         vb = new Vibration(this);
-
         handler = new Handler();
         gif = findViewById(R.id.dice_display);
         point = findViewById(R.id.dice_point);
         result = findViewById(R.id.dice_result);
         label = findViewById(R.id.dice_dice);
         diceList = new DiceList();
+
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
     }
 
     private void loadData() {
@@ -93,6 +110,8 @@ public class DiceRolling extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(DIE_TYPE, diceList.getCurrDie());
         editor.apply();
+
+        sensorManager.unregisterListener(this);
     }
 
     // load settings and set blinking effect
@@ -128,12 +147,16 @@ public class DiceRolling extends AppCompatActivity {
         result.setText(R.string.start_rolling);
         die = diceList.getDie(type);
         updateDie();
+
+        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     public void tap(View view) {
         roll();
     }
 
+    // terminate blinking and rolling
+    // display gif for 2 seconds then show the point
     private void roll() {
         terminateBlink();
         terminateRolling();
@@ -148,6 +171,7 @@ public class DiceRolling extends AppCompatActivity {
                 try {
                     Thread.sleep(ROLLING_TIME);
                     String number = String.valueOf(die.roll());
+                    vb.vibrate(stopVb);
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -203,4 +227,24 @@ public class DiceRolling extends AppCompatActivity {
         updateDie();
     }
 
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (lastUpdatedTime != null
+                && System.currentTimeMillis() - lastUpdatedTime < TIME_INTERVAL) {
+            return;
+        }
+        float x = Math.abs(event.values[0]);
+        float y = Math.abs(event.values[1]);
+        float z = Math.abs(event.values[2]);
+        double currAccel = Math.sqrt((double) x * x + y * y + z * z);
+        if (currAccel > SHAKE_THRESHOLD) {
+            lastUpdatedTime = System.currentTimeMillis();
+            roll();
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
 }
