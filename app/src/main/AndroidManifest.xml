@@ -14,6 +14,9 @@
         android:theme="@style/Theme.Team20FinalProject"
         tools:targetApi="31">
         <activity
+            android:name=".CreatePlayerActivity"
+            android:exported="false" />
+        <activity
             android:name=".GameActivity"
             android:exported="false" />
         <activity

@@ -4,7 +4,7 @@ import edu.neu.madcourse.team20_finalproject.game.ingame.item.Armor;
 import edu.neu.madcourse.team20_finalproject.game.ingame.item.Weapon;
 
 public abstract class Entity {
-    protected String name;;
+    protected String name;
 
     //stats
     protected int armorClass;
@@ -15,14 +15,22 @@ public abstract class Entity {
     protected int maxMp;
     protected int mp; //mana
 
-    //equips
-    private Weapon main;
-    private Weapon offhand;
+    protected int str;
+    protected int dex;
+    protected int vit;
+    protected int inte;
+    protected int wis;
+    protected int cha;
 
-    private Armor helmet;
-    private Armor chestplate;
-    private Armor leggings;
-    private Armor boots;
+
+    //equips
+    protected Weapon main;
+    protected Weapon offhand;
+
+    protected Armor helmet;
+    protected Armor chestplate;
+    protected Armor leggings;
+    protected Armor boots;
 
     public Entity(String name, int maxHp, int maxMp) {
         this.name = name;
@@ -45,13 +53,30 @@ public abstract class Entity {
         hp -= dmg;
     }
 
+    public void heal(int heal) {
+        hp += heal;
+        if (hp > maxHp) {
+            hp = maxHp;
+        }
+    }
+
     /**
-     * @returnc if entity is dead
+     * @return if entity is dead
      */
     public boolean isDead() {
         return hp <= 0;
     }
 
+    public int calcModifier(int stat) {
+        return Math.floorDiv(stat - 10, 2);
+    }
+
+    // -------------------------------setters and getters -----------------------------------------
+    public String getName() {
+        return name;
+    }
+
+    //stat setters and getters
     public void setArmorClass(int ac) {
         this.armorClass = ac;
     }
@@ -60,11 +85,79 @@ public abstract class Entity {
         return armorClass;
     }
 
-    public String getName() {
-        return name;
+    public int getHp() {
+        return hp;
     }
 
-    //item setters
+    public int getMaxHp() {
+        return maxHp;
+    }
+
+    public int getMp() {
+        return mp;
+    }
+
+    public int getMaxMp() {
+        return maxMp;
+    }
+
+    public int getStr() {
+        return str;
+    }
+
+    public int getDex() {
+        return dex;
+    }
+
+    public int getInte() {
+        return inte;
+    }
+
+    public int getVit() {
+        return vit;
+    }
+
+    public int getWis() {
+        return wis;
+    }
+
+    public int getCha() {
+        return cha;
+    }
+
+    public void setMaxHp(int maxHp) {
+        this.maxHp = maxHp;
+    }
+
+    public void setMaxMp(int maxMp) {
+        this.maxMp = maxMp;
+    }
+
+    public void setStr(int str) {
+        this.str = str;
+    }
+
+    public void setDex(int dex) {
+        this.dex = dex;
+    }
+
+    public void setVit(int vit) {
+        this.vit = vit;
+    }
+
+    public void setCha(int cha) {
+        this.cha = cha;
+    }
+
+    public void setWis(int wis) {
+        this.wis = wis;
+    }
+
+    public void setInte(int inte) {
+        this.inte = inte;
+    }
+
+    //item getters and setters
     public void setMain(Weapon main) {
         this.main = main;
     }
@@ -87,5 +180,29 @@ public abstract class Entity {
 
     public void setBoots(Armor boots) {
         this.boots = boots;
+    }
+
+    public Weapon getMain() {
+        return main;
+    }
+
+    public Weapon getOffhand() {
+        return offhand;
+    }
+
+    public Armor getHelmet() {
+        return helmet;
+    }
+
+    public Armor getChestplate() {
+        return chestplate;
+    }
+
+    public Armor getLeggings() {
+        return leggings;
+    }
+
+    public Armor getBoots() {
+        return boots;
     }
 }

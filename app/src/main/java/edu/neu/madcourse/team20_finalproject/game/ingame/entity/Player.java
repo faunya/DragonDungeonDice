@@ -10,15 +10,13 @@ public class Player extends Entity {
     private int xp;
     private int lv;
 
+    private String pClass;
+
     public Player(String name, int maxHp, int maxMp, int lv) {
         super(name, maxHp, maxMp);
 
         this.lv = lv;
         this.xp = 0;
-    }
-
-    public int getLv() {
-        return lv;
     }
 
     public void addXP(int gain) {
@@ -30,5 +28,15 @@ public class Player extends Entity {
         }
     }
 
+    public int getLv() {
+        return lv;
+    }
 
+    public String getPClass() {
+        return pClass;
+    }
+
+    public void setPClass(String pClass) {
+        this.pClass = pClass;
+    }
 }

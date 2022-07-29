@@ -23,4 +23,8 @@ public class Room {
     public List<NPC> getNpcList() {
         return npcList;
     }
+
+    public String getDesc() {
+        return desc;
+    }
 }
