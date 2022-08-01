@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Team20-FinalProject</string>
 
+    <string name="atk">Attack</string>
+    <string name="itm">Items</string>
+    <string name="abl">Abilities</string>
+    <string name="run">Flee</string>
+
     <string name="roll">Roll</string>
     <string name="player_create">Character Creation</string>
     <string name="question">\?</string>

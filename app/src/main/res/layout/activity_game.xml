@@ -10,49 +10,55 @@
         android:id="@+id/actionLog"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/act1"
+        app:layout_constraintBottom_toTopOf="@+id/attackBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/act2"
+        android:id="@+id/ablBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/act4"
+        android:onClick="onAbility"
+        android:text="@string/abl"
+        app:layout_constraintBottom_toTopOf="@+id/runBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/act1"
+        app:layout_constraintStart_toEndOf="@+id/attackBtn"
         app:layout_constraintTop_toBottomOf="@+id/actionLog" />
 
     <Button
-        android:id="@+id/act1"
+        android:id="@+id/attackBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="@+id/act2"
-        app:layout_constraintEnd_toStartOf="@+id/act2"
+        android:onClick="onAttack"
+        android:text="@string/atk"
+        app:layout_constraintBottom_toBottomOf="@+id/ablBtn"
+        app:layout_constraintEnd_toStartOf="@+id/ablBtn"
         app:layout_constraintStart_toStartOf="parent"
         tools:visibility="visible" />
 
     <Button
-        android:id="@+id/act3"
+        android:id="@+id/itemBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="@+id/act4"
-        app:layout_constraintEnd_toStartOf="@+id/act4"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:onClick="onItem"
+        android:text="@string/itm"
+        app:layout_constraintBottom_toBottomOf="@+id/runBtn"
+        app:layout_constraintEnd_toEndOf="@+id/attackBtn"
+        app:layout_constraintStart_toStartOf="@+id/attackBtn"
+        app:layout_constraintTop_toBottomOf="@+id/attackBtn"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/act4"
+        android:id="@+id/runBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:onClick="onRun"
+        android:text="@string/run"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/ablBtn"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/act3"
-        app:layout_constraintTop_toBottomOf="@+id/act2" />
+        app:layout_constraintStart_toStartOf="@+id/ablBtn"
+        app:layout_constraintTop_toBottomOf="@+id/ablBtn" />
 </androidx.constraintlayout.widget.ConstraintLayout>

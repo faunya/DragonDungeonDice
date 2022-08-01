@@ -3,6 +3,8 @@ package edu.neu.madcourse.team20_finalproject;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,26 +16,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.neu.madcourse.team20_finalproject.game.ingame.Room;
-import edu.neu.madcourse.team20_finalproject.game.ingame.entity.Entity;
 import edu.neu.madcourse.team20_finalproject.game.ingame.entity.NPC;
 import edu.neu.madcourse.team20_finalproject.game.ingame.entity.Player;
 import edu.neu.madcourse.team20_finalproject.game.system.Actions;
 import edu.neu.madcourse.team20_finalproject.game.system.Message;
+import edu.neu.madcourse.team20_finalproject.gameRecycler.ActLogViewAdapter;
 
 public class GameActivity extends AppCompatActivity {
     private ActivityResultLauncher resultLauncher;
+    private ActLogViewAdapter actLogAdapter;
+    private RecyclerView actLogRV;
 
-    private boolean firstStart = true;
+    private boolean firstStart;
 
     private List<Message> actLog;
     private Player player;
     private Room curRoom;
 
     //buttons
-    private Button act1;
-    private Button act2;
-    private Button act3;
-    private Button act4;
+    private Button atkBtn;
+    private Button abilBtn;
+    private Button itmBtn;
+    private Button runBtn;
 
     private int diceResult;
 
@@ -51,16 +55,19 @@ public class GameActivity extends AppCompatActivity {
 
                     }
                 });
-        if (firstStart) {
 
-        }
-
-        act1 = findViewById(R.id.act1);
-        act2 = findViewById(R.id.act2);
-        act3 = findViewById(R.id.act3);
-        act4 = findViewById(R.id.act4);
-
+        //recycler view
         actLog = new ArrayList<Message>();
+        actLogAdapter = new ActLogViewAdapter(this, actLog);
+        actLogRV = findViewById(R.id.actionLog);
+        actLogRV.setHasFixedSize(true);
+        actLogRV.setLayoutManager(new LinearLayoutManager(this));
+        actLogRV.setAdapter(actLogAdapter);
+
+        atkBtn = findViewById(R.id.attackBtn);
+        abilBtn = findViewById(R.id.ablBtn);
+        itmBtn = findViewById(R.id.itemBtn);
+        runBtn = findViewById(R.id.runBtn);
 
         player = new Player("Test", 15, 0, 1);
         player.setArmorClass(12);
@@ -81,6 +88,30 @@ public class GameActivity extends AppCompatActivity {
 
  */
 
+    private void actionSetup() {
+        List<Actions> actList = curRoom.getActions();
+        List<Button> buttonList = new ArrayList<>();
+        buttonList.add(atkBtn);
+        buttonList.add(abilBtn);
+        buttonList.add(itmBtn);
+        buttonList.add(runBtn);
+
+        for (int i = 0; i < actList.size(); i++) {
+            buttonList.get(i).setVisibility(View.VISIBLE);
+                switch (actList.get(i)) {
+                    case ATTACK:
+                    case ABILITY:
+                    case ITEM:
+                    case RUN:
+                    case REST:
+                }
+        }
+    }
+
+    private void notifyRoomChange() {
+        actLog.add(new Message(System.currentTimeMillis(), curRoom.getDesc()));
+    }
+
     public void onAttack(View view) {
         int dmg = 0;
         int ac = curRoom.getNpcList().get(0).getArmorClass();
@@ -93,29 +124,12 @@ public class GameActivity extends AppCompatActivity {
         player.attack(curRoom.getNpcList().get(0), dmg);
         actLog.add(new Message(System.currentTimeMillis(),
                 player.getName() + " attacked " + curRoom.getNpcList().get(0).getName()
-                        + " for " + String.valueOf(dmg) + "dmg"));
+                        + " for " + dmg + "dmg"));
+        System.out.println(actLog.size());
+        actLogAdapter.notifyDataSetChanged();
     }
 
-    private void actionSetup() {
-        List<Actions> actList = curRoom.getActions();
-        List<Button> buttonList = new ArrayList<>();
-        buttonList.add(act1);
-        buttonList.add(act2);
-        buttonList.add(act3);
-        buttonList.add(act4);
-
-        for (int i = 0; i < actList.size(); i++) {
-            buttonList.get(i).setVisibility(View.VISIBLE);
-
-        }
-    }
-
-    private void notifyRoomChange() {
-        actLog.add(new Message(System.currentTimeMillis(), curRoom.getDesc()));
-    }
-
-
-    public void onBlock(View view) {
+    public void onAbility(View view) {
     }
 
     public void onItem(View view) {
