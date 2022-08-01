@@ -98,8 +98,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        saveLoginDays();
         bgm.stopSound();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveLoginDays();
     }
 
     @Override
