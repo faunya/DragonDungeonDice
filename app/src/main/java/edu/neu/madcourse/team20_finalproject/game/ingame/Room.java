@@ -8,9 +8,9 @@ import edu.neu.madcourse.team20_finalproject.game.ingame.entity.NPC;
 public class Room {
     private List<Actions> actions;
     private List<NPC> npcList;
-    private String desc;
+    private List<String> desc;
 
-    public Room(List<NPC> npcList, List<Actions> actions, String desc) {
+    public Room(List<NPC> npcList, List<Actions> actions, List<String> desc) {
         this.npcList = npcList;
         this.actions = actions;
         this.desc = desc;
@@ -24,7 +24,7 @@ public class Room {
         return npcList;
     }
 
-    public String getDesc() {
+    public List<String> getDesc() {
         return desc;
     }
 }

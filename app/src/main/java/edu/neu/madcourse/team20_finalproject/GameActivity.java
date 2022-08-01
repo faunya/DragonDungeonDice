@@ -77,11 +77,14 @@ public class GameActivity extends AppCompatActivity {
         player.setArmorClass(12);
 
         List<NPC> npcList = new ArrayList<NPC>();
+        List<String> descList = new ArrayList<>();
+        descList.add("test room line 1");
+        descList.add("test room line 2");
         npcList.add(new NPC("test enemy", 10, 0));
         npcList.add(new NPC("test enemy2", 10, 0));
         List<Actions> actionsList = new ArrayList<>();
         actionsList.add(Actions.ATTACK);
-        curRoom = new Room(npcList, actionsList, "Test room");
+        curRoom = new Room(npcList, actionsList, descList);
 
         turnSetup();
 
@@ -128,7 +131,7 @@ public class GameActivity extends AppCompatActivity {
             player.attack(curRoom.getNpcList().get(0), dmg);
             actLog.add(new Message(System.currentTimeMillis(),
                     player.getName() + " attacked " + curRoom.getNpcList().get(0).getName()
-                            + " for " + dmg + "dmg"));
+                            + " for " + dmg + "dmg" ));
             System.out.println(actLog.size());
             actLogAdapter.notifyItemInserted(actLog.size() - 1);
 
@@ -137,13 +140,22 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void onAbility(View view) {
+        if (turnList.get(turn).equals(player)){
+
+        }
     }
 
     public void onItem(View view) {
+        if (turnList.get(turn).equals(player)){
+
+        }
         //makes small popup appear with list of items
     }
 
     public void onRun(View view) {
+        if (turnList.get(turn).equals(player)){
+
+        }
 
     }
 
@@ -152,7 +164,10 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void notifyRoomChange() {
-        actLog.add(new Message(System.currentTimeMillis(), curRoom.getDesc()));
+        for (String desc : curRoom.getDesc()) {
+            actLog.add(new Message(System.currentTimeMillis(), desc));
+            sleepThread(500);
+        }
     }
 
     private void turnSetup() {
@@ -183,8 +198,9 @@ public class GameActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            while (true) { //can change to variable so you can pause game later
+            notifyRoomChange();
 
+            while (true) { //can change to variable so you can pause game later
                 if (!turnList.get(turn).equals(player)) {
                     NPC npc = (NPC) turnList.get(turn);
                     sleepThread(500);
