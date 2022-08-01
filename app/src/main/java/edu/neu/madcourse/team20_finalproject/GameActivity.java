@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.neu.madcourse.team20_finalproject.game.ingame.Room;
+import edu.neu.madcourse.team20_finalproject.game.ingame.entity.Entity;
 import edu.neu.madcourse.team20_finalproject.game.ingame.entity.NPC;
 import edu.neu.madcourse.team20_finalproject.game.ingame.entity.Player;
 import edu.neu.madcourse.team20_finalproject.game.system.Actions;
@@ -28,6 +29,9 @@ public class GameActivity extends AppCompatActivity {
     private RecyclerView actLogRV;
 
     private boolean firstStart;
+
+    private List<Entity> turnList;
+    private int turn;
 
     private List<Message> actLog;
     private Player player;
@@ -48,9 +52,9 @@ public class GameActivity extends AppCompatActivity {
 
         resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if (result .getResultCode() == Activity.RESULT_OK) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
-                        diceResult = data.getIntExtra("roll",1);
+                        diceResult = data.getIntExtra("roll", 1);
                     } else {
 
                     }
@@ -74,11 +78,14 @@ public class GameActivity extends AppCompatActivity {
 
         List<NPC> npcList = new ArrayList<NPC>();
         npcList.add(new NPC("test enemy", 10, 0));
+        npcList.add(new NPC("test enemy2", 10, 0));
         List<Actions> actionsList = new ArrayList<>();
         actionsList.add(Actions.ATTACK);
         curRoom = new Room(npcList, actionsList, "Test room");
 
+        turnSetup();
 
+        new Thread(new GameThread()).start();
     }
 /*
     @Override
@@ -98,35 +105,35 @@ public class GameActivity extends AppCompatActivity {
 
         for (int i = 0; i < actList.size(); i++) {
             buttonList.get(i).setVisibility(View.VISIBLE);
-                switch (actList.get(i)) {
-                    case ATTACK:
-                    case ABILITY:
-                    case ITEM:
-                    case RUN:
-                    case REST:
-                }
+            switch (actList.get(i)) {
+                case ATTACK:
+                case ABILITY:
+                case ITEM:
+                case RUN:
+                case REST:
+            }
         }
     }
 
-    private void notifyRoomChange() {
-        actLog.add(new Message(System.currentTimeMillis(), curRoom.getDesc()));
-    }
-
     public void onAttack(View view) {
-        int dmg = 0;
-        int ac = curRoom.getNpcList().get(0).getArmorClass();
-        //Intent intent = new Intent(this, DiceRollScreen.activity);
+        if (turnList.get(turn).equals(player)) {
+            int dmg = 0;
+            int ac = curRoom.getNpcList().get(0).getArmorClass();
+            //Intent intent = new Intent(this, DiceRollScreen.activity);
         /*
         Sends ac to dice rolling screen
         if roll is equal to or above ac, then it rolls again for dmg
         returns dmg value here
          */
-        player.attack(curRoom.getNpcList().get(0), dmg);
-        actLog.add(new Message(System.currentTimeMillis(),
-                player.getName() + " attacked " + curRoom.getNpcList().get(0).getName()
-                        + " for " + dmg + "dmg"));
-        System.out.println(actLog.size());
-        actLogAdapter.notifyDataSetChanged();
+            player.attack(curRoom.getNpcList().get(0), dmg);
+            actLog.add(new Message(System.currentTimeMillis(),
+                    player.getName() + " attacked " + curRoom.getNpcList().get(0).getName()
+                            + " for " + dmg + "dmg"));
+            System.out.println(actLog.size());
+            actLogAdapter.notifyItemInserted(actLog.size() - 1);
+
+            nextTurn();
+        }
     }
 
     public void onAbility(View view) {
@@ -144,12 +151,48 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
-    private class gameThread implements Runnable {
+    private void notifyRoomChange() {
+        actLog.add(new Message(System.currentTimeMillis(), curRoom.getDesc()));
+    }
+
+    private void turnSetup() {
+        turnList = new ArrayList<Entity>();
+        turnList.add(player);
+        for (Entity npc : curRoom.getNpcList()) {
+            turnList.add(npc);
+        }
+    }
+
+    private void nextTurn() {
+        int nxt = turn + 1;
+        if (nxt >= turnList.size()) {
+            turn = 0;
+        } else {
+            ++turn;
+        }
+    }
+
+    private void sleepThread(long time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+        }
+    }
+
+    private class GameThread implements Runnable {
 
         @Override
         public void run() {
             while (true) { //can change to variable so you can pause game later
 
+                if (!turnList.get(turn).equals(player)) {
+                    NPC npc = (NPC) turnList.get(turn);
+                    sleepThread(500);
+                    System.out.println(npc.getName() + " turn");
+                    actLog.add(new Message(System.currentTimeMillis(), npc.getName() + " attacks"));
+                    actLogAdapter.notifyItemInserted(actLog.size() - 1);
+                    nextTurn();
+                }
             }
         }
     }

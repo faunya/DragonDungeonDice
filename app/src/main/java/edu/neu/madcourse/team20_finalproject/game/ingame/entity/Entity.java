@@ -20,7 +20,7 @@ public abstract class Entity {
     protected int vit;
     protected int inte;
     protected int wis;
-    protected int cha;
+    protected int spd;
 
 
     //equips
@@ -121,8 +121,8 @@ public abstract class Entity {
         return wis;
     }
 
-    public int getCha() {
-        return cha;
+    public int getSpd() {
+        return spd;
     }
 
     public void setMaxHp(int maxHp) {
@@ -145,8 +145,8 @@ public abstract class Entity {
         this.vit = vit;
     }
 
-    public void setCha(int cha) {
-        this.cha = cha;
+    public void setSpd(int spd) {
+        this.spd = spd;
     }
 
     public void setWis(int wis) {
