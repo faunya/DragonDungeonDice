@@ -13,14 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Team20FinalProject"
         tools:targetApi="31">
-        <activity
-            android:name=".GameActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".LogActivity"
-            android:exported="true">
-        </activity>
 
         <activity
             android:name=".MainActivity"
@@ -31,6 +23,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".SkinActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".GameActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
