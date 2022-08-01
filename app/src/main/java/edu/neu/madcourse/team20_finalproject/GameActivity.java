@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 
@@ -24,11 +26,12 @@ import edu.neu.madcourse.team20_finalproject.game.system.Message;
 import edu.neu.madcourse.team20_finalproject.gameRecycler.ActLogViewAdapter;
 
 public class GameActivity extends AppCompatActivity {
-    private ActivityResultLauncher resultLauncher;
+    private SharedPreferences sharedPref;
+
+    private ActivityResultLauncher rollResultLauncher;
+    private ActivityResultLauncher playerResultLauncher;
     private ActLogViewAdapter actLogAdapter;
     private RecyclerView actLogRV;
-
-    private boolean firstStart;
 
     private List<Entity> turnList;
     private int turn;
@@ -50,7 +53,17 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+        rollResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        diceResult = data.getIntExtra("roll", 1);
+                    } else {
+
+                    }
+                });
+
+        rollResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
@@ -89,6 +102,22 @@ public class GameActivity extends AppCompatActivity {
         turnSetup();
 
         new Thread(new GameThread()).start();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor prefEdit = sharedPref.edit();
+
+        boolean firstStart = sharedPref.getBoolean("firstStart", true);
+        if (firstStart) {
+            prefEdit.putBoolean("firstStart", false);
+            prefEdit.commit();
+            Intent intent = new Intent(this, CreatePlayerActivity.class);
+            rollResultLauncher.launch(intent);
+        }
     }
 /*
     @Override
