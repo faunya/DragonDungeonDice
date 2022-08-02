@@ -32,8 +32,9 @@
         android:id="@+id/createCharName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Character Name"
+        android:hint="@string/charName"
         android:minHeight="48dp"
+        android:textColorHint="#757575"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -107,7 +108,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/createStrStat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/createStrStat"
-        app:layout_constraintTop_toTopOf="@+id/createStrStat" />
+        app:layout_constraintTop_toTopOf="@+id/createStrStat"
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
     <Button
         android:id="@+id/createDexBtn"
@@ -270,8 +272,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="@string/finish"
+        android:onClick="onFinish"
 
+        android:text="@string/finish"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import edu.neu.madcourse.team20_finalproject.game.ingame.entity.Entity;
 
 public class CreatePlayerActivity extends AppCompatActivity {
@@ -47,6 +49,7 @@ public class CreatePlayerActivity extends AppCompatActivity {
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
+                        diceResult =
                         diceResult = data.getIntExtra("roll", 1);
                         setStat();
                     } else {
@@ -78,6 +81,22 @@ public class CreatePlayerActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void onFinish(View view) {
+        if (strTV.getText().equals("-") || dexTV.getText().equals("-")
+        || vitTV.getText().equals("-") || wisTV.getText().equals("-")
+        || intTV.getText().equals("-") || spdTV.getText().equals("-")) {
+            Snackbar snackbar;
+        } else {
+            Intent intent = new Intent(this, GameActivity.class);
+            intent.putExtra("str", strTV.getText());
+            intent.putExtra("dex", dexTV.getText());
+            intent.putExtra("vit", vitTV.getText());
+            intent.putExtra("wis", wisTV.getText());
+            intent.putExtra("int", intTV.getText());
+            intent.putExtra("spd", spdTV.getText());
+        }
     }
 
     public void onStr(View view) {
