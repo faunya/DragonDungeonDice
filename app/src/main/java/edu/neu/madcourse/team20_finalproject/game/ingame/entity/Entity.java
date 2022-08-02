@@ -5,7 +5,7 @@ import android.os.Parcelable;
 import edu.neu.madcourse.team20_finalproject.game.ingame.item.Armor;
 import edu.neu.madcourse.team20_finalproject.game.ingame.item.Weapon;
 
-public abstract class Entity implements Parcelable {
+public abstract class Entity {
     protected String name;
 
     //stats
