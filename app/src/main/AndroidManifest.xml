@@ -32,6 +32,11 @@
         <activity
             android:name=".GameActivity"
             android:exported="true" />
+
+        <activity
+            android:name=".DiceRolling"
+            android:exported="true" />
+
     </application>
 
 </manifest>

@@ -11,8 +11,9 @@
         <entry key="app/src/main/res/layout/act_log_layout.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_log.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_skin.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_skin.xml" value="0.10377655029296876" />
         <entry key="app/src/main/res/layout/item_wallpaper.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/wallpaper_layout.xml" value="0.1" />
       </map>
     </option>
   </component>
