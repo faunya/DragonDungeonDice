@@ -1,6 +1,8 @@
 package edu.neu.madcourse.team20_finalproject;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
@@ -19,6 +21,11 @@ public class SkinActivity extends AppCompatActivity implements SkinViewHolder.It
     private List<WallpaperID>  wallpaperIDList;
     private SkinRecyclerAdapter skinAdapter;
     private RecyclerView skinRecycler;
+    private Context context;
+    private SharedPreferences sharedPref;
+    private final static String NUM_OF_DAYS_REQUIRED = "REQUIRED_DAYS";
+    private final static Integer NUM_OF_WALLPAPERS = 10;
+    private final static Integer NUM_OF_DAYS_PER_SKIN = 30;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +34,7 @@ public class SkinActivity extends AppCompatActivity implements SkinViewHolder.It
 
         wallpaperIDList = new ArrayList<>();
         addImgToList();
-
+        setSharedPreferenceInt();
         skinRecyclerSetUp();
     }
 
@@ -44,6 +51,18 @@ public class SkinActivity extends AppCompatActivity implements SkinViewHolder.It
         wallpaperIDList.add(WallpaperID.B10);
     }
 
+    private void setSharedPreferenceInt() {
+        context = SkinActivity.this;
+        sharedPref = context.getSharedPreferences(NUM_OF_DAYS_REQUIRED, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        for (int i = 1; i <= NUM_OF_WALLPAPERS; i++) {
+            String key = "b" + String.valueOf(i);
+            int value = i * NUM_OF_DAYS_PER_SKIN;
+            editor.putInt(key, value);
+            editor.apply();
+        }
+    }
+
     private void skinRecyclerSetUp() {
         skinAdapter = new SkinRecyclerAdapter(wallpaperIDList, this, this);
         skinRecycler = findViewById(R.id.skin_recycler);
@@ -58,7 +77,6 @@ public class SkinActivity extends AppCompatActivity implements SkinViewHolder.It
 
     @Override
     public void onItemClick(int position) {
-        System.out.println("hahahah");
         int backgroundId = WallpaperID.getWallpaperReference(wallpaperIDList.get(position));
         Intent intent = new Intent(this, DiceRolling.class);
         intent.putExtra("backgroundId", backgroundId);
