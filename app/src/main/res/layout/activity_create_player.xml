@@ -4,16 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:minWidth="200dp"
     tools:context=".CreatePlayerActivity">
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/createIntStat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="@string/dash"
+        app:layout_constraintBottom_toTopOf="@+id/createSpdStat"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="541dp" />
+        app:layout_constraintTop_toBottomOf="@+id/createWisStat" />
 
     <TextView
         android:id="@+id/textView"
@@ -26,7 +29,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/charName"
+        android:id="@+id/createCharName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Character Name"
@@ -40,167 +43,258 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/str"
-        app:layout_constraintBottom_toBottomOf="@+id/textView8"
-        app:layout_constraintEnd_toStartOf="@+id/textView8"
+        app:layout_constraintBottom_toBottomOf="@+id/createStrStat"
+        app:layout_constraintEnd_toStartOf="@+id/createStrStat"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView8" />
+        app:layout_constraintTop_toTopOf="@+id/createStrStat" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dex"
-        app:layout_constraintBottom_toBottomOf="@+id/textView9"
-        app:layout_constraintEnd_toStartOf="@+id/textView9"
+        app:layout_constraintBottom_toBottomOf="@+id/createDexStat"
+        app:layout_constraintEnd_toStartOf="@+id/createDexStat"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView9" />
+        app:layout_constraintTop_toTopOf="@+id/createDexStat" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/vit"
-        app:layout_constraintBottom_toBottomOf="@+id/textView10"
-        app:layout_constraintEnd_toStartOf="@+id/textView10"
+        app:layout_constraintBottom_toBottomOf="@+id/createVitStat"
+        app:layout_constraintEnd_toStartOf="@+id/createVitStat"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView10" />
+        app:layout_constraintTop_toTopOf="@+id/createVitStat" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/wis"
-        app:layout_constraintBottom_toBottomOf="@+id/textView11"
-        app:layout_constraintEnd_toStartOf="@+id/textView11"
+        app:layout_constraintBottom_toBottomOf="@+id/createWisStat"
+        app:layout_constraintEnd_toStartOf="@+id/createWisStat"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView11" />
+        app:layout_constraintTop_toTopOf="@+id/createWisStat" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/inte"
-        app:layout_constraintBottom_toBottomOf="@+id/textView12"
-        app:layout_constraintEnd_toStartOf="@+id/textView12"
+        app:layout_constraintBottom_toBottomOf="@+id/createIntStat"
+        app:layout_constraintEnd_toStartOf="@+id/createIntStat"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView12" />
+        app:layout_constraintTop_toTopOf="@+id/createIntStat" />
 
     <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/cha"
-        app:layout_constraintBottom_toBottomOf="@+id/textView13"
-        app:layout_constraintEnd_toStartOf="@+id/textView13"
+        android:text="@string/spd"
+        app:layout_constraintBottom_toBottomOf="@+id/createSpdStat"
+        app:layout_constraintEnd_toStartOf="@+id/createSpdStat"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView13" />
+        app:layout_constraintTop_toTopOf="@+id/createSpdStat" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/createStrBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onStr"
         android:text="@string/roll"
-        app:layout_constraintBottom_toBottomOf="@+id/textView8"
+        app:layout_constraintBottom_toBottomOf="@+id/createStrStat"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toTopOf="@+id/textView8" />
+        app:layout_constraintStart_toEndOf="@+id/createStrStat"
+        app:layout_constraintTop_toTopOf="@+id/createStrStat" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/createDexBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onDex"
         android:text="@string/roll"
-        app:layout_constraintBottom_toBottomOf="@+id/textView9"
+        app:layout_constraintBottom_toBottomOf="@+id/createDexStat"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView9"
-        app:layout_constraintTop_toTopOf="@+id/textView9" />
+        app:layout_constraintStart_toEndOf="@+id/createDexStat"
+        app:layout_constraintTop_toTopOf="@+id/createDexStat" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/createVitBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onVit"
         android:text="@string/roll"
-        app:layout_constraintBottom_toBottomOf="@+id/textView10"
+        app:layout_constraintBottom_toBottomOf="@+id/createVitStat"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView10"
-        app:layout_constraintTop_toTopOf="@+id/textView10" />
+        app:layout_constraintStart_toEndOf="@+id/createVitStat"
+        app:layout_constraintTop_toTopOf="@+id/createVitStat" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/createWisBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onWis"
         android:text="@string/roll"
-        app:layout_constraintBottom_toBottomOf="@+id/textView11"
+        app:layout_constraintBottom_toBottomOf="@+id/createWisStat"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView11"
-        app:layout_constraintTop_toTopOf="@+id/textView11" />
+        app:layout_constraintStart_toEndOf="@+id/createWisStat"
+        app:layout_constraintTop_toTopOf="@+id/createWisStat" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/createIntBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onInt"
         android:text="@string/roll"
-        app:layout_constraintBottom_toBottomOf="@+id/textView12"
+        app:layout_constraintBottom_toBottomOf="@+id/createIntStat"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toTopOf="@+id/textView12" />
+        app:layout_constraintStart_toEndOf="@+id/createIntStat"
+        app:layout_constraintTop_toTopOf="@+id/createIntStat" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/createSpdBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onSpd"
         android:text="@string/roll"
-        app:layout_constraintBottom_toBottomOf="@+id/textView13"
+        app:layout_constraintBottom_toBottomOf="@+id/createSpdStat"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView13"
-        app:layout_constraintTop_toTopOf="@+id/textView13" />
+        app:layout_constraintStart_toEndOf="@+id/createSpdStat"
+        app:layout_constraintTop_toTopOf="@+id/createSpdStat" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/createStrStat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="@string/dash"
+        app:layout_constraintBottom_toTopOf="@+id/createDexStat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="159dp" />
+        app:layout_constraintTop_toBottomOf="@+id/createSPBar" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/createDexStat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="@string/dash"
+        app:layout_constraintBottom_toTopOf="@+id/createVitStat"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="254dp" />
+        app:layout_constraintTop_toBottomOf="@+id/createStrStat" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/createVitStat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="@string/dash"
+        app:layout_constraintBottom_toTopOf="@+id/createWisStat"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="350dp" />
+        app:layout_constraintTop_toBottomOf="@+id/createDexStat" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/createWisStat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="@string/dash"
+        app:layout_constraintBottom_toTopOf="@+id/createIntStat"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="446dp" />
+        app:layout_constraintTop_toBottomOf="@+id/createVitStat" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/createSpdStat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="@string/dash"
+        app:layout_constraintBottom_toTopOf="@+id/button7"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="636dp" />
+        app:layout_constraintTop_toBottomOf="@+id/createIntStat" />
+
+    <ProgressBar
+        android:id="@+id/createHPBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="175dp"
+        android:progressTint="#FF0000"
+        app:layout_constraintBottom_toTopOf="@+id/createSPBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createCharName" />
+
+    <TextView
+        android:id="@+id/createHP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/hp"
+        app:layout_constraintBottom_toBottomOf="@+id/createHPBar"
+        app:layout_constraintEnd_toStartOf="@+id/createHPBar"
+        app:layout_constraintTop_toTopOf="@+id/createHPBar" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/sp"
+        app:layout_constraintBottom_toBottomOf="@+id/createSPBar"
+        app:layout_constraintEnd_toStartOf="@+id/createSPBar"
+        app:layout_constraintTop_toTopOf="@+id/createSPBar" />
+
+    <ProgressBar
+        android:id="@+id/createSPBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="175dp"
+        android:progressTint="#00FF37"
+        app:layout_constraintBottom_toTopOf="@+id/createStrBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createHPBar" />
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/finish"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createSpdStat" />
+
+    <TextView
+        android:id="@+id/createHPStat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/dash"
+        app:layout_constraintBottom_toBottomOf="@+id/createHPBar"
+        app:layout_constraintStart_toEndOf="@+id/createHPBar"
+        app:layout_constraintTop_toTopOf="@+id/createHPBar" />
+
+    <TextView
+        android:id="@+id/createSPStat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/dash"
+        app:layout_constraintBottom_toBottomOf="@+id/createSPBar"
+        app:layout_constraintStart_toEndOf="@+id/createSPBar"
+        app:layout_constraintTop_toTopOf="@+id/createSPBar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

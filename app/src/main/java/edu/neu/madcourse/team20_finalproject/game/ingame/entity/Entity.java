@@ -67,7 +67,7 @@ public abstract class Entity {
         return hp <= 0;
     }
 
-    public int calcModifier(int stat) {
+    public static int calcModifier(int stat) {
         return Math.floorDiv(stat - 10, 2);
     }
 

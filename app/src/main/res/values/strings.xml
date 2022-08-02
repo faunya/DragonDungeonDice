@@ -9,15 +9,17 @@
     <string name="roll">Roll</string>
     <string name="player_create">Character Creation</string>
     <string name="question">\?</string>
+    <string name="dash">-</string>
+    <string name="finish">Finish</string>
 
     <string name="hp">HP</string>
-    <string name="mp">MP</string>
+    <string name="sp">SP</string>
     <string name="str">STR</string>
     <string name="dex">DEX</string>
     <string name="vit">VIT</string>
     <string name="wis">WIS</string>
     <string name="inte">INT</string>
-    <string name="cha">CHA</string>
+    <string name="spd">SPD</string>
 
 
 </resources>

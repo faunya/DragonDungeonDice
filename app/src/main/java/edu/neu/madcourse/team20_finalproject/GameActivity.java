@@ -29,7 +29,6 @@ public class GameActivity extends AppCompatActivity {
     private SharedPreferences sharedPref;
 
     private ActivityResultLauncher rollResultLauncher;
-    private ActivityResultLauncher playerResultLauncher;
     private ActLogViewAdapter actLogAdapter;
     private RecyclerView actLogRV;
 
@@ -59,17 +58,6 @@ public class GameActivity extends AppCompatActivity {
                         Intent data = result.getData();
                         diceResult = data.getIntExtra("roll", 1);
                     } else {
-
-                    }
-                });
-
-        rollResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        Intent data = result.getData();
-                        diceResult = data.getIntExtra("roll", 1);
-                    } else {
-
                     }
                 });
 
@@ -104,6 +92,7 @@ public class GameActivity extends AppCompatActivity {
         new Thread(new GameThread()).start();
     }
 
+    /*
     @Override
     protected void onStart() {
         super.onStart();
@@ -119,6 +108,8 @@ public class GameActivity extends AppCompatActivity {
             rollResultLauncher.launch(intent);
         }
     }
+
+     */
 /*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, String strdata, Bundle bundle) {
