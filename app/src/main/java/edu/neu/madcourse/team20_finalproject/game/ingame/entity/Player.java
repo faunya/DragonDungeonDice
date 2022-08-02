@@ -1,5 +1,7 @@
 package edu.neu.madcourse.team20_finalproject.game.ingame.entity;
 
+import android.os.Parcel;
+
 import edu.neu.madcourse.team20_finalproject.game.ingame.item.Armor;
 import edu.neu.madcourse.team20_finalproject.game.ingame.item.Weapon;
 
@@ -38,5 +40,15 @@ public class Player extends Entity {
 
     public void setPClass(String pClass) {
         this.pClass = pClass;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 }

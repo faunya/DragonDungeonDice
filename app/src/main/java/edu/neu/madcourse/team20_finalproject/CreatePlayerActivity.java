@@ -6,9 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -23,6 +26,8 @@ public class CreatePlayerActivity extends AppCompatActivity {
 
     private ProgressBar hpBar;
     private ProgressBar spBar;
+
+    private EditText charNameTV;
 
     private TextView hpTV;
     private TextView spTV;
@@ -49,13 +54,15 @@ public class CreatePlayerActivity extends AppCompatActivity {
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
-                        diceResult =
+                        selected = data.getStringExtra("selected");
                         diceResult = data.getIntExtra("roll", 1);
                         setStat();
                     } else {
 
                     }
                 });
+
+        charNameTV = findViewById(R.id.createCharName);
 
         hpBar = findViewById(R.id.createHPBar);
         spBar = findViewById(R.id.createSPBar);
@@ -84,11 +91,19 @@ public class CreatePlayerActivity extends AppCompatActivity {
     }
 
     public void onFinish(View view) {
-        if (strTV.getText().equals("-") || dexTV.getText().equals("-")
-        || vitTV.getText().equals("-") || wisTV.getText().equals("-")
-        || intTV.getText().equals("-") || spdTV.getText().equals("-")) {
+
+        System.out.println("char name" + charNameTV.getText());
+        if (strTV.getText().toString().equals("-") || dexTV.getText().toString().equals("-")
+        || vitTV.getText().toString().equals("-") || wisTV.getText().toString().equals("-")
+        || intTV.getText().toString().equals("-") || spdTV.getText().toString().equals("-")
+        || charNameTV.getText().toString().equals("")) {
             Snackbar snackbar;
         } else {
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor prefEdit = sharedPref.edit();
+            prefEdit.putBoolean("firstStart", false);
+            prefEdit.commit();
+
             Intent intent = new Intent(this, GameActivity.class);
             intent.putExtra("str", strTV.getText());
             intent.putExtra("dex", dexTV.getText());
@@ -96,6 +111,8 @@ public class CreatePlayerActivity extends AppCompatActivity {
             intent.putExtra("wis", wisTV.getText());
             intent.putExtra("int", intTV.getText());
             intent.putExtra("spd", spdTV.getText());
+            intent.putExtra("name", charNameTV.getText());
+            startActivity(intent);
         }
     }
 
@@ -116,7 +133,7 @@ public class CreatePlayerActivity extends AppCompatActivity {
     }
 
     public void onWis(View view) {
-        onRoll("Wis");
+        onRoll("wis");
     }
 
     public void onSpd(View view) {
@@ -125,32 +142,38 @@ public class CreatePlayerActivity extends AppCompatActivity {
 
     private void onRoll(String stat) {
         selected = stat;
+
+        diceResult = 10;
+        setStat();
+        /*
         Intent intent = new Intent();//(this, diceRollingScreen);
         intent.putExtra("stat", stat);
         rollResultLauncher.launch(intent);
+
+         */
     }
 
     private void setStat() {
         switch (selected) {
             case "str":
-                strTV.setText(diceResult);
+                strTV.setText(String.valueOf(diceResult));
                 return;
             case "dex":
-                dexTV.setText(diceResult);
+                dexTV.setText(String.valueOf(diceResult));
                 return;
             case "vit":
-                vitTV.setText(diceResult);
-                hpTV.setText(Entity.calcModifier(diceResult) + 10);
+                vitTV.setText(String.valueOf(diceResult));
+                hpTV.setText(String.valueOf(Entity.calcModifier(diceResult) + 10));
                 return;
             case "int":
-                intTV.setText(diceResult);
+                intTV.setText(String.valueOf(diceResult));
                 return;
             case "wis":
-                wisTV.setText(diceResult);
-                spTV.setText(Entity.calcModifier(diceResult) + 5);
+                wisTV.setText(String.valueOf(diceResult));
+                spTV.setText(String.valueOf(Entity.calcModifier(diceResult) + 5));
                 return;
             case "spd":
-                spdTV.setText(diceResult);
+                spdTV.setText(String.valueOf(diceResult));
                 return;
         }
     }
