@@ -82,6 +82,7 @@ public class SkinActivity extends AppCompatActivity implements SkinViewHolder.It
     public void onItemClick(int position) {
         int backgroundId = WallpaperID.getWallpaperReference(wallpaperIDList.get(position));
         int logOnDays = getLogOnDays();
+        System.out.println("logOnDays:" + logOnDays);
         if(meetRequiredDays(logOnDays, position)) {
             Intent intent = new Intent(this, DiceRolling.class);
             intent.putExtra("backgroundId", backgroundId);
@@ -96,7 +97,9 @@ public class SkinActivity extends AppCompatActivity implements SkinViewHolder.It
     }
 
     public boolean meetRequiredDays(int logOnDays, int position) {
-        int daysRequiredToUnlock = sharedPref.getInt(wallpaperIDList.get(position).getWpString(), 0);
+        int daysRequiredToUnlock = sharedPref.getInt(wallpaperIDList
+                .get(position).getWpString(), 0);
+        System.out.println("daysRequiredToUnlock:" + daysRequiredToUnlock);
         if(logOnDays >= daysRequiredToUnlock)
             return true;
         return false;

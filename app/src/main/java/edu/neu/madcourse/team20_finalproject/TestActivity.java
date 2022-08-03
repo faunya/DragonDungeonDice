@@ -32,49 +32,11 @@ public class TestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-    }
-
-    public void loadData() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SETTINGS,MODE_PRIVATE);
-        logOnDays = sharedPreferences.getInt(LOG_ON_DAYS, 0);
-        lastLogin = sharedPreferences.getString(LAST_LOGIN, "");
-    }
-
-    private void saveLoginDays() {
         SharedPreferences sharedPreferences = getSharedPreferences(SETTINGS,MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(LOG_ON_DAYS, logOnDays);
-        editor.putString(LAST_LOGIN, lastLogin);
+        editor.putInt(LOG_ON_DAYS, 30);
+        int days = sharedPreferences.getInt(LOG_ON_DAYS,0);
+        System.out.println("days:" + days);
         editor.apply();
-    }
-
-    private void updateLoginDays() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar calendar = Calendar.getInstance();
-        String date = sdf.format(calendar.getTime());
-        if (!lastLogin.equals(date)) {
-            lastLogin = date;
-            logOnDays += 1;
-            Toast.makeText(this, "First Login Today!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        saveLoginDays();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        loadData();
-        updateLoginDays();
     }
 }
