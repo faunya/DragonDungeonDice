@@ -6,18 +6,17 @@ import java.util.List;
 
 public class NPC extends Entity {
     private List<String> dialog;
+    private int id;
 
     public NPC(String name, int maxHp, int maxMp) {
         super(name, maxHp, maxMp);
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
+    public int getId() {
+        return id;
     }
 }
