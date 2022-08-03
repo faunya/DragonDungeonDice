@@ -4,6 +4,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.recyclerview.widget.RecyclerView;
 
 import edu.neu.madcourse.team20_finalproject.R;
@@ -25,7 +27,6 @@ public class SkinViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     @Override
     public void onClick(View v) {
         int pos = getAdapterPosition();
-        System.out.println("position is:" + pos);
         SkinRecyclerAdapter.clickListener.onItemClick(pos);
     }
 

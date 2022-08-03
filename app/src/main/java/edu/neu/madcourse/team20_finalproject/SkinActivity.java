@@ -8,6 +8,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -26,6 +27,9 @@ public class SkinActivity extends AppCompatActivity implements SkinViewHolder.It
     private final static String NUM_OF_DAYS_REQUIRED = "REQUIRED_DAYS";
     private final static Integer NUM_OF_WALLPAPERS = 10;
     private final static Integer NUM_OF_DAYS_PER_SKIN = 30;
+
+    private static final String SETTINGS = "settings";
+    private static final String LOG_ON_DAYS = "logOnDays";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +52,6 @@ public class SkinActivity extends AppCompatActivity implements SkinViewHolder.It
         wallpaperIDList.add(WallpaperID.B7);
         wallpaperIDList.add(WallpaperID.B8);
         wallpaperIDList.add(WallpaperID.B9);
-        wallpaperIDList.add(WallpaperID.B10);
     }
 
     private void setSharedPreferenceInt() {
@@ -56,7 +59,7 @@ public class SkinActivity extends AppCompatActivity implements SkinViewHolder.It
         sharedPref = context.getSharedPreferences(NUM_OF_DAYS_REQUIRED, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         for (int i = 1; i <= NUM_OF_WALLPAPERS; i++) {
-            String key = "b" + String.valueOf(i);
+            String key = "b" + i;
             int value = i * NUM_OF_DAYS_PER_SKIN;
             editor.putInt(key, value);
             editor.apply();
@@ -67,7 +70,7 @@ public class SkinActivity extends AppCompatActivity implements SkinViewHolder.It
         skinAdapter = new SkinRecyclerAdapter(wallpaperIDList, this, this);
         skinRecycler = findViewById(R.id.skin_recycler);
         skinRecycler.setHasFixedSize(true);
-        skinRecycler.setLayoutManager(new GridLayoutManager(this, 2));
+        skinRecycler.setLayoutManager(new LinearLayoutManager(this));
         skinRecycler.setAdapter(skinAdapter);
     }
 
@@ -78,8 +81,24 @@ public class SkinActivity extends AppCompatActivity implements SkinViewHolder.It
     @Override
     public void onItemClick(int position) {
         int backgroundId = WallpaperID.getWallpaperReference(wallpaperIDList.get(position));
-        Intent intent = new Intent(this, DiceRolling.class);
-        intent.putExtra("backgroundId", backgroundId);
-        startActivity(intent);
+        int logOnDays = getLogOnDays();
+        if(meetRequiredDays(logOnDays, position)) {
+            Intent intent = new Intent(this, DiceRolling.class);
+            intent.putExtra("backgroundId", backgroundId);
+            startActivity(intent);
+        }
+    }
+
+    public int getLogOnDays() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SETTINGS,MODE_PRIVATE);
+        int numOfDays = sharedPreferences.getInt(LOG_ON_DAYS, 0);
+        return numOfDays;
+    }
+
+    public boolean meetRequiredDays(int logOnDays, int position) {
+        int daysRequiredToUnlock = sharedPref.getInt(wallpaperIDList.get(position).getWpString(), 0);
+        if(logOnDays >= daysRequiredToUnlock)
+            return true;
+        return false;
     }
 }

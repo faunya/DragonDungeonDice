@@ -11,8 +11,7 @@ public enum WallpaperID {
     B6("b6"),
     B7("b7"),
     B8("b8"),
-    B9("b9"),
-    B10("b10");
+    B9("b9");
 
     private String wpString;
 
@@ -45,8 +44,6 @@ public enum WallpaperID {
                 return B8;
             case "b9":
                 return B9;
-            case "b10":
-                return B10;
             default:
                 return null;
         }
@@ -72,8 +69,6 @@ public enum WallpaperID {
                 return R.drawable.b5;
             case B9:
                 return R.drawable.b9;
-            case B10:
-                return R.drawable.b10;
             default:
                 break;
         }
