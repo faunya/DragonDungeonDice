@@ -30,11 +30,16 @@ public class SkinActivity extends AppCompatActivity implements SkinViewHolder.It
 
     private static final String SETTINGS = "settings";
     private static final String LOG_ON_DAYS = "logOnDays";
+    private static final String BACKGROUND = "background";
+
+    private SharedPreferences sharedPreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skin);
+
+        sharedPreference = getSharedPreferences(SETTINGS,MODE_PRIVATE);
 
         wallpaperIDList = new ArrayList<>();
         addImgToList();
@@ -86,8 +91,10 @@ public class SkinActivity extends AppCompatActivity implements SkinViewHolder.It
                 .get(position).getWpString(), 0);
         System.out.println("logOnDays:" + logOnDays);
         if(logOnDays >= daysRequiredToUnlock) {
+            SharedPreferences.Editor editor_settings = sharedPreference.edit();
+            editor_settings.putInt(BACKGROUND, backgroundId);
+            editor_settings.apply();
             Intent intent = new Intent(this, DiceRolling.class);
-            intent.putExtra("backgroundId", backgroundId);
             startActivity(intent);
         } else {
             int daysGap = daysRequiredToUnlock - logOnDays;
@@ -98,8 +105,7 @@ public class SkinActivity extends AppCompatActivity implements SkinViewHolder.It
     }
 
     public int getLogOnDays() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SETTINGS,MODE_PRIVATE);
-        int numOfDays = sharedPreferences.getInt(LOG_ON_DAYS, 0);
+        int numOfDays = sharedPreference.getInt(LOG_ON_DAYS, 0);
         return numOfDays;
     }
 
