@@ -15,6 +15,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_skin.xml" value="0.10377655029296876" />
         <entry key="app/src/main/res/layout/item_wallpaper.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/unlock_msg_layout.xml" value="0.1" />
         <entry key="app/src/main/res/layout/wallpaper_layout.xml" value="0.165" />
       </map>
     </option>

@@ -102,4 +102,7 @@ public class SkinActivity extends AppCompatActivity implements SkinViewHolder.It
         int numOfDays = sharedPreferences.getInt(LOG_ON_DAYS, 0);
         return numOfDays;
     }
+
+
+
 }
