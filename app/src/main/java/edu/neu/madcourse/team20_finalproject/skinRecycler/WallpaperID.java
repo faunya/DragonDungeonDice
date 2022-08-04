@@ -24,31 +24,6 @@ public enum WallpaperID {
         return wpString;
     }
 
-    public static WallpaperID stringToID(String id) {
-        switch (id) {
-            case "b1":
-                return B1;
-            case "b2":
-                return B2;
-            case "b3":
-                return B3;
-            case "b4":
-                return B4;
-            case "b5":
-                return B5;
-            case "b6":
-                return B6;
-            case "b7":
-                return B7;
-            case "b8":
-                return B8;
-            case "b9":
-                return B9;
-            default:
-                return null;
-        }
-    }
-
     public static int getWallpaperReference(WallpaperID wallpaperID) {
         switch (wallpaperID) {
             case B1:

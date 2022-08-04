@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -82,11 +82,18 @@ public class SkinActivity extends AppCompatActivity implements SkinViewHolder.It
     public void onItemClick(int position) {
         int backgroundId = WallpaperID.getWallpaperReference(wallpaperIDList.get(position));
         int logOnDays = getLogOnDays();
+        int daysRequiredToUnlock = sharedPref.getInt(wallpaperIDList
+                .get(position).getWpString(), 0);
         System.out.println("logOnDays:" + logOnDays);
-        if(meetRequiredDays(logOnDays, position)) {
+        if(logOnDays >= daysRequiredToUnlock) {
             Intent intent = new Intent(this, DiceRolling.class);
             intent.putExtra("backgroundId", backgroundId);
             startActivity(intent);
+        } else {
+            int daysGap = daysRequiredToUnlock - logOnDays;
+            String toastString = "Keep on logging into your account everyday!! " +
+                    "You will be able to unlock this wallpaper in " + daysGap + " days!!";
+            Toast.makeText(context, toastString, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -96,12 +103,4 @@ public class SkinActivity extends AppCompatActivity implements SkinViewHolder.It
         return numOfDays;
     }
 
-    public boolean meetRequiredDays(int logOnDays, int position) {
-        int daysRequiredToUnlock = sharedPref.getInt(wallpaperIDList
-                .get(position).getWpString(), 0);
-        System.out.println("daysRequiredToUnlock:" + daysRequiredToUnlock);
-        if(logOnDays >= daysRequiredToUnlock)
-            return true;
-        return false;
-    }
 }
