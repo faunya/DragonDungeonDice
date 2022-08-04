@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="edu.neu.madcourse.team20_finalproject">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,10 +15,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Team20FinalProject"
         tools:targetApi="31">
-
+        <activity
+            android:name=".Settings"
+            android:theme="@style/SettingsTheme"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".DiceRolling"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GameActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,14 +43,9 @@
             android:exported="true">
         </activity>
 
-        <activity
-            android:name=".GameActivity"
-            android:exported="true" />
-
-        <activity
-            android:name=".DiceRolling"
-            android:exported="true" />
-
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

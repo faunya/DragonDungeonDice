@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Settings">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/parchment" />
+
+    <TextView
+        android:id="@+id/settings_music"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/press_start_2p"
+        android:minHeight="48dp"
+        android:onClick="setMusic"
+        android:text="@string/music"
+        android:textColor="#6D4C41"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/settings_soundEffect"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3" />
+
+    <TextView
+        android:id="@+id/settings_soundEffect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/press_start_2p"
+        android:minHeight="48dp"
+        android:onClick="setSoundEffect"
+        android:text="@string/sound_effect"
+        android:textColor="#6D4C41"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.45" />
+
+    <TextView
+        android:id="@+id/settings_vibration"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/press_start_2p"
+        android:minHeight="48dp"
+        android:onClick="setVibration"
+        android:text="@string/vibration"
+        android:textColor="#6D4C41"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/settings_soundEffect"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.6" />
+
+    <TextView
+        android:id="@+id/settings_statusSe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/press_start_2p"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:onClick="setSoundEffect"
+        android:text="@string/on"
+        android:textColor="#6D4C41"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/settings_soundEffect"
+        app:layout_constraintTop_toTopOf="@+id/settings_soundEffect"
+        tools:ignore="DuplicateSpeakableTextCheck" />
+
+    <TextView
+        android:id="@+id/settings_statusM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/press_start_2p"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:onClick="setMusic"
+        android:text="@string/on"
+        android:textColor="#6D4C41"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/settings_soundEffect"
+        app:layout_constraintTop_toTopOf="@+id/settings_music" />
+
+    <TextView
+        android:id="@+id/settings_statusV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/press_start_2p"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:onClick="setVibration"
+        android:text="@string/on"
+        android:textColor="#6D4C41"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/settings_soundEffect"
+        app:layout_constraintTop_toTopOf="@+id/settings_vibration" />
+
+    <TextView
+        android:id="@+id/settings_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/press_start_2p"
+        android:minHeight="48dp"
+        android:onClick="saveData"
+        android:text="@string/save"
+        android:textColor="#6D4C41"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_vibration"
+        app:layout_constraintVertical_bias="0.3" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
