@@ -33,15 +33,15 @@ public enum WallpaperID {
             case B3:
                 return R.drawable.b3;
             case B4:
-                return R.drawable.b7;
+                return R.drawable.b4;
             case B5:
-                return R.drawable.b8;
+                return R.drawable.b5;
             case B6:
                 return R.drawable.b6;
             case B7:
-                return R.drawable.b4;
+                return R.drawable.b7;
             case B8:
-                return R.drawable.b5;
+                return R.drawable.b8;
             case B9:
                 return R.drawable.b9;
             default:

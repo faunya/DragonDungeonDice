@@ -30,10 +30,15 @@ public class SkinViewHolder extends RecyclerView.ViewHolder implements View.OnCl
             wallpaperView.setImageResource(WallpaperID.getWallpaperReference(wallpaper));
             int logOnDays = getLogOnDays(itemView.getContext());
             int numOfDaysRequired = getNumOfDaysRequired(itemView.getContext(), wallpaper);
+            System.out.println("LogOnDays:" + logOnDays);
+            System.out.println("numOfDays:" + numOfDaysRequired);
             if(logOnDays >= numOfDaysRequired) {
-                icon.setVisibility(View.GONE);
+                icon.setVisibility(View.INVISIBLE);
+            } else {
+                icon.setVisibility(View.VISIBLE);
             }
         }
+
     }
 
     public int getNumOfDaysRequired (Context context, WallpaperID wallpaperID) {
