@@ -3,9 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:title="@string/log"
-        android:id="@+id/menu_log" ></item>
-    <item
         android:title="@string/background_skin"
         android:id="@+id/menu_background" ></item>
     <item

@@ -270,14 +270,11 @@ public class DiceRolling extends AppCompatActivity implements SensorEventListene
                 vb.vibrate(stopVb);
                 se.playSound(muteSe, DiceRolling.this, R.raw.click, false);
                 if (item.getItemId() == R.id.menu_background) {
-                    // start background skin activity
-                    Toast.makeText(DiceRolling.this, "background skin", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(DiceRolling.this, SkinActivity.class);
+                    startActivity(intent);
                 } else if (item.getItemId() == R.id.menu_home) {
                     Intent intent = new Intent(DiceRolling.this, MainActivity.class);
                     startActivity(intent);
-                } else if (item.getItemId() == R.id.menu_log) {
-                    // start log activity
-                    Toast.makeText(DiceRolling.this, "log", Toast.LENGTH_SHORT).show();
                 } else if (item.getItemId() == R.id.menu_settings) {
                     Intent intent = new Intent(DiceRolling.this, Settings.class);
                     startActivity(intent);
