@@ -58,6 +58,7 @@ public class GameActivity extends AppCompatActivity {
                         Intent data = result.getData();
                         diceResult = data.getIntExtra("roll", 1);
                     } else {
+                        diceResult = 1;
                     }
                 });
 
@@ -73,6 +74,14 @@ public class GameActivity extends AppCompatActivity {
         abilBtn = findViewById(R.id.ablBtn);
         itmBtn = findViewById(R.id.itemBtn);
         runBtn = findViewById(R.id.runBtn);
+
+        String pName = getIntent().getStringExtra("name");
+        int str = ;
+        int dex = ;
+        int vit = ;
+        int wis = ;
+        int inte = ;
+        int spd = ;
 
         player = new Player("Test", 15, 0, 1);
         player.setArmorClass(12);
