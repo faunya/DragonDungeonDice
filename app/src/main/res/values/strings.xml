@@ -1,6 +1,22 @@
 <resources>
     <string name="app_name">Team20-FinalProject</string>
 
+    <string name="start_game">START GAME</string>
+    <string name="roll_a_die">ROLL A DIE</string>
+    <string name="settings">SETTINGS</string>
+    <string name="current_point">CURRENT POINT:</string>
+    <string name="menu">menu</string>
+    <string name="start_rolling">TAP OR SHAKE</string>
+    <string name="on">ON</string>
+    <string name="off">OFF</string>
+    <string name="sound_effect">SOUND EFFECT:</string>
+    <string name="vibration">VIBRATION:</string>
+    <string name="save">SAVE</string>
+    <string name="music">MUSIC:</string>
+    <string name="background_skin">BACKGROUND SKIN</string>
+    <string name="log">LOG</string>
+    <string name="home">HOME</string>
+
     <string name="atk">Attack</string>
     <string name="itm">Items</string>
     <string name="abl">Abilities</string>
@@ -21,6 +37,4 @@
     <string name="wis">WIS</string>
     <string name="inte">INT</string>
     <string name="spd">SPD</string>
-
-
 </resources>

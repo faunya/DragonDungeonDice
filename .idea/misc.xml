@@ -7,6 +7,21 @@
         <entry key="..\:/Users/Jay/AndroidStudioProjects/Team20FinalProject/app/src/main/res/layout/activity_create_player.xml" value="0.358695652173913" />
         <entry key="..\:/Users/Jay/AndroidStudioProjects/Team20FinalProject/app/src/main/res/layout/activity_game.xml" value="0.358695652173913" />
         <entry key="..\:/Users/Jay/AndroidStudioProjects/Team20FinalProject/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
+        <entry key="app/src/main/res/drawable-anydpi/ic_lock.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1465" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1465" />
+        <entry key="app/src/main/res/layout/act_log_layout.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_game.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_log.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_skin.xml" value="0.10377655029296876" />
+        <entry key="app/src/main/res/layout/item_wallpaper.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/unlock_msg_layout.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/wallpaper_layout.xml" value="0.165" />
+        <entry key="..\:/final_project/Team20-FinalProject/app/src/main/res/layout/activity_dice_rolling.xml" value="0.25" />
+        <entry key="..\:/final_project/Team20-FinalProject/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/final_project/Team20-FinalProject/app/src/main/res/layout/activity_settings.xml" value="0.27241139680333565" />
+        <entry key="..\:/final_project/Team20-FinalProject/app/src/main/res/menu/popup_menu.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>
