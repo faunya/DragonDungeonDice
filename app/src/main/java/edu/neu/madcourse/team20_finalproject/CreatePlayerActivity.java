@@ -105,13 +105,13 @@ public class CreatePlayerActivity extends AppCompatActivity {
             prefEdit.commit();
 
             Intent intent = new Intent(this, GameActivity.class);
-            intent.putExtra("str", strTV.getText());
-            intent.putExtra("dex", dexTV.getText());
-            intent.putExtra("vit", vitTV.getText());
-            intent.putExtra("wis", wisTV.getText());
-            intent.putExtra("int", intTV.getText());
-            intent.putExtra("spd", spdTV.getText());
-            intent.putExtra("name", charNameTV.getText());
+            intent.putExtra("str", Integer.parseInt(strTV.getText().toString()));
+            intent.putExtra("dex", Integer.parseInt(dexTV.getText().toString()));
+            intent.putExtra("vit", Integer.parseInt(vitTV.getText().toString()));
+            intent.putExtra("wis", Integer.parseInt(wisTV.getText().toString()));
+            intent.putExtra("int", Integer.parseInt(intTV.getText().toString()));
+            intent.putExtra("spd", Integer.parseInt(spdTV.getText().toString()));
+            intent.putExtra("name", charNameTV.getText().toString());
             startActivity(intent);
         }
     }

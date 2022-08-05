@@ -10,6 +10,11 @@ public class Room {
     private List<NPC> npcList;
     private List<String> desc;
 
+    public Room(List<NPC> npcList, List<String> desc) {
+        this.npcList = npcList;
+        this.desc = desc;
+    }
+
     public Room(List<NPC> npcList, List<Actions> actions, List<String> desc) {
         this.npcList = npcList;
         this.actions = actions;

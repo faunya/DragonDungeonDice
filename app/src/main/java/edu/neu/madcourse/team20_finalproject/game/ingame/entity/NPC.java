@@ -19,4 +19,8 @@ public class NPC extends Entity {
     public int getId() {
         return id;
     }
+
+    public List<String> getDialog() {
+        return dialog;
+    }
 }

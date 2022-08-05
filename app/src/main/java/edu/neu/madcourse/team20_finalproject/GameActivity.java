@@ -14,6 +14,8 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,28 +77,7 @@ public class GameActivity extends AppCompatActivity {
         itmBtn = findViewById(R.id.itemBtn);
         runBtn = findViewById(R.id.runBtn);
 
-        String pName = getIntent().getStringExtra("name");
-        int str = ;
-        int dex = ;
-        int vit = ;
-        int wis = ;
-        int inte = ;
-        int spd = ;
-
-        player = new Player("Test", 15, 0, 1);
-        player.setArmorClass(12);
-
-        List<NPC> npcList = new ArrayList<NPC>();
-        List<String> descList = new ArrayList<>();
-        descList.add("test room line 1");
-        descList.add("test room line 2");
-        npcList.add(new NPC("test enemy", 10, 0));
-        npcList.add(new NPC("test enemy2", 10, 0));
-        List<Actions> actionsList = new ArrayList<>();
-        actionsList.add(Actions.ATTACK);
-        curRoom = new Room(npcList, actionsList, descList);
-
-        turnSetup();
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         new Thread(new GameThread()).start();
     }
@@ -192,6 +173,62 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    private void saveData() {
+        saveRoom();
+        savePlayer();
+        saveEnemy();
+    }
+
+    private void savePlayer() {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("name",player.getName());
+        editor.putInt("maxHp",player.getMaxHp());
+        editor.putInt("maxSp",player.getMaxMp());
+        editor.putInt("hp",player.getHp());
+        editor.putInt("sp",player.getMp());
+        editor.putInt("str",player.getStr());
+        editor.putInt("dex",player.getDex());
+        editor.putInt("vit",player.getVit());
+        editor.putInt("wis",player.getWis());
+        editor.putInt("int",player.getInte());
+        editor.putInt("spd",player.getSpd());
+        editor.commit();
+    }
+
+    private void saveRoom() {
+        Gson gson = new Gson();
+        String descJSON = gson.toJson(curRoom.getDesc());
+        String npcJSOn = gson.toJson(curRoom.getNpcList());
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("roomNPC", npcJSOn);
+        editor.putString("roomDesc", descJSON);
+        editor.commit();
+    }
+
+    private void saveEnemy() {
+        Gson gson = new Gson();
+        NPC enemy = curRoom.getNpcList().get(0);
+        String dialogJSON = gson.toJson(enemy.getDialog());
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("eName",enemy.getName());
+        editor.putInt("eMaxHp",enemy.getMaxHp());
+        editor.putInt("eMaxSp",enemy.getMaxMp());
+        editor.putInt("eHp",enemy.getHp());
+        editor.putInt("eSp",enemy.getMp());
+        editor.putInt("eStr",enemy.getStr());
+        editor.putInt("eDex",enemy.getDex());
+        editor.putInt("eVit",enemy.getVit());
+        editor.putInt("eWis",enemy.getWis());
+        editor.putInt("eInt",enemy.getInte());
+        editor.putInt("eSpd",enemy.getSpd());
+    }
+
+
+
+
+
     private void notifyRoomChange() {
         for (String desc : curRoom.getDesc()) {
             actLog.add(new Message(System.currentTimeMillis(), desc));
@@ -227,6 +264,34 @@ public class GameActivity extends AppCompatActivity {
 
         @Override
         public void run() {
+            if (sharedPref.getBoolean("firstStart", false)) {
+                Intent intent = getIntent();
+                String pName = intent.getStringExtra("name");
+                int maxHp = intent.getIntExtra("str", 1);
+                int maxSp = intent.getIntExtra("maxSp", 1);
+                int str = intent.getIntExtra("str", 1);
+                int dex = intent.getIntExtra("dex", 1);
+                int vit = intent.getIntExtra("vit", 1);
+                int wis = intent.getIntExtra("wis", 1);
+                int inte = intent.getIntExtra("int", 1);
+                int spd = intent.getIntExtra("spd", 1);
+
+                player = new Player("Test", 15, 0, 1);
+                player.setArmorClass(12);
+
+                List<NPC> npcList = new ArrayList<NPC>();
+                List<String> descList = new ArrayList<>();
+                descList.add("test room line 1");
+                descList.add("test room line 2");
+                npcList.add(new NPC("test enemy", 10, 0));
+                npcList.add(new NPC("test enemy2", 10, 0));
+                List<Actions> actionsList = new ArrayList<>();
+                actionsList.add(Actions.ATTACK);
+                curRoom = new Room(npcList, actionsList, descList);
+            } else {
+            }
+
+            turnSetup();
             notifyRoomChange();
 
             while (true) { //can change to variable so you can pause game later
