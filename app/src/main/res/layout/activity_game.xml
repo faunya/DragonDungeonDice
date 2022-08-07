@@ -8,13 +8,15 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/actionLog"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="400dp"
+        android:layout_width="318dp"
+        android:layout_height="240dp"
+        android:layout_marginTop="250dp"
         app:layout_constraintBottom_toTopOf="@+id/attackBtn"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.695" />
 
     <Button
         android:id="@+id/ablBtn"
@@ -65,12 +67,13 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="241dp"
+        android:layout_height="203dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_launcher_background"
-        tools:layout_editor_absoluteY="184dp" />
+        tools:layout_editor_absoluteY="91dp" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -78,8 +81,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.063"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="301dp" />
+        tools:layout_editor_absoluteY="29dp" />
 
     <ProgressBar
         android:id="@+id/progressBar2"
@@ -87,6 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.068"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="589dp" />
+        tools:layout_editor_absoluteY="63dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
