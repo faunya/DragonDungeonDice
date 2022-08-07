@@ -99,11 +99,6 @@ public class CreatePlayerActivity extends AppCompatActivity {
         || charNameTV.getText().toString().equals("")) {
             Snackbar snackbar;
         } else {
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-            SharedPreferences.Editor prefEdit = sharedPref.edit();
-            prefEdit.putBoolean("firstStart", false);
-            prefEdit.commit();
-
             Intent intent = new Intent(this, GameActivity.class);
             intent.putExtra("str", Integer.parseInt(strTV.getText().toString()));
             intent.putExtra("dex", Integer.parseInt(dexTV.getText().toString()));

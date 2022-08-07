@@ -10,6 +10,10 @@ public class Room {
     private List<NPC> npcList;
     private List<String> desc;
 
+    public Room() {
+
+    }
+
     public Room(List<NPC> npcList, List<String> desc) {
         this.npcList = npcList;
         this.desc = desc;
@@ -31,5 +35,13 @@ public class Room {
 
     public List<String> getDesc() {
         return desc;
+    }
+
+    public void setNpcList(List<NPC> npcList) {
+        this.npcList = npcList;
+    }
+
+    public void setDesc(List<String> desc) {
+        this.desc = desc;
     }
 }

@@ -1,7 +1,5 @@
 package edu.neu.madcourse.team20_finalproject.game.ingame.entity;
 
-import android.os.Parcelable;
-
 import edu.neu.madcourse.team20_finalproject.game.ingame.item.Armor;
 import edu.neu.madcourse.team20_finalproject.game.ingame.item.Weapon;
 
@@ -15,7 +13,7 @@ public abstract class Entity {
     protected int hp; //health
 
     protected int maxMp;
-    protected int mp; //mana
+    protected int sp; //mana
 
     protected int str;
     protected int dex;
@@ -40,7 +38,7 @@ public abstract class Entity {
         this.hp = maxHp;
 
         this.maxMp = maxMp;
-        this.mp = maxMp;
+        this.sp = maxMp;
     }
 
     /**
@@ -95,8 +93,8 @@ public abstract class Entity {
         return maxHp;
     }
 
-    public int getMp() {
-        return mp;
+    public int getSp() {
+        return sp;
     }
 
     public int getMaxMp() {
@@ -133,6 +131,14 @@ public abstract class Entity {
 
     public void setMaxMp(int maxMp) {
         this.maxMp = maxMp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public void setSp(int sp) {
+        this.sp = sp;
     }
 
     public void setStr(int str) {
