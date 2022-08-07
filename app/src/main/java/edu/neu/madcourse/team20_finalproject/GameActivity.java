@@ -31,6 +31,7 @@ import edu.neu.madcourse.team20_finalproject.gameRecycler.ActLogViewAdapter;
 
 public class GameActivity extends AppCompatActivity {
     private SharedPreferences sharedPref;
+    private int roomNum;
 
     private ActivityResultLauncher rollResultLauncher;
     private ActLogViewAdapter actLogAdapter;
@@ -189,7 +190,7 @@ public class GameActivity extends AppCompatActivity {
         editor.putString("name",player.getName());
         editor.putInt("pAc",player.getArmorClass());
         editor.putInt("maxHp",player.getMaxHp());
-        editor.putInt("maxSp",player.getMaxMp());
+        editor.putInt("maxSp",player.getMaxSp());
         editor.putInt("hp",player.getHp());
         editor.putInt("sp",player.getSp());
         editor.putInt("str",player.getStr());
@@ -254,7 +255,7 @@ public class GameActivity extends AppCompatActivity {
         editor.putString("eName",enemy.getName());
         editor.putInt("eAc",enemy.getArmorClass());
         editor.putInt("eMaxHp",enemy.getMaxHp());
-        editor.putInt("eMaxSp",enemy.getMaxMp());
+        editor.putInt("eMaxSp",enemy.getMaxSp());
         editor.putInt("eHp",enemy.getHp());
         editor.putInt("eSp",enemy.getSp());
         editor.putInt("eStr",enemy.getStr());
@@ -295,6 +296,28 @@ public class GameActivity extends AppCompatActivity {
         enemy.setDialog(new ArrayList<String>(sharedPref.getStringSet("eDialog",new HashSet<>())));
 
         return enemy;
+    }
+
+    private void createPlayer() {
+        Intent intent = getIntent();
+        String pName = intent.getStringExtra("name");
+        int maxHp = intent.getIntExtra("str", 1);
+        int maxSp = intent.getIntExtra("maxSp", 1);
+        int str = intent.getIntExtra("str", 1);
+        int dex = intent.getIntExtra("dex", 1);
+        int vit = intent.getIntExtra("vit", 1);
+        int wis = intent.getIntExtra("wis", 1);
+        int inte = intent.getIntExtra("int", 1);
+        int spd = intent.getIntExtra("spd", 1);
+
+        player = new Player(pName, maxHp, maxSp, 1);
+        player.setArmorClass(12);
+        player.setStr(str);
+        player.setDex(dex);
+        player.setVit(vit);
+        player.setWis(wis);
+        player.setInte(inte);
+        player.setSpd(spd);
     }
 
     private void notifyRoomChange() {
@@ -346,27 +369,8 @@ public class GameActivity extends AppCompatActivity {
         @Override
         public void run() {
             if (sharedPref.getBoolean("firstStart", false)) {
-                Intent intent = getIntent();
-                String pName = intent.getStringExtra("name");
-                int maxHp = intent.getIntExtra("str", 1);
-                int maxSp = intent.getIntExtra("maxSp", 1);
-                int str = intent.getIntExtra("str", 1);
-                int dex = intent.getIntExtra("dex", 1);
-                int vit = intent.getIntExtra("vit", 1);
-                int wis = intent.getIntExtra("wis", 1);
-                int inte = intent.getIntExtra("int", 1);
-                int spd = intent.getIntExtra("spd", 1);
-
-                player = new Player(pName, maxHp, maxSp, 1);
-                player.setArmorClass(12);
-                player.setStr(str);
-                player.setDex(dex);
-                player.setVit(vit);
-                player.setWis(wis);
-                player.setInte(inte);
-                player.setSpd(spd);
-
-                //curRoom =
+                createPlayer();
+                curRoom = Room.room1();
 
                 SharedPreferences.Editor prefEdit = sharedPref.edit();
                 prefEdit.putBoolean("firstStart", false);
@@ -378,6 +382,7 @@ public class GameActivity extends AppCompatActivity {
             } else {
                 loadPlayer();
                 loadRoom();
+                notifyRoomChange();
             }
 
             turnSetup();
@@ -386,10 +391,15 @@ public class GameActivity extends AppCompatActivity {
             while (!paused) { //can change to variable so you can pause game later
                 if (!turnList.get(turn).equals(player)) {
                     NPC npc = (NPC) turnList.get(turn);
+
+                    if (npc.isDead()) {
+
+                    }
                     sleepThread(500);
-                    System.out.println(npc.getName() + " turn");
-                    actLog.add(new Message(System.currentTimeMillis(), npc.getName() + " attacks"));
+                    String text = npc.behavior(player, player.getArmorClass());
+                    actLog.add(new Message(System.currentTimeMillis(), text));
                     actLogAdapter.notifyItemInserted(actLog.size() - 1);
+
                     nextTurn();
                 }
             }
