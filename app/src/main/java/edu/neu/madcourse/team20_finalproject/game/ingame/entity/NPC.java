@@ -1,7 +1,5 @@
 package edu.neu.madcourse.team20_finalproject.game.ingame.entity;
 
-import android.os.Parcel;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -84,7 +82,7 @@ public class NPC extends Entity {
         goblin.setInte(10);
         goblin.setSpd(12);
 
-        goblin.setImg(R.drawable.m6);
+        goblin.setImg(R.drawable.m5);
 
         return goblin;
     }

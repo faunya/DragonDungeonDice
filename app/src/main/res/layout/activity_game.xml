@@ -4,20 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/r1"
+    android:background="@drawable/r0"
     android:backgroundTintMode="add"
     tools:context=".GameActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/actionLog"
-        android:layout_width="303dp"
-        android:layout_height="209dp"
-        android:layout_marginTop="250dp"
+        android:layout_width="245dp"
+        android:layout_height="287dp"
+        android:layout_marginTop="240dp"
+        android:background="@drawable/log_frame"
+        android:backgroundTint="@color/cardview_dark_background"
         app:layout_constraintBottom_toTopOf="@+id/attackBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25" />
 
     <Button
         android:id="@+id/ablBtn"
@@ -48,11 +51,11 @@
         android:layout_height="wrap_content"
         android:onClick="onItem"
         android:text="@string/itm"
-        app:layout_constraintBottom_toBottomOf="@+id/runBtn"
-        app:layout_constraintEnd_toEndOf="@+id/attackBtn"
-        app:layout_constraintStart_toStartOf="@+id/attackBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/runBtn"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/attackBtn"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.283" />
 
     <Button
         android:id="@+id/runBtn"
@@ -61,30 +64,31 @@
         android:onClick="onRun"
         android:text="@string/run"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/ablBtn"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/ablBtn"
-        app:layout_constraintTop_toBottomOf="@+id/ablBtn" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.567"
+        app:layout_constraintStart_toEndOf="@id/itemBtn"
+        app:layout_constraintTop_toBottomOf="@id/ablBtn" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="139dp"
-        android:layout_height="94dp"
+        android:layout_width="128dp"
+        android:layout_height="108dp"
         android:layout_marginBottom="438dp"
-        android:background="@drawable/npc_background_color"
+        android:background="#55DCD0D0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBar2"
-        app:srcCompat="@drawable/m8" />
+        app:layout_constraintVertical_bias="0.1"
+        app:srcCompat="@drawable/m0" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="71dp"
-        android:layout_marginBottom="21dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintBottom_toTopOf="@+id/progressBar2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.057"
@@ -96,8 +100,7 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="74dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.057"
         app:layout_constraintStart_toStartOf="parent"
@@ -105,10 +108,10 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="191dp"
-        android:layout_height="32dp"
+        android:layout_width="185dp"
+        android:layout_height="37dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/dnd_title" />
