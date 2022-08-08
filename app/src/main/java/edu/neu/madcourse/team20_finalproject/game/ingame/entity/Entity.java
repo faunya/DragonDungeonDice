@@ -1,11 +1,11 @@
 package edu.neu.madcourse.team20_finalproject.game.ingame.entity;
 
-import android.os.Parcelable;
-
 import edu.neu.madcourse.team20_finalproject.game.ingame.item.Armor;
 import edu.neu.madcourse.team20_finalproject.game.ingame.item.Weapon;
 
 public abstract class Entity {
+    protected boolean blocking;
+
     protected String name;
 
     //stats
@@ -14,8 +14,8 @@ public abstract class Entity {
     protected int maxHp;
     protected int hp; //health
 
-    protected int maxMp;
-    protected int mp; //mana
+    protected int maxSp;
+    protected int sp; //mana
 
     protected int str;
     protected int dex;
@@ -34,13 +34,15 @@ public abstract class Entity {
     protected Armor leggings;
     protected Armor boots;
 
-    public Entity(String name, int maxHp, int maxMp) {
+    public Entity(String name, int maxHp, int maxSp) {
         this.name = name;
         this.maxHp = maxHp;
         this.hp = maxHp;
 
-        this.maxMp = maxMp;
-        this.mp = maxMp;
+        this.maxSp = maxSp;
+        this.sp = maxSp;
+
+        this.blocking = false;
     }
 
     /**
@@ -49,9 +51,13 @@ public abstract class Entity {
      */
     public void attack(Entity target, int dmg) {
         target.takeDmg(dmg);
+
     }
 
     public void takeDmg(int dmg) {
+        if (blocking) {
+            dmg = Math.floorDiv(dmg,3);
+        }
         hp -= dmg;
     }
 
@@ -74,6 +80,10 @@ public abstract class Entity {
     }
 
     // -------------------------------setters and getters -----------------------------------------
+    public void setBlocking(boolean block) {
+        this.blocking = block;
+    }
+
     public String getName() {
         return name;
     }
@@ -95,12 +105,12 @@ public abstract class Entity {
         return maxHp;
     }
 
-    public int getMp() {
-        return mp;
+    public int getSp() {
+        return sp;
     }
 
-    public int getMaxMp() {
-        return maxMp;
+    public int getMaxSp() {
+        return maxSp;
     }
 
     public int getStr() {
@@ -131,8 +141,22 @@ public abstract class Entity {
         this.maxHp = maxHp;
     }
 
-    public void setMaxMp(int maxMp) {
-        this.maxMp = maxMp;
+    public void setMaxSp(int maxSp) {
+        this.maxSp = maxSp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+        if (this.hp > this.maxHp) {
+            this.hp = this.maxHp;
+        }
+    }
+
+    public void setSp(int sp) {
+        this.sp = sp;
+        if (this.sp > maxSp) {
+            this.sp = maxSp;
+        }
     }
 
     public void setStr(int str) {

@@ -15,8 +15,10 @@ import android.view.View;
 import android.widget.Button;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import edu.neu.madcourse.team20_finalproject.game.ingame.Room;
@@ -29,6 +31,7 @@ import edu.neu.madcourse.team20_finalproject.gameRecycler.ActLogViewAdapter;
 
 public class GameActivity extends AppCompatActivity {
     private SharedPreferences sharedPref;
+    private int roomNum;
 
     private ActivityResultLauncher rollResultLauncher;
     private ActLogViewAdapter actLogAdapter;
@@ -48,11 +51,14 @@ public class GameActivity extends AppCompatActivity {
     private Button runBtn;
 
     private int diceResult;
+    private boolean paused;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        paused = false;
 
         rollResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -82,31 +88,11 @@ public class GameActivity extends AppCompatActivity {
         new Thread(new GameThread()).start();
     }
 
-    /*
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor prefEdit = sharedPref.edit();
-
-        boolean firstStart = sharedPref.getBoolean("firstStart", true);
-        if (firstStart) {
-            prefEdit.putBoolean("firstStart", false);
-            prefEdit.commit();
-            Intent intent = new Intent(this, CreatePlayerActivity.class);
-            rollResultLauncher.launch(intent);
-        }
+    protected void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        saveData();
     }
-
-     */
-/*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, String strdata, Bundle bundle) {
-
-    }
-
- */
 
     private void actionSetup() {
         List<Actions> actList = curRoom.getActions();
@@ -129,7 +115,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void onAttack(View view) {
-        if (turnList.get(turn).equals(player)) {
+        if (turnList.get(turn).equals(player) && !paused) {
             int dmg = 0;
             int ac = curRoom.getNpcList().get(0).getArmorClass();
             //Intent intent = new Intent(this, DiceRollScreen.activity);
@@ -142,7 +128,6 @@ public class GameActivity extends AppCompatActivity {
             actLog.add(new Message(System.currentTimeMillis(),
                     player.getName() + " attacked " + curRoom.getNpcList().get(0).getName()
                             + " for " + dmg + "dmg" ));
-            System.out.println(actLog.size());
             actLogAdapter.notifyItemInserted(actLog.size() - 1);
 
             nextTurn();
@@ -150,20 +135,20 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void onAbility(View view) {
-        if (turnList.get(turn).equals(player)){
+        if (turnList.get(turn).equals(player) && !paused){
 
         }
     }
 
     public void onItem(View view) {
-        if (turnList.get(turn).equals(player)){
+        if (turnList.get(turn).equals(player) && !paused){
 
         }
         //makes small popup appear with list of items
     }
 
     public void onRun(View view) {
-        if (turnList.get(turn).equals(player)){
+        if (turnList.get(turn).equals(player) && !paused){
 
         }
 
@@ -182,10 +167,11 @@ public class GameActivity extends AppCompatActivity {
     private void savePlayer() {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("name",player.getName());
+        editor.putInt("pAc",player.getArmorClass());
         editor.putInt("maxHp",player.getMaxHp());
-        editor.putInt("maxSp",player.getMaxMp());
+        editor.putInt("maxSp",player.getMaxSp());
         editor.putInt("hp",player.getHp());
-        editor.putInt("sp",player.getMp());
+        editor.putInt("sp",player.getSp());
         editor.putInt("str",player.getStr());
         editor.putInt("dex",player.getDex());
         editor.putInt("vit",player.getVit());
@@ -195,52 +181,151 @@ public class GameActivity extends AppCompatActivity {
         editor.commit();
     }
 
+    private void loadPlayer() {
+        String name = sharedPref.getString("pName", "Player");
+        int maxHp = sharedPref.getInt("maxHp",10);
+        int maxSp = sharedPref.getInt("maxSp",5);
+        int ac = sharedPref.getInt("pAc",12);
+        int hp = sharedPref.getInt("hp",10);
+        int sp = sharedPref.getInt("sp",5);
+        int str = sharedPref.getInt("str",1);
+        int dex = sharedPref.getInt("dex",1);
+        int vit = sharedPref.getInt("vit",1);
+        int wis = sharedPref.getInt("wis",1);
+        int inte = sharedPref.getInt("int",1);
+        int spd = sharedPref.getInt("spd",1);
+
+        player = new Player(name, maxHp, maxSp, 1);
+        player.setArmorClass(ac);
+        player.setHp(hp);
+        player.setSp(sp);
+        player.setStr(str);
+        player.setDex(dex);
+        player.setVit(vit);
+        player.setWis(wis);
+        player.setInte(inte);
+        player.setSpd(spd);
+    }
+
     private void saveRoom() {
         Gson gson = new Gson();
         String descJSON = gson.toJson(curRoom.getDesc());
-        String npcJSOn = gson.toJson(curRoom.getNpcList());
+        //String npcJSOn = gson.toJson(curRoom.getNpcList());
 
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("roomNPC", npcJSOn);
+        //editor.putString("roomNPC", npcJSOn);
         editor.putString("roomDesc", descJSON);
         editor.commit();
     }
 
-    private void saveEnemy() {
+    private void loadRoom() {
         Gson gson = new Gson();
+
+        List<String> descList = gson.fromJson(sharedPref.getString("roomDesc",""), new TypeToken<ArrayList<String>>(){}.getType());
+        List<NPC> npcList = new ArrayList<NPC>();
+        npcList.add(loadEnemy());
+        curRoom = new Room(npcList, descList);
+    }
+
+    private void saveEnemy() {
         NPC enemy = curRoom.getNpcList().get(0);
-        String dialogJSON = gson.toJson(enemy.getDialog());
 
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("eName",enemy.getName());
+        editor.putInt("eAc",enemy.getArmorClass());
         editor.putInt("eMaxHp",enemy.getMaxHp());
-        editor.putInt("eMaxSp",enemy.getMaxMp());
+        editor.putInt("eMaxSp",enemy.getMaxSp());
         editor.putInt("eHp",enemy.getHp());
-        editor.putInt("eSp",enemy.getMp());
+        editor.putInt("eSp",enemy.getSp());
         editor.putInt("eStr",enemy.getStr());
         editor.putInt("eDex",enemy.getDex());
         editor.putInt("eVit",enemy.getVit());
         editor.putInt("eWis",enemy.getWis());
         editor.putInt("eInt",enemy.getInte());
         editor.putInt("eSpd",enemy.getSpd());
+
+        editor.putStringSet("eDialog", new HashSet<String>(enemy.getDialog()));
     }
 
+    private NPC loadEnemy() {
+        String name = sharedPref.getString("eName", "Monster");
+        int ac = sharedPref.getInt("eAc",8);
+        int maxHp = sharedPref.getInt("maxHp",10);
+        int maxSp = sharedPref.getInt("maxSp",5);
+        int hp = sharedPref.getInt("hp",10);
+        int sp = sharedPref.getInt("sp",5);
+        int str = sharedPref.getInt("str",1);
+        int dex = sharedPref.getInt("dex",1);
+        int vit = sharedPref.getInt("vit",1);
+        int wis = sharedPref.getInt("wis",1);
+        int inte = sharedPref.getInt("int",1);
+        int spd = sharedPref.getInt("spd",1);
 
+        NPC enemy = new NPC(name, maxHp, maxSp);
+        enemy.setHp(hp);
+        enemy.setSp(sp);
+        enemy.setArmorClass(ac);
+        enemy.setStr(str);
+        enemy.setDex(dex);
+        enemy.setVit(vit);
+        enemy.setWis(wis);
+        enemy.setInte(inte);
+        enemy.setSpd(spd);
 
+        enemy.setDialog(new ArrayList<String>(sharedPref.getStringSet("eDialog",new HashSet<>())));
 
+        return enemy;
+    }
+
+    private void createPlayer() {
+        Intent intent = getIntent();
+        String pName = intent.getStringExtra("name");
+        int maxHp = intent.getIntExtra("str", 1);
+        int maxSp = intent.getIntExtra("maxSp", 1);
+        int str = intent.getIntExtra("str", 1);
+        int dex = intent.getIntExtra("dex", 1);
+        int vit = intent.getIntExtra("vit", 1);
+        int wis = intent.getIntExtra("wis", 1);
+        int inte = intent.getIntExtra("int", 1);
+        int spd = intent.getIntExtra("spd", 1);
+
+        player = new Player(pName, maxHp, maxSp, 1);
+        player.setArmorClass(12);
+        player.setStr(str);
+        player.setDex(dex);
+        player.setVit(vit);
+        player.setWis(wis);
+        player.setInte(inte);
+        player.setSpd(spd);
+    }
 
     private void notifyRoomChange() {
+        paused = true;
         for (String desc : curRoom.getDesc()) {
             actLog.add(new Message(System.currentTimeMillis(), desc));
+            actLogAdapter.notifyItemInserted(actLog.size() - 1);
             sleepThread(500);
+
+            actLogRV.post(new Runnable() {
+                @Override
+                public void run() {
+                    actLogRV.scrollToPosition(actLog.size() - 1);
+                }
+            });
         }
+        paused = false;
     }
 
     private void turnSetup() {
         turnList = new ArrayList<Entity>();
-        turnList.add(player);
-        for (Entity npc : curRoom.getNpcList()) {
-            turnList.add(npc);
+        Entity enemy = curRoom.getNpcList().get(0);
+
+        if (player.getSpd() > enemy.getSpd()) {
+            turnList.add(player);
+            turnList.add(enemy);
+        } else {
+            turnList.add(enemy);
+            turnList.add(player);
         }
     }
 
@@ -264,43 +349,50 @@ public class GameActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            if (sharedPref.getBoolean("firstStart", false)) {
-                Intent intent = getIntent();
-                String pName = intent.getStringExtra("name");
-                int maxHp = intent.getIntExtra("str", 1);
-                int maxSp = intent.getIntExtra("maxSp", 1);
-                int str = intent.getIntExtra("str", 1);
-                int dex = intent.getIntExtra("dex", 1);
-                int vit = intent.getIntExtra("vit", 1);
-                int wis = intent.getIntExtra("wis", 1);
-                int inte = intent.getIntExtra("int", 1);
-                int spd = intent.getIntExtra("spd", 1);
+            if (sharedPref.getBoolean("firstStart", true)) {
+                createPlayer();
+                curRoom = Room.room1();
 
-                player = new Player("Test", 15, 0, 1);
-                player.setArmorClass(12);
+                SharedPreferences.Editor prefEdit = sharedPref.edit();
+                prefEdit.putBoolean("firstStart", false);
+                prefEdit.commit();
 
-                List<NPC> npcList = new ArrayList<NPC>();
-                List<String> descList = new ArrayList<>();
-                descList.add("test room line 1");
-                descList.add("test room line 2");
-                npcList.add(new NPC("test enemy", 10, 0));
-                npcList.add(new NPC("test enemy2", 10, 0));
-                List<Actions> actionsList = new ArrayList<>();
-                actionsList.add(Actions.ATTACK);
-                curRoom = new Room(npcList, actionsList, descList);
+                saveData();
             } else {
+                loadPlayer();
+                loadRoom();
             }
 
             turnSetup();
             notifyRoomChange();
 
-            while (true) { //can change to variable so you can pause game later
-                if (!turnList.get(turn).equals(player)) {
-                    NPC npc = (NPC) turnList.get(turn);
+            while (!paused) { //can change to variable so you can pause game later
+                Entity eTurn = turnList.get(turn);
+
+                if (!eTurn.equals(player)) {
+
+                    System.out.println("eturn " + eTurn);
+                    NPC npc = (NPC) eTurn;
+
+                    System.out.println("npc " + npc);
+                    System.out.println(npc.getName());
+                    System.out.println(player.getName());
+
+
+                    if (npc.isDead()) {
+
+                    }
                     sleepThread(500);
-                    System.out.println(npc.getName() + " turn");
-                    actLog.add(new Message(System.currentTimeMillis(), npc.getName() + " attacks"));
+                    String text = npc.behavior(player, player.getArmorClass());
+                    actLog.add(new Message(System.currentTimeMillis(), text));
                     actLogAdapter.notifyItemInserted(actLog.size() - 1);
+                    actLogRV.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            actLogRV.scrollToPosition(actLog.size() - 1);
+                        }
+                    });
+
                     nextTurn();
                 }
             }

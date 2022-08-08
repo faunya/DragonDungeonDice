@@ -50,6 +50,11 @@ public class CreatePlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_player);
 
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("firstStart", true);
+        editor.commit();
+
         rollResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
@@ -94,16 +99,11 @@ public class CreatePlayerActivity extends AppCompatActivity {
 
         System.out.println("char name" + charNameTV.getText());
         if (strTV.getText().toString().equals("-") || dexTV.getText().toString().equals("-")
-        || vitTV.getText().toString().equals("-") || wisTV.getText().toString().equals("-")
-        || intTV.getText().toString().equals("-") || spdTV.getText().toString().equals("-")
-        || charNameTV.getText().toString().equals("")) {
+                || vitTV.getText().toString().equals("-") || wisTV.getText().toString().equals("-")
+                || intTV.getText().toString().equals("-") || spdTV.getText().toString().equals("-")
+                || charNameTV.getText().toString().equals("")) {
             Snackbar snackbar;
         } else {
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-            SharedPreferences.Editor prefEdit = sharedPref.edit();
-            prefEdit.putBoolean("firstStart", false);
-            prefEdit.commit();
-
             Intent intent = new Intent(this, GameActivity.class);
             intent.putExtra("str", Integer.parseInt(strTV.getText().toString()));
             intent.putExtra("dex", Integer.parseInt(dexTV.getText().toString()));
@@ -142,15 +142,14 @@ public class CreatePlayerActivity extends AppCompatActivity {
 
     private void onRoll(String stat) {
         selected = stat;
-
         diceResult = 10;
-        setStat();
         /*
-        Intent intent = new Intent();//(this, diceRollingScreen);
-        intent.putExtra("stat", stat);
+        Intent intent = new Intent(this, DiceRolling.class);
         rollResultLauncher.launch(intent);
 
          */
+
+        setStat();
     }
 
     private void setStat() {
