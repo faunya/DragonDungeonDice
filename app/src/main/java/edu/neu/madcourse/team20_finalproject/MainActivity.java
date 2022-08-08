@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Toast;
 
@@ -54,9 +55,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startGame(View view) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         se.playSound(muteSe, this, R.raw.click, false);
         vb.vibrate(stopVb);
-        Intent intent = new Intent(MainActivity.this, GameActivity.class);
+        Intent intent;
+        if (sharedPref.getBoolean("firstStart", true)) {
+            intent = new Intent(MainActivity.this, CreatePlayerActivity.class);
+        } else {
+            System.out.println("not first");
+            System.out.println(sharedPref.getBoolean("firstStart",true));
+            intent = new Intent(this, GameActivity.class);
+        }
         startActivity(intent);
     }
 

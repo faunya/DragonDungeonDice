@@ -254,6 +254,13 @@ public class DiceRolling extends AppCompatActivity implements SensorEventListene
 
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        Intent data = new Intent();
+        //data.putExtra()
+    }
+
     public void menu(View view) {
         vb.vibrate(stopVb);
         se.playSound(muteSe, this, R.raw.click, false);

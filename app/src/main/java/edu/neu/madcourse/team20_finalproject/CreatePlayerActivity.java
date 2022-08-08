@@ -138,14 +138,10 @@ public class CreatePlayerActivity extends AppCompatActivity {
     private void onRoll(String stat) {
         selected = stat;
 
-        diceResult = 10;
-        setStat();
-        /*
-        Intent intent = new Intent();//(this, diceRollingScreen);
-        intent.putExtra("stat", stat);
+        Intent intent = new Intent(this, DiceRolling.class);
         rollResultLauncher.launch(intent);
 
-         */
+        setStat();
     }
 
     private void setStat() {

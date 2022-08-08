@@ -88,32 +88,6 @@ public class GameActivity extends AppCompatActivity {
         new Thread(new GameThread()).start();
     }
 
-    /*
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor prefEdit = sharedPref.edit();
-
-        boolean firstStart = sharedPref.getBoolean("firstStart", true);
-        if (firstStart) {
-            prefEdit.putBoolean("firstStart", false);
-            prefEdit.commit();
-            Intent intent = new Intent(this, CreatePlayerActivity.class);
-            rollResultLauncher.launch(intent);
-        }
-    }
-
-     */
-/*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, String strdata, Bundle bundle) {
-
-    }
-
- */
-
     private void actionSetup() {
         List<Actions> actList = curRoom.getActions();
         List<Button> buttonList = new ArrayList<>();
@@ -368,7 +342,7 @@ public class GameActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            if (sharedPref.getBoolean("firstStart", false)) {
+            if (sharedPref.getBoolean("firstStart", true)) {
                 createPlayer();
                 curRoom = Room.room1();
 
@@ -376,9 +350,7 @@ public class GameActivity extends AppCompatActivity {
                 prefEdit.putBoolean("firstStart", false);
                 prefEdit.commit();
 
-                savePlayer();
-                saveRoom();
-                saveEnemy();
+                saveData();
             } else {
                 loadPlayer();
                 loadRoom();
