@@ -16,10 +16,14 @@
         android:theme="@style/Theme.Team20FinalProject"
         tools:targetApi="31">
         <activity
+            android:name=".Achievements"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+        <activity
             android:name=".Settings"
-            android:theme="@style/SettingsTheme"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/SettingsTheme" />
         <activity
             android:name=".DiceRolling"
             android:exported="false"
@@ -37,11 +41,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".SkinActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
 
         <meta-data
             android:name="preloaded_fonts"

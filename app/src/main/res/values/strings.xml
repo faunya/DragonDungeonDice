@@ -37,4 +37,6 @@
     <string name="wis">WIS</string>
     <string name="inte">INT</string>
     <string name="spd">SPD</string>
+    <string name="resume">RESUME</string>
+    <string name="new_game">NEW GAME</string>
 </resources>
