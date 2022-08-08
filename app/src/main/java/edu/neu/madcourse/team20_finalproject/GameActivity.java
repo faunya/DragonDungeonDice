@@ -58,7 +58,7 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        paused = false;
+        paused = true;
 
         rollResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -141,7 +141,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void onItem(View view) {
-        if (turnList.get(turn).equals(player) && !paused){
+        if (turnList.get(turn).equals(player) && !paused) {
 
         }
         //makes small popup appear with list of items
@@ -306,12 +306,7 @@ public class GameActivity extends AppCompatActivity {
             actLogAdapter.notifyItemInserted(actLog.size() - 1);
             sleepThread(500);
 
-            actLogRV.post(new Runnable() {
-                @Override
-                public void run() {
-                    actLogRV.scrollToPosition(actLog.size() - 1);
-                }
-            });
+            actLogScroll();
         }
         paused = false;
     }
@@ -336,6 +331,15 @@ public class GameActivity extends AppCompatActivity {
         } else {
             ++turn;
         }
+    }
+
+    private void actLogScroll() {
+        actLogRV.post(new Runnable() {
+            @Override
+            public void run() {
+                actLogRV.scrollToPosition(actLog.size() - 1);
+            }
+        });
     }
 
     private void sleepThread(long time) {
@@ -378,20 +382,15 @@ public class GameActivity extends AppCompatActivity {
                     System.out.println(npc.getName());
                     System.out.println(player.getName());
 
-
                     if (npc.isDead()) {
 
                     }
+
                     sleepThread(500);
                     String text = npc.behavior(player, player.getArmorClass());
                     actLog.add(new Message(System.currentTimeMillis(), text));
                     actLogAdapter.notifyItemInserted(actLog.size() - 1);
-                    actLogRV.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            actLogRV.scrollToPosition(actLog.size() - 1);
-                        }
-                    });
+                    actLogScroll();
 
                     nextTurn();
                 }

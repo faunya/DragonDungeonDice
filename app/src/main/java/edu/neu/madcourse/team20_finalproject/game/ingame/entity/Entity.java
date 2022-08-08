@@ -24,7 +24,6 @@ public abstract class Entity {
     protected int wis;
     protected int spd;
 
-
     //equips
     protected Weapon main;
     protected Weapon offhand;
@@ -47,7 +46,7 @@ public abstract class Entity {
 
     /**
      * @param target to attack
-     * @param dmg target takes
+     * @param dmg    target takes
      */
     public void attack(Entity target, int dmg) {
         target.takeDmg(dmg);
@@ -56,7 +55,7 @@ public abstract class Entity {
 
     public void takeDmg(int dmg) {
         if (blocking) {
-            dmg = Math.floorDiv(dmg,3);
+            dmg = Math.floorDiv(dmg, 3);
         }
         hp -= dmg;
     }
