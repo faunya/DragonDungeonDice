@@ -21,13 +21,20 @@ public class Player extends Entity {
         this.xp = 0;
     }
 
-    public void addXP(int gain) {
+    /**
+     *
+     * @param gain
+     * @return true if leveled up, false if didn't level up
+     */
+    public boolean addXP(int gain) {
         xp += gain;
 
         if (xp >= (Math.pow((lv + 1)/3, 2) * 100)) {
             int nextLv = lv +1 ;
             lv = nextLv;
+            return true;
         }
+        return false;
     }
 
     public int getLv() {

@@ -12,9 +12,19 @@ public class NPC extends Entity {
     protected int id;
     protected int img;
 
+    protected int xp;
+
     public NPC(String name, int maxHp, int maxMp) {
         super(name, maxHp, maxMp);
         rand = new Random();
+    }
+
+    public int getXp() {
+        return xp;
+    }
+
+    public void setXp(int xp) {
+        this.xp = xp;
     }
 
     public void setId(int id) {
@@ -46,6 +56,7 @@ public class NPC extends Entity {
     }
 
     public String regAttack(Entity target, int ac) {
+        setSp(sp + 1);
         int hit = rand.nextInt(20) + 1 + Entity.calcModifier(dex);
         int dmg = rand.nextInt(6) + 1 + Entity.calcModifier(str);
 
@@ -82,7 +93,7 @@ public class NPC extends Entity {
         goblin.setInte(10);
         goblin.setSpd(12);
 
-        goblin.setImg(R.drawable.m5);
+        goblin.setImg(R.drawable.goblinsword);
 
         return goblin;
     }

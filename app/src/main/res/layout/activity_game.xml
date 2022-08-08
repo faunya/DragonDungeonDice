@@ -10,17 +10,13 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/actionLog"
-        android:layout_width="245dp"
-        android:layout_height="287dp"
-        android:layout_marginTop="240dp"
-        android:background="@drawable/log_frame"
-        android:backgroundTint="@color/cardview_dark_background"
-        app:layout_constraintBottom_toTopOf="@+id/attackBtn"
+        android:layout_width="318dp"
+        android:layout_height="240dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintBottom_toTopOf="@id/playerHpBar"
+        app:layout_constraintTop_toBottomOf="@id/enemyPic"
+        tools:layout_editor_absoluteY="250dp" />
 
     <Button
         android:id="@+id/ablBtn"
@@ -32,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/attackBtn"
-        app:layout_constraintTop_toBottomOf="@+id/actionLog" />
+        app:layout_constraintTop_toBottomOf="@+id/playerSpBar" />
 
     <Button
         android:id="@+id/attackBtn"
@@ -42,6 +38,7 @@
         android:text="@string/atk"
         app:layout_constraintBottom_toBottomOf="@+id/ablBtn"
         app:layout_constraintEnd_toStartOf="@+id/ablBtn"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         tools:visibility="visible" />
 
@@ -51,11 +48,10 @@
         android:layout_height="wrap_content"
         android:onClick="onItem"
         android:text="@string/itm"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/runBtn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/attackBtn"
-        app:layout_constraintVertical_bias="0.283" />
+        app:layout_constraintBottom_toBottomOf="@+id/runBtn"
+        app:layout_constraintEnd_toEndOf="@+id/attackBtn"
+        app:layout_constraintStart_toStartOf="@+id/attackBtn"
+        app:layout_constraintTop_toTopOf="@+id/runBtn" />
 
     <Button
         android:id="@+id/runBtn"
@@ -64,56 +60,85 @@
         android:onClick="onRun"
         android:text="@string/run"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.567"
-        app:layout_constraintStart_toEndOf="@id/itemBtn"
-        app:layout_constraintTop_toBottomOf="@id/ablBtn" />
+        app:layout_constraintEnd_toEndOf="@+id/ablBtn"
+        app:layout_constraintStart_toStartOf="@+id/ablBtn"
+        app:layout_constraintTop_toBottomOf="@+id/ablBtn" />
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="128dp"
-        android:layout_height="108dp"
-        android:layout_marginBottom="438dp"
-        android:background="#55DCD0D0"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/enemyPic"
+        android:layout_width="224dp"
+        android:layout_height="173dp"
+        app:layout_constraintBottom_toTopOf="@id/actionLog"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar2"
-        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintTop_toBottomOf="@id/enemyHpBar"
         app:srcCompat="@drawable/m0" />
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/enemyHpBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/progressBar2"
+        android:layout_marginStart="8dp"
+        android:minWidth="150dp"
+        android:progressTint="#FF0000"
+        app:layout_constraintBottom_toTopOf="@id/enemyPic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/enemyName" />
+
+    <ProgressBar
+        android:id="@+id/playerHpBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:progressTint="#FF0000"
+        app:layout_constraintBottom_toTopOf="@+id/playerSpBar"
+        app:layout_constraintEnd_toEndOf="@+id/playerSpBar"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/playerSpBar"
+        app:layout_constraintTop_toBottomOf="@+id/actionLog" />
+
+    <ProgressBar
+        android:id="@+id/playerSpBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:progressTint="#00FF37"
+        app:layout_constraintBottom_toTopOf="@+id/ablBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.057"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playerHpBar" />
+
+    <TextView
+        android:id="@+id/enemyName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@id/enemyHpBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ProgressBar
-        android:id="@+id/progressBar2"
-        style="?android:attr/progressBarStyleHorizontal"
+    <TextView
+        android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.057"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+        android:layout_marginEnd="8dp"
+        android:text="@string/hp"
+        app:layout_constraintBottom_toBottomOf="@+id/playerHpBar"
+        app:layout_constraintEnd_toStartOf="@+id/playerHpBar"
+        app:layout_constraintTop_toTopOf="@+id/playerHpBar" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="185dp"
-        android:layout_height="37dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/dnd_title" />
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/sp"
+        app:layout_constraintBottom_toBottomOf="@+id/playerSpBar"
+        app:layout_constraintEnd_toStartOf="@+id/playerSpBar"
+        app:layout_constraintTop_toTopOf="@+id/playerSpBar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
