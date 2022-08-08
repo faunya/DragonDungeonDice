@@ -52,9 +52,10 @@ public class MainActivity extends AppCompatActivity {
         vb.vibrate(stopVb);
         Intent intent = new Intent(MainActivity.this, DiceRolling.class);
         startActivity(intent);
+        finish();
     }
 
-    public void startGame(View view) {
+    public void resumeGame(View view) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         se.playSound(muteSe, this, R.raw.click, false);
         vb.vibrate(stopVb);
@@ -67,12 +68,28 @@ public class MainActivity extends AppCompatActivity {
             intent = new Intent(this, GameActivity.class);
         }
         startActivity(intent);
+        finish();
+    }
+
+    public void newGame(View view) {
+        se.playSound(muteSe, this, R.raw.click, false);
+        vb.vibrate(stopVb);
+        Intent intent = new Intent(MainActivity.this, CreatePlayerActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void setting(View view) {
         se.playSound(muteSe, this, R.raw.click, false);
         vb.vibrate(stopVb);
         Intent intent = new Intent(MainActivity.this, Settings.class);
+        startActivity(intent);
+    }
+
+    public void achievements(View view) {
+        se.playSound(muteSe, this, R.raw.click, false);
+        vb.vibrate(stopVb);
+        Intent intent = new Intent(MainActivity.this, Achievements.class);
         startActivity(intent);
     }
 

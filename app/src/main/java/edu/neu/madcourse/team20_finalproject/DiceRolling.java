@@ -36,6 +36,7 @@ public class DiceRolling extends AppCompatActivity implements SensorEventListene
     private static final String VIBRATION = "vibration";
     private static final String BACKGROUND = "background";
     private static final String DIE_TYPE = "dieType";
+    private static final String ROLL_TIMES = "rollingTimes";
 
     private static final int ROLLING_TIME = 2000;
     private static final int BLINK_TIME = 300;
@@ -52,6 +53,7 @@ public class DiceRolling extends AppCompatActivity implements SensorEventListene
     private boolean stopVb;
     private int backgroundId;
     private int type;
+    private int times;
 
     private Handler handler;
     private Thread blink;
@@ -98,6 +100,7 @@ public class DiceRolling extends AppCompatActivity implements SensorEventListene
         stopVb = sharedPreferences.getBoolean(VIBRATION, false);
         backgroundId = sharedPreferences.getInt(BACKGROUND, R.drawable.default_background);
         type = sharedPreferences.getInt(DIE_TYPE, 1);
+        times = sharedPreferences.getInt(ROLL_TIMES, 0);
     }
 
     @Override
@@ -115,6 +118,7 @@ public class DiceRolling extends AppCompatActivity implements SensorEventListene
         SharedPreferences sharedPreferences = getSharedPreferences(SETTINGS,MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(DIE_TYPE, diceList.getCurrDie());
+        editor.putInt(ROLL_TIMES, times);
         editor.apply();
 
         sensorManager.unregisterListener(this);
@@ -184,6 +188,7 @@ public class DiceRolling extends AppCompatActivity implements SensorEventListene
                             gif.setImageResource(die.getImgId());
                             result.setText(number);
                             point.setText(number);
+                            times += 1;
                         }
                     });
                 } catch (InterruptedException e) {
@@ -282,6 +287,7 @@ public class DiceRolling extends AppCompatActivity implements SensorEventListene
                 } else if (item.getItemId() == R.id.menu_home) {
                     Intent intent = new Intent(DiceRolling.this, MainActivity.class);
                     startActivity(intent);
+                    finish();
                 } else if (item.getItemId() == R.id.menu_settings) {
                     Intent intent = new Intent(DiceRolling.this, Settings.class);
                     startActivity(intent);
