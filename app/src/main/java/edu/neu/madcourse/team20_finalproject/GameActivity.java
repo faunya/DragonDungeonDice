@@ -115,19 +115,20 @@ public class GameActivity extends AppCompatActivity {
         saveData();
     }
 
+    //action buttons--------------------------------------------------------------------------------
     public void onAttack(View view) {
         if (turnList.get(turn).equals(player) && !paused) {
             NPC enemy = curRoom.getNpcList().get(0);
             int ac = enemy.getArmorClass();
             StringBuilder builder = new StringBuilder();
 
-            int dmg = 1;//diceResult;
             //Intent intent = new Intent(this, DiceRollScreen.activity);
         /*
         Sends ac to dice rolling screen
         if roll is equal to or above ac, then it rolls again for dmg
         returns dmg value here
          */
+            int dmg = 1;//diceResult;
             if (dmg <= 0) { //misses or dmg was 0
                 builder.append(player.getName() + "'s attack on " + enemy.getName() + " misses");
             } else { //attack hits
@@ -169,7 +170,7 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
-    //save and load data
+    //save and load data----------------------------------------------------------------------------
     private void saveData() {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt("turn", turn);
@@ -344,6 +345,7 @@ public class GameActivity extends AppCompatActivity {
             turnList.add(player);
         }
     }
+    //----------------------------------------------------------------------------------------------
 
     private void nextTurn() {
         int nxt = turn + 1;

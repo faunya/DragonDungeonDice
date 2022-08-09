@@ -2,12 +2,14 @@ package edu.neu.madcourse.team20_finalproject;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
@@ -96,6 +98,12 @@ public class CreatePlayerActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("selected", selected);
+    }
+
     public void onFinish(View view) {
         if (strTV.getText().toString().equals("-") || dexTV.getText().toString().equals("-")
                 || vitTV.getText().toString().equals("-") || wisTV.getText().toString().equals("-")
@@ -143,15 +151,15 @@ public class CreatePlayerActivity extends AppCompatActivity {
 
     private void onRoll(String stat) {
         selected = stat;
-        diceResult = 10;
+        //diceResult = 10;
 
-        /*
-        Intent intent = new Intent(this, DiceRolling.class);
+
+        Intent intent = new Intent(this, DiceForGame.class);
         intent.putExtra("type", 5);
         intent.putExtra("ac", 0);
         rollResultLauncher.launch(intent);
 
-         */
+
 
         setStat();
     }
