@@ -434,6 +434,7 @@ public class GameActivity extends AppCompatActivity {
         int curRoomNum  = curRoom.getRoomNum();
         curRoom = roomList.get(curRoomNum + 1);
         notifyRoomChange();
+        turnList.clear();
         turnSetup();
     }
 

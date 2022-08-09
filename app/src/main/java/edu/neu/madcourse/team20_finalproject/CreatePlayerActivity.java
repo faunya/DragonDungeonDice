@@ -55,7 +55,9 @@ public class CreatePlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_player);
 
-        savedInstanceState.getString(SELECTED_KEY);
+        if (savedInstanceState == null) {
+            savedInstanceState.getString(SELECTED_KEY);
+        }
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sharedPref.edit();
