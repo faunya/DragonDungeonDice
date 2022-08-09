@@ -447,6 +447,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void ending() {
+        paused = true;
         List<String> epilogue = Room.getEpilogue();
         for (String line : epilogue) {
             actLog.add(new Message(System.currentTimeMillis(), line));
