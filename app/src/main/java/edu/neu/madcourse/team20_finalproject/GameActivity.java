@@ -303,7 +303,7 @@ public class GameActivity extends AppCompatActivity {
     private void createPlayer() {
         Intent intent = getIntent();
         String pName = intent.getStringExtra("name");
-        int maxHp = intent.getIntExtra("str", 1);
+        int maxHp = intent.getIntExtra("maxHp", 1);
         int maxSp = intent.getIntExtra("maxSp", 1);
         int str = intent.getIntExtra("str", 1);
         int dex = intent.getIntExtra("dex", 1);
@@ -365,7 +365,7 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
-    //update hp, sp bars and enemy name
+    //update hp, sp bars and enemy name-------------------------------------------------------------
     private void updateMaxHp(int maxHp) {
         hpBar.post(new Runnable() {
             @Override
@@ -428,6 +428,14 @@ public class GameActivity extends AppCompatActivity {
             }
         });
     }
+    //----------------------------------------------------------------------------------------------
+
+    private void nextRoom() {
+        int curRoomNum  = curRoom.getRoomNum();
+        curRoom = roomList.get(curRoomNum + 1);
+        notifyRoomChange();
+        turnSetup();
+    }
 
     private void sleepThread(long time) {
         try {
@@ -435,6 +443,7 @@ public class GameActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
         }
     }
+
 
     /**
      *
@@ -477,7 +486,10 @@ public class GameActivity extends AppCompatActivity {
                 if (!eTurn.equals(player)) {
                     NPC npc = (NPC) eTurn;
                     if (npc.isDead()) {
-
+                        actLog.add(new Message(System.currentTimeMillis(), "Gained " + npc.getXp() + "xp"));
+                        if (player.addXP(npc.getXp())) {
+                            actLog.add(new Message(System.currentTimeMillis(), "Congrats! Your character is now level " + player.getLv()));
+                        }
                     }
 
                     sleepThread(500);

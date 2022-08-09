@@ -24,6 +24,8 @@ import edu.neu.madcourse.team20_finalproject.game.ingame.entity.Entity;
 
 public class CreatePlayerActivity extends AppCompatActivity {
     private ActivityResultLauncher rollResultLauncher;
+
+    private String SELECTED_KEY = "selectedStat";
     private String selected;
     private int diceResult;
 
@@ -53,6 +55,8 @@ public class CreatePlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_player);
 
+        savedInstanceState.getString(SELECTED_KEY);
+
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean("firstStart", true);
@@ -62,7 +66,6 @@ public class CreatePlayerActivity extends AppCompatActivity {
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
-                        selected = data.getStringExtra("selected");
                         diceResult = data.getIntExtra("roll", 1);
                         setStat();
                     } else {
@@ -101,7 +104,7 @@ public class CreatePlayerActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("selected", selected);
+        outState.putString(SELECTED_KEY, selected);
     }
 
     public void onFinish(View view) {
@@ -114,6 +117,8 @@ public class CreatePlayerActivity extends AppCompatActivity {
             snackbar.show();
         } else {
             Intent intent = new Intent(this, GameActivity.class);
+            intent.putExtra("maxHp", Integer.parseInt(hpTV.getText().toString()));
+            intent.putExtra("maxSp", Integer.parseInt(spTV.getText().toString()));
             intent.putExtra("str", Integer.parseInt(strTV.getText().toString()));
             intent.putExtra("dex", Integer.parseInt(dexTV.getText().toString()));
             intent.putExtra("vit", Integer.parseInt(vitTV.getText().toString()));
@@ -151,8 +156,8 @@ public class CreatePlayerActivity extends AppCompatActivity {
 
     private void onRoll(String stat) {
         selected = stat;
-        //diceResult = 10;
 
+        //diceResult = 10;
 
         Intent intent = new Intent(this, DiceForGame.class);
         intent.putExtra("type", 5);
