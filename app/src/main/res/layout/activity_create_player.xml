@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:minWidth="200dp"
+    android:background="@drawable/bg_achievement"
     tools:context=".CreatePlayerActivity">
 
     <TextView
@@ -12,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dash"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/createSpdStat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -20,6 +22,7 @@
 
     <TextView
         android:id="@+id/textView"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -44,6 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/str"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/createStrStat"
         app:layout_constraintEnd_toStartOf="@+id/createStrStat"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,6 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dex"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/createDexStat"
         app:layout_constraintEnd_toStartOf="@+id/createDexStat"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,6 +66,7 @@
 
     <TextView
         android:id="@+id/textView4"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/vit"
@@ -71,6 +77,7 @@
 
     <TextView
         android:id="@+id/textView5"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/wis"
@@ -81,6 +88,7 @@
 
     <TextView
         android:id="@+id/textView6"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/inte"
@@ -91,6 +99,7 @@
 
     <TextView
         android:id="@+id/textView7"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/spd"
@@ -168,6 +177,7 @@
 
     <TextView
         android:id="@+id/createStrStat"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dash"
@@ -179,6 +189,7 @@
 
     <TextView
         android:id="@+id/createDexStat"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dash"
@@ -190,6 +201,7 @@
 
     <TextView
         android:id="@+id/createVitStat"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dash"
@@ -202,6 +214,7 @@
     <TextView
         android:id="@+id/createWisStat"
         android:layout_width="wrap_content"
+        android:textColor="@color/black"
         android:layout_height="wrap_content"
         android:text="@string/dash"
         app:layout_constraintBottom_toTopOf="@+id/createIntStat"
@@ -212,6 +225,7 @@
 
     <TextView
         android:id="@+id/createSpdStat"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dash"
@@ -236,6 +250,7 @@
 
     <TextView
         android:id="@+id/createHP"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -246,6 +261,7 @@
 
     <TextView
         android:id="@+id/textView15"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
