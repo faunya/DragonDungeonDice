@@ -12,6 +12,8 @@
         android:id="@+id/actionLog"
         android:layout_width="318dp"
         android:layout_height="240dp"
+        android:background="@drawable/log_frame"
+        android:backgroundTint="@color/cardview_dark_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/playerHpBar"
@@ -66,8 +68,9 @@
 
     <ImageView
         android:id="@+id/enemyPic"
-        android:layout_width="224dp"
-        android:layout_height="173dp"
+        android:layout_width="146dp"
+        android:layout_height="124dp"
+        android:background="#55000000"
         app:layout_constraintBottom_toTopOf="@id/actionLog"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -115,7 +118,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="15dp"
         android:text="TextView"
         app:layout_constraintBottom_toTopOf="@id/enemyHpBar"
         app:layout_constraintStart_toStartOf="parent"
@@ -140,5 +143,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/playerSpBar"
         app:layout_constraintEnd_toStartOf="@+id/playerSpBar"
         app:layout_constraintTop_toTopOf="@+id/playerSpBar" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="259dp"
+        android:layout_height="31dp"
+        app:srcCompat="@drawable/dnd_title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
