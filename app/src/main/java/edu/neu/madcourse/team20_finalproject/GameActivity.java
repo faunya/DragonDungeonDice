@@ -521,6 +521,8 @@ public class GameActivity extends AppCompatActivity {
                     actLog.add(new Message(System.currentTimeMillis(), "Gained " + npc.getXp() + "xp"));
                     if (player.addXP(npc.getXp())) {
                         actLog.add(new Message(System.currentTimeMillis(), "Congrats! Your character is now level " + player.getLv()));
+                        updateMaxHp(player.getMaxHp());
+                        updateMaxSp(player.getMaxSp());
                     }
                     nextRoom();
                     return;

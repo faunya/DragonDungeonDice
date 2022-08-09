@@ -32,6 +32,7 @@ public class Player extends Entity {
         if (xp >= (Math.pow((lv + 1)/3, 2) * 100)) {
             int nextLv = lv +1 ;
             lv = nextLv;
+            lvlUp();
             return true;
         }
         return false;
@@ -45,8 +46,8 @@ public class Player extends Entity {
         wis += 1;
         inte += 1;
         spd += 1;
-        maxHp += 5;
-        maxSp += 2;
+        maxHp += 5 + Entity.calcModifier(vit);
+        maxSp += 2 + Entity.calcModifier(wis);
     }
 
     public int getLv() {
