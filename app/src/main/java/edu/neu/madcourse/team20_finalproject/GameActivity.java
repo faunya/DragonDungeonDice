@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -50,6 +52,12 @@ public class GameActivity extends AppCompatActivity {
     private Button itmBtn;
     private Button runBtn;
 
+    //views
+    private TextView enemyNameTV;
+    private ProgressBar enemyHPBar;
+    private ProgressBar hpBar;
+    private ProgressBar spBar;
+
     private int diceResult;
     private boolean paused;
 
@@ -82,6 +90,11 @@ public class GameActivity extends AppCompatActivity {
         abilBtn = findViewById(R.id.ablBtn);
         itmBtn = findViewById(R.id.itemBtn);
         runBtn = findViewById(R.id.runBtn);
+
+        hpBar = findViewById(R.id.playerHpBar);
+        spBar = findViewById(R.id.playerSpBar);
+        enemyHPBar = findViewById(R.id.enemyHpBar);
+        enemyNameTV = findViewById(R.id.enemyName);
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 

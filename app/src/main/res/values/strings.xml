@@ -17,10 +17,17 @@
     <string name="log">LOG</string>
     <string name="home">HOME</string>
 
+    <!--Enemies-->
+    <string name="goblin">Goblin</string>
+    <string name="dark_cultist">Dark Cultist</string>
+    <string name=""></string>
+
+    <!--Actions-->
     <string name="atk">Attack</string>
     <string name="itm">Items</string>
     <string name="abl">Abilities</string>
     <string name="run">Flee</string>
+    <string name="rest">Rest</string>
 
     <string name="roll">Roll</string>
     <string name="player_create">Character Creation</string>
@@ -29,6 +36,7 @@
     <string name="finish">Finish</string>
     <string name="charName">Character Name</string>
 
+    <!--Stats-->
     <string name="hp">HP</string>
     <string name="sp">SP</string>
     <string name="str">STR</string>

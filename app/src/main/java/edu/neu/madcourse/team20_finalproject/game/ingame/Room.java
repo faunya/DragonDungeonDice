@@ -68,8 +68,8 @@ public class Room {
     public static Room room2() {
         List<String> desc = new ArrayList<>();
         desc.add("You manage to strike dwn the goblin.");
-        desc.add("If your few adventures had taught you anything, if there is one goblin, t" +
-                "here is a dozen more somewhere");
+        desc.add("If your few adventures had taught you anything, if there is one goblin, " +
+                "there is a dozen more somewhere");
         //desc.add();
         return new Room();
     }
