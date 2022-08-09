@@ -181,14 +181,20 @@ public class CreatePlayerActivity extends AppCompatActivity {
                 return;
             case "vit":
                 vitTV.setText(String.valueOf(diceResult));
-                hpTV.setText(String.valueOf(Entity.calcModifier(diceResult) + 20));
+                int maxHp = Entity.calcModifier(diceResult) + 20;
+                hpTV.setText(String.valueOf(maxHp));
+                hpBar.setMax(maxHp);
+                hpBar.setProgress(maxHp);
                 return;
             case "int":
                 intTV.setText(String.valueOf(diceResult));
                 return;
             case "wis":
                 wisTV.setText(String.valueOf(diceResult));
-                spTV.setText(String.valueOf(Entity.calcModifier(diceResult) + 10));
+                int maxSp = Entity.calcModifier(diceResult) + 10;
+                spTV.setText(String.valueOf(maxSp));
+                spBar.setMax(maxSp);
+                spBar.setProgress(maxSp);
                 return;
             case "spd":
                 spdTV.setText(String.valueOf(diceResult));
