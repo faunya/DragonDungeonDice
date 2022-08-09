@@ -20,7 +20,8 @@
     <!--Enemies-->
     <string name="goblin">Goblin</string>
     <string name="dark_cultist">Dark Cultist</string>
-    <string name=""></string>
+    <string name="golem">Golem</string>
+    <string name="dragon">Dragon</string>
 
     <!--Actions-->
     <string name="atk">Attack</string>

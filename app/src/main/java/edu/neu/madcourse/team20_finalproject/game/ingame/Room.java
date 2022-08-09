@@ -26,6 +26,10 @@ public class Room {
         this.desc = desc;
     }
 
+    public String finishedRoom() {
+        return "";
+    }
+
     public List<Actions> getActions() {
         return actions;
     }

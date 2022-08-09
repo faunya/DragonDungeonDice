@@ -107,26 +107,6 @@ public class GameActivity extends AppCompatActivity {
         saveData();
     }
 
-    private void actionSetup() {
-        List<Actions> actList = curRoom.getActions();
-        List<Button> buttonList = new ArrayList<>();
-        buttonList.add(atkBtn);
-        buttonList.add(abilBtn);
-        buttonList.add(itmBtn);
-        buttonList.add(runBtn);
-
-        for (int i = 0; i < actList.size(); i++) {
-            buttonList.get(i).setVisibility(View.VISIBLE);
-            switch (actList.get(i)) {
-                case ATTACK:
-                case ABILITY:
-                case ITEM:
-                case RUN:
-                case REST:
-            }
-        }
-    }
-
     public void onAttack(View view) {
         if (turnList.get(turn).equals(player) && !paused) {
             int dmg = 0;
@@ -317,9 +297,8 @@ public class GameActivity extends AppCompatActivity {
         for (String desc : curRoom.getDesc()) {
             actLog.add(new Message(System.currentTimeMillis(), desc));
             actLogAdapter.notifyItemInserted(actLog.size() - 1);
-            sleepThread(500);
-
             actLogScroll();
+            sleepThread(500);
         }
         paused = false;
     }
@@ -351,6 +330,51 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void run() {
                 actLogRV.scrollToPosition(actLog.size() - 1);
+            }
+        });
+    }
+
+    private void updateMaxHp(int maxHp) {
+        hpBar.post(new Runnable() {
+            @Override
+            public void run() {
+                hpBar.setMax(maxHp);
+            }
+        });
+    }
+
+    private void updateHP(int hp) {
+        hpBar.post(new Runnable() {
+            @Override
+            public void run() {
+                hpBar.setProgress(hp);
+            }
+        });
+    }
+
+    private void updateEnemyName(String name) {
+        enemyNameTV.post(new Runnable() {
+            @Override
+            public void run() {
+                enemyNameTV.setText(name);
+            }
+        });
+    }
+
+    private void updateEnemyMaxHp(int maxHp) {
+        enemyHPBar.post(new Runnable() {
+            @Override
+            public void run() {
+                enemyHPBar.setMax(maxHp);
+            }
+        });
+    }
+
+    private void updateEnemyHp(int hp) {
+        enemyHPBar.post(new Runnable() {
+            @Override
+            public void run() {
+                enemyHPBar.setProgress(hp);
             }
         });
     }

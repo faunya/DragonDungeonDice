@@ -85,11 +85,11 @@
         android:layout_marginStart="8dp"
         android:minWidth="150dp"
         android:progressTint="#FF0000"
-        app:layout_constraintBottom_toTopOf="@id/enemyPic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/enemyName" />
 
     <ProgressBar
+        android:minWidth="150dp"
         android:id="@+id/playerHpBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="wrap_content"
@@ -107,6 +107,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:progressTint="#00FF37"
+        android:minWidth="150dp"
         app:layout_constraintBottom_toTopOf="@+id/ablBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -118,11 +119,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="15dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@id/enemyHpBar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <TextView
         android:id="@+id/textView9"
