@@ -7,15 +7,9 @@
         <entry key="..\:/Users/Jay/AndroidStudioProjects/Team20FinalProject/app/src/main/res/layout/activity_create_player.xml" value="0.358695652173913" />
         <entry key="..\:/Users/Jay/AndroidStudioProjects/Team20FinalProject/app/src/main/res/layout/activity_game.xml" value="0.358695652173913" />
         <entry key="..\:/Users/Jay/AndroidStudioProjects/Team20FinalProject/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
-        <entry key="..\:/final_project/Team20-FinalProject/app/src/main/res/layout/achievement_layout.xml" value="0.25" />
-        <entry key="..\:/final_project/Team20-FinalProject/app/src/main/res/layout/activity_achievements.xml" value="0.22" />
-        <entry key="..\:/final_project/Team20-FinalProject/app/src/main/res/layout/activity_dice_for_game.xml" value="0.17074275362318841" />
         <entry key="..\:/final_project/Team20-FinalProject/app/src/main/res/layout/activity_dice_rolling.xml" value="0.25" />
         <entry key="..\:/final_project/Team20-FinalProject/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/final_project/Team20-FinalProject/app/src/main/res/layout/activity_settings.xml" value="0.27241139680333565" />
-        <entry key="..\:/final_project/Team20-FinalProject/app/src/main/res/layout/activity_skin.xml" value="0.17074275362318841" />
-        <entry key="..\:/final_project/Team20-FinalProject/app/src/main/res/layout/activity_test_dice_for_game.xml" value="0.17074275362318841" />
-        <entry key="..\:/final_project/Team20-FinalProject/app/src/main/res/layout/wallpaper_layout.xml" value="0.17074275362318841" />
         <entry key="..\:/final_project/Team20-FinalProject/app/src/main/res/menu/popup_menu.xml" value="0.20416666666666666" />
         <entry key="app/src/main/res/drawable-anydpi/ic_lock.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1465" />
@@ -26,7 +20,7 @@
         <entry key="app/src/main/res/layout/activity_achievements.xml" value="0.11354166666666667" />
         <entry key="app/src/main/res/layout/activity_create_player.xml" value="0.11354166666666667" />
         <entry key="app/src/main/res/layout/activity_dice_rolling.xml" value="0.11354166666666667" />
-        <entry key="app/src/main/res/layout/activity_game.xml" value="0.2538818359375" />
+        <entry key="app/src/main/res/layout/activity_game.xml" value="0.4914184570312501" />
         <entry key="app/src/main/res/layout/activity_log.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.11354166666666667" />
