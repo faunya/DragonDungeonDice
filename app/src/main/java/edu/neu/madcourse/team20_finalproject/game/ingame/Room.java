@@ -62,7 +62,7 @@ public class Room {
     public static List<Room> getLevels() {
         List<Room> roomList = new ArrayList<>();
         roomList.add(room1());
-        roomList.add(room2());
+        //roomList.add(room2());
 
         return roomList;
     }
@@ -93,7 +93,13 @@ public class Room {
         desc.add("If your few adventures had taught you anything, if there is one goblin, " +
                 "there is a dozen more somewhere");
         //desc.add();
-        return new Room();
+        return new Room(new ArrayList<>(), desc);
+    }
+
+    public static List<String> getEpilogue() {
+        List<String> epilogue = new ArrayList<>();
+        epilogue.add("the end");
+        return epilogue;
     }
 }
 

@@ -159,15 +159,15 @@ public class CreatePlayerActivity extends AppCompatActivity {
     private void onRoll(String stat) {
         selected = stat;
 
-        //diceResult = 10;
+        diceResult = 10;
 
+        /*
         Intent intent = new Intent(this, DiceForGame.class);
         intent.putExtra("type", 5);
         intent.putExtra("ac", 0);
         rollResultLauncher.launch(intent);
 
-
-
+         */
         setStat();
     }
 

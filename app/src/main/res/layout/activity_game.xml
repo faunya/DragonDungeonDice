@@ -157,7 +157,8 @@
         android:id="@+id/hpNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_marginStart="8dp"
+        android:text="0"
         app:layout_constraintBottom_toBottomOf="@+id/playerHpBar"
         app:layout_constraintStart_toEndOf="@+id/playerHpBar"
         app:layout_constraintTop_toTopOf="@+id/playerHpBar" />
@@ -166,7 +167,8 @@
         android:id="@+id/spNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_marginStart="8dp"
+        android:text="0"
         app:layout_constraintBottom_toBottomOf="@+id/playerSpBar"
         app:layout_constraintStart_toEndOf="@+id/playerSpBar"
         app:layout_constraintTop_toTopOf="@+id/playerSpBar" />
@@ -176,9 +178,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="TextView"
+        android:text="0"
         app:layout_constraintBottom_toBottomOf="@+id/enemyHpBar"
         app:layout_constraintStart_toEndOf="@+id/enemyHpBar"
         app:layout_constraintTop_toTopOf="@+id/enemyHpBar" />
+
+    <TextView
+        android:id="@+id/maxEnemyHpNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="/0"
+        app:layout_constraintBottom_toBottomOf="@+id/enemyHpNum"
+        app:layout_constraintStart_toEndOf="@+id/enemyHpNum"
+        app:layout_constraintTop_toTopOf="@+id/enemyHpNum" />
+
+    <TextView
+        android:id="@+id/maxHpNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="/0"
+        app:layout_constraintBottom_toBottomOf="@+id/hpNum"
+        app:layout_constraintStart_toEndOf="@+id/hpNum"
+        app:layout_constraintTop_toTopOf="@+id/hpNum" />
+
+    <TextView
+        android:id="@+id/maxSpNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="/0"
+        app:layout_constraintBottom_toBottomOf="@+id/spNum"
+        app:layout_constraintStart_toEndOf="@+id/spNum"
+        app:layout_constraintTop_toTopOf="@+id/spNum" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
