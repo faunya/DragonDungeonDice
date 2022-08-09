@@ -55,7 +55,7 @@ public class CreatePlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_player);
 
-        if (savedInstanceState == null) {
+        if (savedInstanceState != null) {
             savedInstanceState.getString(SELECTED_KEY);
         }
 
