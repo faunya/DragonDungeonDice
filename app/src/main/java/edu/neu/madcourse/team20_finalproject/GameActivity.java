@@ -171,6 +171,10 @@ public class GameActivity extends AppCompatActivity {
 
     //save and load data
     private void saveData() {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("turn", turn);
+        editor.putInt("roomNum", curRoom.getRoomNum());
+
         saveRoom();
         savePlayer();
         saveEnemy();
@@ -194,7 +198,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void loadPlayer() {
-        String name = sharedPref.getString("pName", "Player");
+        String name = sharedPref.getString("name", "Player");
         int maxHp = sharedPref.getInt("maxHp",10);
         int maxSp = sharedPref.getInt("maxSp",5);
         int ac = sharedPref.getInt("pAc",12);

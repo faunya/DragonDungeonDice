@@ -20,7 +20,7 @@
             android:exported="false" />
         <activity
             android:name=".DiceForGame"
-            android:exported="false"
+            android:exported="true"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Achievements"
@@ -33,7 +33,7 @@
             android:theme="@style/SettingsTheme" />
         <activity
             android:name=".DiceRolling"
-            android:exported="false"
+            android:exported="true"
             android:screenOrientation="portrait" />
         <activity
             android:name=".GameActivity"
