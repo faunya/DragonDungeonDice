@@ -55,10 +55,13 @@ public class GameActivity extends AppCompatActivity {
     private TextView enemyNameTV;
     private ProgressBar enemyHPBar;
     private TextView enemyHPNumTv;
+    private TextView maxEnemyHPNumTV;
     private ProgressBar hpBar;
     private ProgressBar spBar;
     private TextView hpNumTV;
+    private TextView maxHpNumTV;
     private TextView spNumTV;
+    private TextView maxSpNumTV;
 
     private int diceResult;
     private boolean paused;
@@ -96,10 +99,13 @@ public class GameActivity extends AppCompatActivity {
 
         //hp and sp views
         hpNumTV = findViewById(R.id.hpNum);
+        maxHpNumTV = findViewById(R.id.maxHpNum);
         spNumTV = findViewById(R.id.spNum);
+        maxSpNumTV = findViewById(R.id.maxSpNum);
         hpBar = findViewById(R.id.playerHpBar);
         spBar = findViewById(R.id.playerSpBar);
-        enemyNameTV = findViewById(R.id.enemyHpNum);
+        enemyHPNumTv = findViewById(R.id.enemyHpNum);
+        maxEnemyHPNumTV = findViewById(R.id.maxEnemyHpNum);
         enemyHPBar = findViewById(R.id.enemyHpBar);
         enemyNameTV = findViewById(R.id.enemyName);
 
@@ -367,7 +373,6 @@ public class GameActivity extends AppCompatActivity {
                 turnList.add(player);
             }
         }
-        turn = 0;
     }
     //----------------------------------------------------------------------------------------------
 
@@ -386,36 +391,18 @@ public class GameActivity extends AppCompatActivity {
 
     //update hp, sp bars and enemy name-------------------------------------------------------------
     private void updateMaxHp(int maxHp) {
-        hpBar.post(new Runnable() {
-            @Override
-            public void run() {
-                hpBar.setMax(maxHp);
-            }
-        });
+        hpBar.post(() -> hpBar.setMax(maxHp));
+        maxHpNumTV.post(() -> maxHpNumTV.setText("/" + String.valueOf(maxHp)));
     }
 
     private void updateHP(int hp) {
-        hpBar.post(new Runnable() {
-            @Override
-            public void run() {
-                hpBar.setProgress(hp);
-            }
-        });
-        hpNumTV.post(new Runnable() {
-            @Override
-            public void run() {
-                hpNumTV.setText(String.valueOf(hp));
-            }
-        });
+        hpBar.post(() -> hpBar.setProgress(hp));
+        hpNumTV.post(() -> hpNumTV.setText(String.valueOf(hp)));
     }
 
     private void updateMaxSp(int maxSp) {
-        spBar.post(new Runnable() {
-            @Override
-            public void run() {
-                spBar.setMax(maxSp);
-            }
-        });
+        spBar.post(() -> spBar.setMax(maxSp));
+        maxSpNumTV.post(() -> maxSpNumTV.setText("/" + String.valueOf(maxSp)));
     }
 
     private void updateSp(int sp) {
@@ -437,21 +424,13 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void updateEnemyMaxHp(int maxHp) {
-        enemyHPBar.post(new Runnable() {
-            @Override
-            public void run() {
-                enemyHPBar.setMax(maxHp);
-            }
-        });
+        enemyHPBar.post(() -> enemyHPBar.setMax(maxHp));
+        maxEnemyHPNumTV.post(() -> maxEnemyHPNumTV.setText("/" + String.valueOf(maxHp)));
     }
 
     private void updateEnemyHp(int hp) {
-        enemyHPBar.post(new Runnable() {
-            @Override
-            public void run() {
-                enemyHPBar.setProgress(hp);
-            }
-        });
+        enemyHPBar.post(() -> enemyHPBar.setProgress(hp));
+        enemyHPNumTv.post(() -> enemyHPNumTv.setText(String.valueOf(hp)));
     }
     //----------------------------------------------------------------------------------------------
 
@@ -502,9 +481,9 @@ public class GameActivity extends AppCompatActivity {
                 prefEdit.commit();
 
                 saveData();
+                turn = 0;
             } else {
-                loadPlayer();
-                loadRoom();
+                loadData();
             }
 
             turnSetup();
@@ -524,7 +503,7 @@ public class GameActivity extends AppCompatActivity {
                 if (turnList.size() > 0) { //npcs to have their turn
                     entityAI();
                 } else {
-                    return;
+                    nextRoom();
                 }
             }
         }
