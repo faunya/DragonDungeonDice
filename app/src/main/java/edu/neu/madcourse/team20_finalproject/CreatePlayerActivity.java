@@ -50,6 +50,11 @@ public class CreatePlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_player);
 
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("firstStart", true);
+        editor.commit();
+
         rollResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
@@ -94,9 +99,9 @@ public class CreatePlayerActivity extends AppCompatActivity {
 
         System.out.println("char name" + charNameTV.getText());
         if (strTV.getText().toString().equals("-") || dexTV.getText().toString().equals("-")
-        || vitTV.getText().toString().equals("-") || wisTV.getText().toString().equals("-")
-        || intTV.getText().toString().equals("-") || spdTV.getText().toString().equals("-")
-        || charNameTV.getText().toString().equals("")) {
+                || vitTV.getText().toString().equals("-") || wisTV.getText().toString().equals("-")
+                || intTV.getText().toString().equals("-") || spdTV.getText().toString().equals("-")
+                || charNameTV.getText().toString().equals("")) {
             Snackbar snackbar;
         } else {
             Intent intent = new Intent(this, GameActivity.class);
@@ -137,9 +142,15 @@ public class CreatePlayerActivity extends AppCompatActivity {
 
     private void onRoll(String stat) {
         selected = stat;
+        diceResult = 10;
 
+        /*
         Intent intent = new Intent(this, DiceRolling.class);
+        intent.putExtra("dice",20);
+        intent.putExtra("ac",0);
         rollResultLauncher.launch(intent);
+
+         */
 
         setStat();
     }

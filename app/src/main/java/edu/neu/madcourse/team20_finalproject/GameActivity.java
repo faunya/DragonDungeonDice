@@ -58,7 +58,7 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        paused = false;
+        paused = true;
 
         rollResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -86,6 +86,12 @@ public class GameActivity extends AppCompatActivity {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         new Thread(new GameThread()).start();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        saveData();
     }
 
     private void actionSetup() {
@@ -122,7 +128,6 @@ public class GameActivity extends AppCompatActivity {
             actLog.add(new Message(System.currentTimeMillis(),
                     player.getName() + " attacked " + curRoom.getNpcList().get(0).getName()
                             + " for " + dmg + "dmg" ));
-            System.out.println(actLog.size());
             actLogAdapter.notifyItemInserted(actLog.size() - 1);
 
             nextTurn();
@@ -136,7 +141,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void onItem(View view) {
-        if (turnList.get(turn).equals(player) && !paused){
+        if (turnList.get(turn).equals(player) && !paused) {
 
         }
         //makes small popup appear with list of items
@@ -243,7 +248,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private NPC loadEnemy() {
-        String name = sharedPref.getString("pName", "Player");
+        String name = sharedPref.getString("eName", "Monster");
         int ac = sharedPref.getInt("eAc",8);
         int maxHp = sharedPref.getInt("maxHp",10);
         int maxSp = sharedPref.getInt("maxSp",5);
@@ -298,7 +303,10 @@ public class GameActivity extends AppCompatActivity {
         paused = true;
         for (String desc : curRoom.getDesc()) {
             actLog.add(new Message(System.currentTimeMillis(), desc));
+            actLogAdapter.notifyItemInserted(actLog.size() - 1);
             sleepThread(500);
+
+            actLogScroll();
         }
         paused = false;
     }
@@ -306,7 +314,7 @@ public class GameActivity extends AppCompatActivity {
     private void turnSetup() {
         turnList = new ArrayList<Entity>();
         Entity enemy = curRoom.getNpcList().get(0);
-        turnList.add(player);
+
         if (player.getSpd() > enemy.getSpd()) {
             turnList.add(player);
             turnList.add(enemy);
@@ -314,12 +322,6 @@ public class GameActivity extends AppCompatActivity {
             turnList.add(enemy);
             turnList.add(player);
         }
-        /*
-        for (Entity npc : curRoom.getNpcList()) {
-            turnList.add(npc);
-        }
-
-         */
     }
 
     private void nextTurn() {
@@ -329,6 +331,15 @@ public class GameActivity extends AppCompatActivity {
         } else {
             ++turn;
         }
+    }
+
+    private void actLogScroll() {
+        actLogRV.post(new Runnable() {
+            @Override
+            public void run() {
+                actLogRV.scrollToPosition(actLog.size() - 1);
+            }
+        });
     }
 
     private void sleepThread(long time) {
@@ -354,23 +365,32 @@ public class GameActivity extends AppCompatActivity {
             } else {
                 loadPlayer();
                 loadRoom();
-                notifyRoomChange();
             }
 
             turnSetup();
             notifyRoomChange();
 
             while (!paused) { //can change to variable so you can pause game later
-                if (!turnList.get(turn).equals(player)) {
-                    NPC npc = (NPC) turnList.get(turn);
+                Entity eTurn = turnList.get(turn);
+
+                if (!eTurn.equals(player)) {
+
+                    System.out.println("eturn " + eTurn);
+                    NPC npc = (NPC) eTurn;
+
+                    System.out.println("npc " + npc);
+                    System.out.println(npc.getName());
+                    System.out.println(player.getName());
 
                     if (npc.isDead()) {
 
                     }
+
                     sleepThread(500);
                     String text = npc.behavior(player, player.getArmorClass());
                     actLog.add(new Message(System.currentTimeMillis(), text));
                     actLogAdapter.notifyItemInserted(actLog.size() - 1);
+                    actLogScroll();
 
                     nextTurn();
                 }
