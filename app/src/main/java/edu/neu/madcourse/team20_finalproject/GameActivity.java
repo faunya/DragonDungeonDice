@@ -127,6 +127,7 @@ public class GameActivity extends AppCompatActivity {
         }
 
         if (turnList.get(turn).equals(player) && !paused) {
+            player.setSp(player.getSp() + 1);
             NPC enemy = curRoom.getNpcList().get(0);
             int ac = enemy.getArmorClass();
             StringBuilder builder = new StringBuilder();

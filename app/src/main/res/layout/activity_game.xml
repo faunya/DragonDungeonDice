@@ -75,7 +75,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/enemyHpBar"
-        app:srcCompat="@drawable/m0" />
+        app:srcCompat="@drawable/goblinmagic" />
 
     <ProgressBar
         android:id="@+id/enemyHpBar"

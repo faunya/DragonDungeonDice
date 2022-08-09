@@ -45,8 +45,8 @@ public class Player extends Entity {
         wis += 1;
         inte += 1;
         spd += 1;
-        maxHp += 3;
-        maxSp += 1;
+        maxHp += 5;
+        maxSp += 2;
     }
 
     public int getLv() {

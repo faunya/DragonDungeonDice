@@ -62,7 +62,7 @@ public class Room {
     public static List<Room> getLevels() {
         List<Room> roomList = new ArrayList<>();
         roomList.add(room1());
-        //roomList.add(room2());
+        roomList.add(room2());
 
         return roomList;
     }
@@ -92,8 +92,15 @@ public class Room {
         desc.add("You manage to strike dwn the goblin.");
         desc.add("If your few adventures had taught you anything, if there is one goblin, " +
                 "there is a dozen more somewhere");
-        //desc.add();
-        return new Room(new ArrayList<>(), desc);
+        desc.add("Your intuition proves correct as a second goblin comes out the brushes, " +
+                "probably alerted by his kinsman's screams");
+
+        List<NPC> npc = new ArrayList<>();
+        npc.add(NPC.createMeleeGoblin());
+        Room room = new Room(npc, desc);
+        room.setRoomNum(1);
+
+        return room;
     }
 
     public static List<String> getEpilogue() {
