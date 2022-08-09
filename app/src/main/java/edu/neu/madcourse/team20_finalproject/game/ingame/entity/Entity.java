@@ -54,6 +54,9 @@ public abstract class Entity {
     }
 
     public void takeDmg(int dmg) {
+        if (dmg < 0) {
+            dmg = 0;
+        }
         if (blocking) {
             dmg = Math.floorDiv(dmg, 3);
         }

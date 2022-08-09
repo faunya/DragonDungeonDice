@@ -2,10 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/charCreationScreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minWidth="200dp"
     android:background="@drawable/bg_achievement"
+    android:minWidth="200dp"
     tools:context=".CreatePlayerActivity">
 
     <TextView
@@ -22,11 +23,11 @@
 
     <TextView
         android:id="@+id/textView"
-        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/player_create"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -66,10 +67,10 @@
 
     <TextView
         android:id="@+id/textView4"
-        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/vit"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/createVitStat"
         app:layout_constraintEnd_toStartOf="@+id/createVitStat"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,10 +78,10 @@
 
     <TextView
         android:id="@+id/textView5"
-        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/wis"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/createWisStat"
         app:layout_constraintEnd_toStartOf="@+id/createWisStat"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,10 +89,10 @@
 
     <TextView
         android:id="@+id/textView6"
-        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/inte"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/createIntStat"
         app:layout_constraintEnd_toStartOf="@+id/createIntStat"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,10 +100,10 @@
 
     <TextView
         android:id="@+id/textView7"
-        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/spd"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/createSpdStat"
         app:layout_constraintEnd_toStartOf="@+id/createSpdStat"
         app:layout_constraintStart_toStartOf="parent"
@@ -177,10 +178,10 @@
 
     <TextView
         android:id="@+id/createStrStat"
-        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dash"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/createDexStat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -189,10 +190,10 @@
 
     <TextView
         android:id="@+id/createDexStat"
-        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dash"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/createVitStat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -201,10 +202,10 @@
 
     <TextView
         android:id="@+id/createVitStat"
-        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dash"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/createWisStat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -214,9 +215,9 @@
     <TextView
         android:id="@+id/createWisStat"
         android:layout_width="wrap_content"
-        android:textColor="@color/black"
         android:layout_height="wrap_content"
         android:text="@string/dash"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/createIntStat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -225,10 +226,10 @@
 
     <TextView
         android:id="@+id/createSpdStat"
-        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dash"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/button7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -250,22 +251,22 @@
 
     <TextView
         android:id="@+id/createHP"
-        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="@string/hp"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/createHPBar"
         app:layout_constraintEnd_toStartOf="@+id/createHPBar"
         app:layout_constraintTop_toTopOf="@+id/createHPBar" />
 
     <TextView
         android:id="@+id/textView15"
-        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="@string/sp"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/createSPBar"
         app:layout_constraintEnd_toStartOf="@+id/createSPBar"
         app:layout_constraintTop_toTopOf="@+id/createSPBar" />

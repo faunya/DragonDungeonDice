@@ -37,6 +37,18 @@ public class Player extends Entity {
         return false;
     }
 
+    private void lvlUp() {
+        armorClass += 1;
+        str += 1;
+        dex += 1;
+        vit += 1;
+        wis += 1;
+        inte += 1;
+        spd += 1;
+        maxHp += 3;
+        maxSp += 1;
+    }
+
     public int getLv() {
         return lv;
     }

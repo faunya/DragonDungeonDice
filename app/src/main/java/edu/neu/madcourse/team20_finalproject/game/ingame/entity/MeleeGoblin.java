@@ -2,9 +2,9 @@ package edu.neu.madcourse.team20_finalproject.game.ingame.entity;
 
 import java.util.Random;
 
-public class SimpleEnemy extends NPC {
+public class MeleeGoblin extends NPC {
 
-    public SimpleEnemy(String name, int maxHp, int maxMp) {
+    public MeleeGoblin(String name, int maxHp, int maxMp) {
         super(name, maxHp, maxMp);
         rand = new Random();
     }
@@ -18,7 +18,7 @@ public class SimpleEnemy extends NPC {
             return super.behavior(target, ac);
         } else { //special attack
             if (sp == 3) { //if enough sp to use ability
-                doubleAttack(target, ac);
+                return doubleAttack(target, ac);
             }
             return super.behavior(target, ac);
         }
@@ -35,13 +35,13 @@ public class SimpleEnemy extends NPC {
         StringBuilder builder = new StringBuilder();
         builder.append(name + " swipes at " + target.getName() + " twice\n");
         if (hit1 >= ac) { //first hits
-            builder.append("The first strike hits, dealing" + String.valueOf(dmg1) + " dmg\n");
+            builder.append("The first strike hits, dealing " + String.valueOf(dmg1) + " dmg\n");
             attack(target, dmg1);
         } else { //first misses
             builder.append("The first strike misses\n");
         }
         if (hit2 >= ac) {
-            builder.append("The second strike hits, dealing" + String.valueOf(dmg2) + " dmg\n");
+            builder.append("The second strike hits, dealing " + String.valueOf(dmg2) + " dmg\n");
             attack(target, dmg2);
         } else {
             builder.append("The second strike misses");

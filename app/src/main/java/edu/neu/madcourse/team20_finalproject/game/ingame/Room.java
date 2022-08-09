@@ -10,6 +10,7 @@ public class Room {
     private List<Actions> actions;
     private List<NPC> npcList;
     private List<String> desc;
+    private int roomNum;
 
     public Room() {
 
@@ -28,6 +29,14 @@ public class Room {
 
     public String finishedRoom() {
         return "";
+    }
+
+    public int getRoomNum() {
+        return roomNum;
+    }
+
+    public void setRoomNum(int roomNum) {
+        this.roomNum = roomNum;
     }
 
     public List<Actions> getActions() {
@@ -50,6 +59,14 @@ public class Room {
         this.desc = desc;
     }
 
+    public static List<Room> getLevels() {
+        List<Room> roomList = new ArrayList<>();
+        roomList.add(room1());
+        roomList.add(room2());
+
+        return roomList;
+    }
+
     public static Room room1() {
         List<String> desc = new ArrayList<>();
         desc.add("You are an adventurer who has been doing quests for a while.");
@@ -63,8 +80,9 @@ public class Room {
         desc.add("Goblin: Shineies! Gimmie shinies!");
 
         List<NPC> npc = new ArrayList<>();
-        npc.add(NPC.createGoblin());
+        npc.add(NPC.createMeleeGoblin());
         Room room = new Room(npc, desc);
+        room.setRoomNum(0);
 
         return room;
     }

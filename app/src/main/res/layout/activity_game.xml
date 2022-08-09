@@ -153,4 +153,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"/>
 
+    <TextView
+        android:id="@+id/hpNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/playerHpBar"
+        app:layout_constraintStart_toEndOf="@+id/playerHpBar"
+        app:layout_constraintTop_toTopOf="@+id/playerHpBar" />
+
+    <TextView
+        android:id="@+id/spNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/playerSpBar"
+        app:layout_constraintStart_toEndOf="@+id/playerSpBar"
+        app:layout_constraintTop_toTopOf="@+id/playerSpBar" />
+
+    <TextView
+        android:id="@+id/enemyHpNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/enemyHpBar"
+        app:layout_constraintStart_toEndOf="@+id/enemyHpBar"
+        app:layout_constraintTop_toTopOf="@+id/enemyHpBar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

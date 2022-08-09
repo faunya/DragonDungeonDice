@@ -59,24 +59,19 @@ public class NPC extends Entity {
         setSp(sp + 1);
         int hit = rand.nextInt(20) + 1 + Entity.calcModifier(dex);
         int dmg = rand.nextInt(6) + 1 + Entity.calcModifier(str);
-
-        if (hit >= ac) { //if hits
-            attack(target, dmg);
-            return name + " attacks " + target.getName() + " for " + String.valueOf(dmg) + " dmg";
+        //System.out.println("ac: " + ac + ", hit: " + hit + ", dmg: " + dmg);
+        if (hit < ac) { //if misses
+            return name + " swings at " + target.getName() + " but misses completely";
         }
-        //if misses
-        int textChoice = rand.nextInt(2);
-        String text;
-        if (textChoice == 0) {
-            text = name + " swings at " + target.getName() + " but misses completely";
-        } else {
-            text = name + " attacks " + target.getName() + " but their armor deflects the blow";
+        if (dmg <= 0) { //0 dmg
+            return name + " attacks " + target.getName() + " but their armor deflects the blow";
         }
-        return text;
+        attack(target, dmg);
+        return name + " attacks " + target.getName() + " for " + String.valueOf(dmg) + " dmg";
     }
 
-    public static SimpleEnemy createGoblin() {
-        SimpleEnemy goblin = new SimpleEnemy("Goblin", 7, 3);
+    public static MeleeGoblin createMeleeGoblin() {
+        MeleeGoblin goblin = new MeleeGoblin("Goblin", 7, 3);
         List<String> dialog = new ArrayList<>();
 
         dialog.add("*screeches*");
@@ -92,6 +87,8 @@ public class NPC extends Entity {
         goblin.setWis(8);
         goblin.setInte(10);
         goblin.setSpd(12);
+
+        goblin.setXp(12);
 
         goblin.setImg(R.drawable.goblinsword);
 

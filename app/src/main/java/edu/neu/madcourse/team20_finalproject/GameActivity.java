@@ -33,7 +33,7 @@ import edu.neu.madcourse.team20_finalproject.gameRecycler.ActLogViewAdapter;
 
 public class GameActivity extends AppCompatActivity {
     private SharedPreferences sharedPref;
-    private int roomNum;
+    private List<Room> roomList;
 
     private ActivityResultLauncher rollResultLauncher;
     private ActLogViewAdapter actLogAdapter;
@@ -55,8 +55,11 @@ public class GameActivity extends AppCompatActivity {
     //views
     private TextView enemyNameTV;
     private ProgressBar enemyHPBar;
+    private TextView enemyHPNumTv;
     private ProgressBar hpBar;
     private ProgressBar spBar;
+    private TextView hpNumTV;
+    private TextView spNumTV;
 
     private int diceResult;
     private boolean paused;
@@ -72,7 +75,7 @@ public class GameActivity extends AppCompatActivity {
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
-                        diceResult = data.getIntExtra("roll", 1);
+                        diceResult = data.getIntExtra("roll", 0);
                     } else {
                         diceResult = 1;
                     }
@@ -86,13 +89,18 @@ public class GameActivity extends AppCompatActivity {
         actLogRV.setLayoutManager(new LinearLayoutManager(this));
         actLogRV.setAdapter(actLogAdapter);
 
+        //buttons
         atkBtn = findViewById(R.id.attackBtn);
         abilBtn = findViewById(R.id.ablBtn);
         itmBtn = findViewById(R.id.itemBtn);
         runBtn = findViewById(R.id.runBtn);
 
+        //hp and sp views
+        hpNumTV = findViewById(R.id.hpNum);
+        spNumTV = findViewById(R.id.spNum);
         hpBar = findViewById(R.id.playerHpBar);
         spBar = findViewById(R.id.playerSpBar);
+        enemyNameTV = findViewById(R.id.enemyHpNum);
         enemyHPBar = findViewById(R.id.enemyHpBar);
         enemyNameTV = findViewById(R.id.enemyName);
 
@@ -109,20 +117,30 @@ public class GameActivity extends AppCompatActivity {
 
     public void onAttack(View view) {
         if (turnList.get(turn).equals(player) && !paused) {
-            int dmg = 0;
-            int ac = curRoom.getNpcList().get(0).getArmorClass();
+            NPC enemy = curRoom.getNpcList().get(0);
+            int ac = enemy.getArmorClass();
+            StringBuilder builder = new StringBuilder();
+
+            int dmg = 1;//diceResult;
             //Intent intent = new Intent(this, DiceRollScreen.activity);
         /*
         Sends ac to dice rolling screen
         if roll is equal to or above ac, then it rolls again for dmg
         returns dmg value here
          */
-            player.attack(curRoom.getNpcList().get(0), dmg);
-            actLog.add(new Message(System.currentTimeMillis(),
-                    player.getName() + " attacked " + curRoom.getNpcList().get(0).getName()
-                            + " for " + dmg + "dmg" ));
-            actLogAdapter.notifyItemInserted(actLog.size() - 1);
+            if (dmg <= 0) { //misses or dmg was 0
+                builder.append(player.getName() + "'s attack on " + enemy.getName() + " misses");
+            } else { //attack hits
+                builder.append(player.getName() + " attacked " + enemy.getName()
+                        + " for " + dmg + "dmg");
+                player.attack(enemy, dmg);
+            }
 
+            actLog.add(new Message(System.currentTimeMillis(), builder.toString()));
+            actLogAdapter.notifyItemInserted(actLog.size() - 1);
+            actLogScroll();
+
+            updateEnemyHp(enemy.getHp());
             nextTurn();
         }
     }
@@ -151,6 +169,7 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    //save and load data
     private void saveData() {
         saveRoom();
         savePlayer();
@@ -237,24 +256,30 @@ public class GameActivity extends AppCompatActivity {
         editor.putInt("eInt",enemy.getInte());
         editor.putInt("eSpd",enemy.getSpd());
 
+        System.out.println("enemy hp: " + enemy.getHp());
+        System.out.println("enemy name: " + enemy.getName());
+
         editor.putStringSet("eDialog", new HashSet<String>(enemy.getDialog()));
+
+        editor.commit();
     }
 
     private NPC loadEnemy() {
         String name = sharedPref.getString("eName", "Monster");
         int ac = sharedPref.getInt("eAc",8);
-        int maxHp = sharedPref.getInt("maxHp",10);
-        int maxSp = sharedPref.getInt("maxSp",5);
-        int hp = sharedPref.getInt("hp",10);
-        int sp = sharedPref.getInt("sp",5);
-        int str = sharedPref.getInt("str",1);
-        int dex = sharedPref.getInt("dex",1);
-        int vit = sharedPref.getInt("vit",1);
-        int wis = sharedPref.getInt("wis",1);
-        int inte = sharedPref.getInt("int",1);
-        int spd = sharedPref.getInt("spd",1);
+        int maxHp = sharedPref.getInt("eMaxHp",10);
+        int maxSp = sharedPref.getInt("eMaxSp",5);
+        int hp = sharedPref.getInt("eHp",10);
+        int sp = sharedPref.getInt("eSp",5);
+        int str = sharedPref.getInt("eStr",1);
+        int dex = sharedPref.getInt("eDex",1);
+        int vit = sharedPref.getInt("eVit",1);
+        int wis = sharedPref.getInt("eWis",1);
+        int inte = sharedPref.getInt("eInt",1);
+        int spd = sharedPref.getInt("eSpd",1);
 
         NPC enemy = new NPC(name, maxHp, maxSp);
+
         enemy.setHp(hp);
         enemy.setSp(sp);
         enemy.setArmorClass(ac);
@@ -334,6 +359,7 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
+    //update hp, sp bars and enemy name
     private void updateMaxHp(int maxHp) {
         hpBar.post(new Runnable() {
             @Override
@@ -348,6 +374,24 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void run() {
                 hpBar.setProgress(hp);
+            }
+        });
+    }
+
+    private void updateMaxSp(int maxSp) {
+        spBar.post(new Runnable() {
+            @Override
+            public void run() {
+                spBar.setMax(maxSp);
+            }
+        });
+    }
+
+    private void updateSp(int sp) {
+        spBar.post(new Runnable() {
+            @Override
+            public void run() {
+                spBar.setProgress(sp);
             }
         });
     }
@@ -386,10 +430,14 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     *
+     */
     private class GameThread implements Runnable {
 
         @Override
         public void run() {
+            roomList = Room.getLevels();
             if (sharedPref.getBoolean("firstStart", true)) {
                 createPlayer();
                 curRoom = Room.room1();
@@ -405,26 +453,30 @@ public class GameActivity extends AppCompatActivity {
             }
 
             turnSetup();
+            updateMaxHp(player.getMaxHp());
+            updateHP(player.getHp());
+            updateMaxSp(player.getMaxSp());
+            updateSp(player.getSp());
+
+            Entity enemy = curRoom.getNpcList().get(0);
+            updateEnemyName(enemy.getName());
+            updateEnemyMaxHp(enemy.getMaxHp());
+            updateEnemyHp(enemy.getHp());
+
             notifyRoomChange();
 
             while (!paused) { //can change to variable so you can pause game later
                 Entity eTurn = turnList.get(turn);
 
                 if (!eTurn.equals(player)) {
-
-                    System.out.println("eturn " + eTurn);
                     NPC npc = (NPC) eTurn;
-
-                    System.out.println("npc " + npc);
-                    System.out.println(npc.getName());
-                    System.out.println(player.getName());
-
                     if (npc.isDead()) {
 
                     }
 
                     sleepThread(500);
                     String text = npc.behavior(player, player.getArmorClass());
+                    updateHP(player.getHp());
                     actLog.add(new Message(System.currentTimeMillis(), text));
                     actLogAdapter.notifyItemInserted(actLog.size() - 1);
                     actLogScroll();

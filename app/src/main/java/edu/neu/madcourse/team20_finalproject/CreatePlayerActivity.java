@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import edu.neu.madcourse.team20_finalproject.game.ingame.entity.Entity;
@@ -96,13 +97,13 @@ public class CreatePlayerActivity extends AppCompatActivity {
     }
 
     public void onFinish(View view) {
-
-        System.out.println("char name" + charNameTV.getText());
         if (strTV.getText().toString().equals("-") || dexTV.getText().toString().equals("-")
                 || vitTV.getText().toString().equals("-") || wisTV.getText().toString().equals("-")
                 || intTV.getText().toString().equals("-") || spdTV.getText().toString().equals("-")
                 || charNameTV.getText().toString().equals("")) {
-            Snackbar snackbar;
+            Snackbar snackbar = Snackbar.make(findViewById(R.id.charCreationScreen),
+                    "Please roll for all stats and name your character", BaseTransientBottomBar.LENGTH_LONG);
+            snackbar.show();
         } else {
             Intent intent = new Intent(this, GameActivity.class);
             intent.putExtra("str", Integer.parseInt(strTV.getText().toString()));
@@ -142,14 +143,15 @@ public class CreatePlayerActivity extends AppCompatActivity {
 
     private void onRoll(String stat) {
         selected = stat;
-        //diceResult = 10;
+        diceResult = 10;
 
+        /*
         Intent intent = new Intent(this, DiceRolling.class);
-        intent.putExtra("type",5);
-        intent.putExtra("ac",0);
+        intent.putExtra("type", 5);
+        intent.putExtra("ac", 0);
         rollResultLauncher.launch(intent);
 
-
+         */
 
         setStat();
     }
@@ -164,14 +166,14 @@ public class CreatePlayerActivity extends AppCompatActivity {
                 return;
             case "vit":
                 vitTV.setText(String.valueOf(diceResult));
-                hpTV.setText(String.valueOf(Entity.calcModifier(diceResult) + 10));
+                hpTV.setText(String.valueOf(Entity.calcModifier(diceResult) + 20));
                 return;
             case "int":
                 intTV.setText(String.valueOf(diceResult));
                 return;
             case "wis":
                 wisTV.setText(String.valueOf(diceResult));
-                spTV.setText(String.valueOf(Entity.calcModifier(diceResult) + 5));
+                spTV.setText(String.valueOf(Entity.calcModifier(diceResult) + 10));
                 return;
             case "spd":
                 spdTV.setText(String.valueOf(diceResult));
