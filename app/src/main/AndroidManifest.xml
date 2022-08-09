@@ -16,9 +16,16 @@
         android:theme="@style/Theme.Team20FinalProject"
         tools:targetApi="31">
         <activity
-            android:name=".Achievements"
-            android:screenOrientation="portrait"
+            android:name=".TestDiceForGame"
             android:exported="false" />
+        <activity
+            android:name=".DiceForGame"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Achievements"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Settings"
             android:exported="false"
@@ -48,7 +55,7 @@
         </activity>
         <activity
             android:name=".SkinActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
 
         <meta-data
             android:name="preloaded_fonts"
