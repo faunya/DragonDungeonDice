@@ -120,6 +120,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="TextView"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
@@ -129,6 +130,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="@string/hp"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/playerHpBar"
         app:layout_constraintEnd_toStartOf="@+id/playerHpBar"
         app:layout_constraintTop_toTopOf="@+id/playerHpBar" />
@@ -139,6 +141,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="@string/sp"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/playerSpBar"
         app:layout_constraintEnd_toStartOf="@+id/playerSpBar"
         app:layout_constraintTop_toTopOf="@+id/playerSpBar" />
@@ -159,6 +162,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="0"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="@+id/playerHpBar"
         app:layout_constraintStart_toEndOf="@+id/playerHpBar"
         app:layout_constraintTop_toTopOf="@+id/playerHpBar" />
@@ -169,6 +173,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="0"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/playerSpBar"
         app:layout_constraintStart_toEndOf="@+id/playerSpBar"
         app:layout_constraintTop_toTopOf="@+id/playerSpBar" />
@@ -179,6 +184,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="0"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/enemyHpBar"
         app:layout_constraintStart_toEndOf="@+id/enemyHpBar"
         app:layout_constraintTop_toTopOf="@+id/enemyHpBar" />
@@ -188,6 +194,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="/0"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/enemyHpNum"
         app:layout_constraintStart_toEndOf="@+id/enemyHpNum"
         app:layout_constraintTop_toTopOf="@+id/enemyHpNum" />
@@ -197,6 +204,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="/0"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/hpNum"
         app:layout_constraintStart_toEndOf="@+id/hpNum"
         app:layout_constraintTop_toTopOf="@+id/hpNum" />
@@ -206,6 +214,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="/0"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="@+id/spNum"
         app:layout_constraintStart_toEndOf="@+id/spNum"
         app:layout_constraintTop_toTopOf="@+id/spNum" />
