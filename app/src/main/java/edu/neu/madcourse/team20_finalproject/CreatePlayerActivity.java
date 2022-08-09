@@ -145,7 +145,7 @@ public class CreatePlayerActivity extends AppCompatActivity {
         //diceResult = 10;
 
         Intent intent = new Intent(this, DiceRolling.class);
-        intent.putExtra("type",20);
+        intent.putExtra("type",5);
         intent.putExtra("ac",0);
         rollResultLauncher.launch(intent);
 
