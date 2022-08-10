@@ -361,10 +361,39 @@ public class GameActivity extends AppCompatActivity {
         paused = false;
     }
 
+    private void nextRoom() {
+        turnList.clear();
+        int curRoomNum = curRoom.getRoomNum();
+        if (curRoomNum + 1 != roomList.size()) { //not last level
+
+            curRoom = roomList.get(curRoomNum + 1);
+            turnSetup();
+            notifyRoomChange();
+            return;
+        }
+
+        ending();
+    }
+
+    private void ending() {
+        paused = true;
+        List<String> epilogue = Room.getEpilogue();
+        for (String line : epilogue) {
+            actLog.add(new Message(System.currentTimeMillis(), line));
+            actLogAdapter.notifyItemInserted(actLog.size() - 1);
+            actLogScroll();
+            sleepThread(700);
+        }
+    }
+
     private void turnSetup() {
         turnList = new ArrayList<>();
         if (curRoom.getNpcList().size() != 0) {
             Entity enemy = curRoom.getNpcList().get(0);
+
+            updateEnemyName(enemy.getName());
+            updateEnemyMaxHp(enemy.getMaxHp());
+            updateEnemyHp(enemy.getHp());
 
             if (player.getSpd() > enemy.getSpd()) {
                 turnList.add(player);
@@ -407,12 +436,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void updateSp(int sp) {
-        spBar.post(new Runnable() {
-            @Override
-            public void run() {
-                spBar.setProgress(sp);
-            }
-        });
+        spBar.post(() -> spBar.setProgress(sp));
+        spNumTV.post(() -> spNumTV.setText(String.valueOf(sp)));
     }
 
     private void updateEnemyName(String name) {
@@ -434,29 +459,6 @@ public class GameActivity extends AppCompatActivity {
         enemyHPNumTv.post(() -> enemyHPNumTv.setText(String.valueOf(hp)));
     }
     //----------------------------------------------------------------------------------------------
-
-    private void nextRoom() {
-        turnList.clear();
-        int curRoomNum = curRoom.getRoomNum();
-        if (curRoomNum == roomList.size() - 1) { //last level
-            ending();
-            return;
-        }
-        curRoom = roomList.get(curRoomNum + 1);
-        notifyRoomChange();
-        turnSetup();
-    }
-
-    private void ending() {
-        paused = true;
-        List<String> epilogue = Room.getEpilogue();
-        for (String line : epilogue) {
-            actLog.add(new Message(System.currentTimeMillis(), line));
-            actLogAdapter.notifyItemInserted(actLog.size() - 1);
-            actLogScroll();
-            sleepThread(700);
-        }
-    }
 
     private void sleepThread(long time) {
         try {
@@ -494,19 +496,12 @@ public class GameActivity extends AppCompatActivity {
             updateMaxSp(player.getMaxSp());
             updateSp(player.getSp());
 
-            Entity enemy = curRoom.getNpcList().get(0);
-            updateEnemyName(enemy.getName());
-            updateEnemyMaxHp(enemy.getMaxHp());
-            updateEnemyHp(enemy.getHp());
 
             notifyRoomChange();
 
             while (!paused) { //can change to variable so you can pause game later
-                if (turnList.size() > 0) { //npcs to have their turn
-                    entityAI();
-                } else {
-                    nextRoom();
-                }
+                entityAI();
+
             }
         }
 

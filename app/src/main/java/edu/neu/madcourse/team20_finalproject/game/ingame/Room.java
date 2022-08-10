@@ -89,7 +89,7 @@ public class Room {
 
     public static Room room2() {
         List<String> desc = new ArrayList<>();
-        desc.add("You manage to strike dwn the goblin.");
+        desc.add("You manage to strike down the goblin.");
         desc.add("If your few adventures had taught you anything, if there is one goblin, " +
                 "there is a dozen more somewhere");
         desc.add("Your intuition proves correct as a second goblin comes out the brushes, " +
@@ -99,6 +99,18 @@ public class Room {
         npc.add(NPC.createMeleeGoblin());
         Room room = new Room(npc, desc);
         room.setRoomNum(1);
+
+        return room;
+    }
+
+    public static Room room3() {
+        List<String> desc = new ArrayList<>();
+        desc.add("");
+
+        List<NPC> npc = new ArrayList<>();
+        npc.add(NPC.createMagicGoblin());
+        Room room = new Room(npc, desc);
+        room.setRoomNum(2);
 
         return room;
     }

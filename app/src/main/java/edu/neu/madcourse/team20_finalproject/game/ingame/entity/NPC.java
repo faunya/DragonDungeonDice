@@ -140,7 +140,7 @@ public class NPC extends Entity {
     }
 
     public static MagicGoblin createMagicGoblin() {
-        MagicGoblin goblin = new MagicGoblin("", 7, 4);
+        MagicGoblin goblin = new MagicGoblin("Goblin Conjurer", 7, 4);
 
         goblin.setArmorClass(8);
         goblin.setStr(8);

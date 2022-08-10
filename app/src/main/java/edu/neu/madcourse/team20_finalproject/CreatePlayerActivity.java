@@ -133,41 +133,49 @@ public class CreatePlayerActivity extends AppCompatActivity {
     }
 
     public void onStr(View view) {
-        onRoll("str");
+        if (strTV.getText().toString().equals("-")) {
+            onRoll("str");
+        }
     }
 
     public void onDex(View view) {
-        onRoll("dex");
+        if (dexTV.getText().toString().equals("-")) {
+            onRoll("dex");
+        }
     }
 
     public void onVit(View view) {
-        onRoll("vit");
+        if (vitTV.getText().toString().equals("-")) {
+            onRoll("vit");
+        }
     }
 
     public void onInt(View view) {
-        onRoll("int");
+        if (intTV.getText().toString().equals("-")) {
+            onRoll("int");
+        }
     }
 
     public void onWis(View view) {
-        onRoll("wis");
+        if (wisTV.getText().toString().equals("-")) {
+            onRoll("wis");
+        }
     }
 
     public void onSpd(View view) {
-        onRoll("spd");
+        if (spdTV.getText().toString().equals("-")) {
+            onRoll("spd");
+        }
     }
 
     private void onRoll(String stat) {
         selected = stat;
 
-        diceResult = 10;
-
-        /*
         Intent intent = new Intent(this, DiceForGame.class);
         intent.putExtra("type", 5);
         intent.putExtra("ac", 0);
         rollResultLauncher.launch(intent);
 
-         */
         setStat();
     }
 

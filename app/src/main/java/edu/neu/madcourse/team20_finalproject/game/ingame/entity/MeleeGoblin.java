@@ -17,8 +17,5 @@ public class MeleeGoblin extends NPC {
             return doubleAttack(target, ac);
         } //regular attack
         return super.behavior(target, ac);
-
     }
-
-
 }
