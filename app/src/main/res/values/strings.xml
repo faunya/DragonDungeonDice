@@ -27,7 +27,7 @@
     <string name="atk">Attack</string>
     <string name="itm">Items</string>
     <string name="abl">Abilities</string>
-    <string name="run">Flee</string>
+    <string name="block">Block </string>
     <string name="rest">Rest</string>
 
     <string name="roll">Roll</string>

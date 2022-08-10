@@ -35,6 +35,9 @@ public class DiceForGame extends AppCompatActivity implements SensorEventListene
     private static final String RETRY = "retry";
     private static final String REMAINS = "remains";
     private static final String ROLL = "roll";
+    private static final String FINISHED = "finished";
+
+    private boolean rolled;
 
     private Handler handler;
     private Thread diceRoller;
@@ -62,6 +65,7 @@ public class DiceForGame extends AppCompatActivity implements SensorEventListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dice_for_game);
 
+        rolled = false;
         handler = new Handler();
         diceList = new DiceList();
         gif = findViewById(R.id.d4g_display);
@@ -91,7 +95,11 @@ public class DiceForGame extends AppCompatActivity implements SensorEventListene
             ACLabel.setText("TAP TO EXIT");
         }
 
-        die = diceList.getDie(type);
+        if (ACValue != 0) {
+            die = diceList.getDie(5);
+        } else {
+            die = diceList.getDie(type);
+        }
         gif.setImageResource(die.getImgId());
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -181,6 +189,7 @@ public class DiceForGame extends AppCompatActivity implements SensorEventListene
                     Thread.sleep(ROLLING_TIME);
                     point = die.roll();
                     numberOfRolls -= 1;
+                    rolled = true;
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -215,8 +224,14 @@ public class DiceForGame extends AppCompatActivity implements SensorEventListene
     }
 
     public void tap(View view) {
-        if (numberOfRolls != 0) {
+        if (numberOfRolls != 0 && !rolled) {
             roll();
+        } else if (numberOfRolls == 1 && rolled) {
+            die = diceList.getDie(type);
+            gif.setImageResource(die.getImgId());
+            rolled = false;
+        } else {
+            finish();
         }
     }
 
@@ -225,6 +240,7 @@ public class DiceForGame extends AppCompatActivity implements SensorEventListene
         Intent data = new Intent();
         if (failed) {
             data.putExtra(ROLL, 0);
+            data.putExtra(FINISHED,true);
         } else {
             data.putExtra(ROLL, point);
         }

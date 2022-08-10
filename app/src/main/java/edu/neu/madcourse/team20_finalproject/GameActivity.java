@@ -31,6 +31,11 @@ import edu.neu.madcourse.team20_finalproject.game.system.Message;
 import edu.neu.madcourse.team20_finalproject.gameRecycler.ActLogViewAdapter;
 
 public class GameActivity extends AppCompatActivity {
+    private static final String TYPE = "type";
+    private static final String AC_REQUIREMENT = "ac";
+    private static final String ROLL = "roll";
+    private static final String FINISHED = "finished";
+
     private SharedPreferences sharedPref;
     private List<Room> roomList;
 
@@ -63,6 +68,7 @@ public class GameActivity extends AppCompatActivity {
     private TextView spNumTV;
     private TextView maxSpNumTV;
 
+    private boolean finishedRolling;
     private int diceResult;
     private boolean paused;
 
@@ -72,12 +78,15 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         paused = true;
+        finishedRolling = false;
+        diceResult = 0;
 
         rollResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
-                        diceResult = data.getIntExtra("roll", 0);
+                        diceResult = data.getIntExtra(ROLL, 0);
+                        finishedRolling = data.getBooleanExtra(FINISHED,true);
                     } else {
                         diceResult = 1;
                     }
@@ -127,32 +136,42 @@ public class GameActivity extends AppCompatActivity {
         }
 
         if (turnList.get(turn).equals(player) && !paused) {
-            player.setSp(player.getSp() + 1);
-            NPC enemy = curRoom.getNpcList().get(0);
-            int ac = enemy.getArmorClass();
-            StringBuilder builder = new StringBuilder();
+            Thread atkThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    player.setSp(player.getSp() + 1);
+                    NPC enemy = curRoom.getNpcList().get(0);
+                    int ac = enemy.getArmorClass() - Entity.calcModifier(player.getDex());
+                    StringBuilder builder = new StringBuilder();
 
-            //Intent intent = new Intent(this, DiceRollScreen.activity);
-        /*
-        Sends ac to dice rolling screen
-        if roll is equal to or above ac, then it rolls again for dmg
-        returns dmg value here
-         */
-            int dmg = 1;//diceResult;
-            if (dmg <= 0) { //misses or dmg was 0
-                builder.append(player.getName() + "'s attack on " + enemy.getName() + " misses");
-            } else { //attack hits
-                builder.append(player.getName() + " attacked " + enemy.getName()
-                        + " for " + dmg + "dmg");
-                player.attack(enemy, dmg);
-            }
+                    Intent intent = new Intent(getBaseContext(), DiceForGame.class);
+                    intent.putExtra(TYPE, 2);
+                    intent.putExtra(AC_REQUIREMENT,ac);
+                    rollResultLauncher.launch(intent);
 
-            actLog.add(new Message(System.currentTimeMillis(), builder.toString()));
-            actLogAdapter.notifyItemInserted(actLog.size() - 1);
-            actLogScroll();
+                    while (!finishedRolling) {
+                        sleepThread(100);
+                    }
 
-            updateEnemyHp(enemy.getHp());
-            nextTurn();
+                    int dmg = diceResult;
+                    if (dmg <= 0) { //misses or dmg was 0
+                        builder.append(player.getName() + "'s attack on " + enemy.getName() + " misses");
+                    } else { //attack hits
+                        builder.append(player.getName() + " attacked " + enemy.getName()
+                                + " for " + dmg + "dmg");
+                        player.attack(enemy, dmg);
+                    }
+                    finishedRolling = false;
+
+                    actLog.add(new Message(System.currentTimeMillis(), builder.toString()));
+                    actLogAdapter.notifyItemInserted(actLog.size() - 1);
+                    actLogScroll();
+
+                    updateEnemyHp(enemy.getHp());
+                    nextTurn();
+                }
+            });
+            atkThread.start();
         }
     }
 
@@ -175,7 +194,7 @@ public class GameActivity extends AppCompatActivity {
         //makes small popup appear with list of items
     }
 
-    public void onRun(View view) {
+    public void onBlock(View view) {
         if (turnList.get(turn).equals(player) && !paused) {
 
         }
@@ -356,7 +375,7 @@ public class GameActivity extends AppCompatActivity {
             actLog.add(new Message(System.currentTimeMillis(), desc));
             actLogAdapter.notifyItemInserted(actLog.size() - 1);
             actLogScroll();
-            sleepThread(500);
+            sleepThread(1000);
         }
         paused = false;
     }
@@ -369,6 +388,7 @@ public class GameActivity extends AppCompatActivity {
             curRoom = roomList.get(curRoomNum + 1);
             turnSetup();
             notifyRoomChange();
+            saveData();
             return;
         }
 
@@ -382,7 +402,7 @@ public class GameActivity extends AppCompatActivity {
             actLog.add(new Message(System.currentTimeMillis(), line));
             actLogAdapter.notifyItemInserted(actLog.size() - 1);
             actLogScroll();
-            sleepThread(700);
+            sleepThread(1000);
         }
     }
 
@@ -523,7 +543,7 @@ public class GameActivity extends AppCompatActivity {
                     return;
                 }
 
-                sleepThread(700);
+                sleepThread(1000);
                 String text = npc.behavior(player, player.getArmorClass());
                 updateHP(player.getHp());
                 actLog.add(new Message(System.currentTimeMillis(), text));
