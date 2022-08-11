@@ -192,7 +192,7 @@ public class GameActivity extends AppCompatActivity {
             return;
         }
         if (turnList.get(turn).equals(player) && !paused) {
-
+            Intent intent = new Intent(this, AbilityListActivity.class);
         }
     }
 

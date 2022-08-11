@@ -3,11 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Jay/AndroidStudioProjects/Team20FinalProject/app/src/main/res/layout/ability_layout.xml" value="0.358695652173913" />
         <entry key="..\:/Users/Jay/AndroidStudioProjects/Team20FinalProject/app/src/main/res/layout/act_log_layout.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/Jay/AndroidStudioProjects/Team20FinalProject/app/src/main/res/layout/activity_ability_list.xml" value="0.358695652173913" />
         <entry key="..\:/Users/Jay/AndroidStudioProjects/Team20FinalProject/app/src/main/res/layout/activity_create_player.xml" value="0.358695652173913" />
         <entry key="..\:/Users/Jay/AndroidStudioProjects/Team20FinalProject/app/src/main/res/layout/activity_game.xml" value="0.358695652173913" />
         <entry key="..\:/Users/Jay/AndroidStudioProjects/Team20FinalProject/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
         <entry key="..\:/Users/Jay/AndroidStudioProjects/Team20FinalProject/app/src/main/res/layout/activity_settings.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/Jay/AndroidStudioProjects/Team20FinalProject/app/src/main/res/layout/activity_test_dice_for_game.xml" value="0.358695652173913" />
         <entry key="..\:/final_project/Team20-FinalProject/app/src/main/res/layout/achievement_layout.xml" value="0.25" />
         <entry key="..\:/final_project/Team20-FinalProject/app/src/main/res/layout/achivement_layout.xml" value="0.17074275362318841" />
         <entry key="..\:/final_project/Team20-FinalProject/app/src/main/res/layout/activity_achievements.xml" value="0.22" />

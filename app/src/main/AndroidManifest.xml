@@ -16,6 +16,12 @@
         android:theme="@style/Theme.Team20FinalProject"
         tools:targetApi="31">
         <activity
+            android:name=".CharScreenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AbilityListActivity"
+            android:exported="false" />
+        <activity
             android:name=".TestDiceForGame"
             android:exported="false" />
         <activity
