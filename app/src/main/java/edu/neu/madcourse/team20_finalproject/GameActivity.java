@@ -45,6 +45,7 @@ public class GameActivity extends AppCompatActivity {
 
     private List<Entity> turnList;
     private int turn;
+    private boolean finRest;
 
     private List<Message> actLog;
     private Player player;
@@ -79,6 +80,7 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         paused = true;
+        finRest = false;
         finishedRolling = false;
         diceResult = 0;
 
@@ -156,9 +158,9 @@ public class GameActivity extends AppCompatActivity {
                     }
 
                     int dmg = diceResult + Entity.calcModifier(player.getStr());
-                    if (dmg == 0) { //misses or dmg was 0
+                    if (diceResult == 0) { //misses or dmg was 0
                         builder.append(player.getName() + "'s attack on " + enemy.getName() + " misses");
-                    } else if (dmg < 0) {
+                    } else if (dmg <= 0) {
                         builder.append(player.getName() + "'s attack is deflected");
                     } else { //attack hits
                         builder.append(player.getName() + " attacked " + enemy.getName()
@@ -237,7 +239,8 @@ public class GameActivity extends AppCompatActivity {
                     finishedRolling = false;
 
                     setRestVisible(false);
-                    nextRoom();
+                    finRest = true;
+                    //nextRoom();
                 }
             });
             restThead.start();
@@ -375,9 +378,6 @@ public class GameActivity extends AppCompatActivity {
         editor.putInt("eSpd", enemy.getSpd());
         editor.putInt("eXp", enemy.getXp());
 
-        System.out.println("enemy hp: " + enemy.getHp());
-        System.out.println("enemy name: " + enemy.getName());
-
         editor.putStringSet("eDialog", new HashSet<>(enemy.getDialog()));
 
         editor.apply();
@@ -472,10 +472,10 @@ public class GameActivity extends AppCompatActivity {
         paused = true;
         List<String> epilogue = Room.getEpilogue();
         for (String line : epilogue) {
+            sleepThread(1000);
             actLog.add(new Message(System.currentTimeMillis(), line));
             actLogAdapter.notifyItemInserted(actLog.size() - 1);
             actLogScroll();
-            sleepThread(1000);
         }
     }
 
@@ -563,6 +563,16 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    private void addLog(Message message) {
+        actLog.add(message);
+        actLogRV.post(new Runnable() {
+            @Override
+            public void run() {
+                actLogAdapter.notifyItemInserted(actLog.size() - 1);
+                actLogScroll();
+            }
+        });
+    }
 
     /**
      *
@@ -596,8 +606,12 @@ public class GameActivity extends AppCompatActivity {
             notifyRoomChange();
 
             while (!paused) { //can change to variable so you can pause game later
+                //System.out.println("running");
                 entityAI();
-
+            }
+            while (paused) {
+                System.out.println("paused");
+                sleepThread(100);
             }
         }
 
@@ -605,20 +619,33 @@ public class GameActivity extends AppCompatActivity {
             Entity eTurn = turnList.get(turn);
 
             if (!eTurn.equals(player)) {
+                System.out.println("enemy turn");
                 NPC npc = (NPC) eTurn;
 
                 if (npc.isDead()) {//completed room
                     turnList.remove(npc);
                     turn = 0;
+
                     actLog.add(new Message(System.currentTimeMillis(), "Gained " + npc.getXp() + "xp"));
+                    actLogAdapter.notifyItemInserted(actLog.size() - 1);
+                    actLogScroll();
                     sleepThread(1000);
+
                     if (player.addXP(npc.getXp())) {
                         actLog.add(new Message(System.currentTimeMillis(), "Congrats! Your character is now level " + player.getLv()));
+                        actLogAdapter.notifyItemInserted(actLog.size() - 1);
+                        actLogScroll();
+
                         updateMaxHp(player.getMaxHp());
                         updateMaxSp(player.getMaxSp());
                         sleepThread(1000);
                     }
                     setRestVisible(true);
+                    while (!finRest) {
+                        sleepThread(100);
+                    }
+                    finRest = false;
+                    nextRoom();
                     return;
                 }
 
