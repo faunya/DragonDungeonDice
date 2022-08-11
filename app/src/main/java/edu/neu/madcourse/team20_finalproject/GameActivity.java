@@ -164,7 +164,13 @@ public class GameActivity extends AppCompatActivity {
                     finishedRolling = false;
 
                     actLog.add(new Message(System.currentTimeMillis(), builder.toString()));
-                    actLogAdapter.notifyItemInserted(actLog.size() - 1);
+
+                    actLogRV.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            actLogAdapter.notifyDataSetChanged();//notifyItemInserted(actLog.size() - 1);
+                        }
+                    });
                     actLogScroll();
 
                     updateEnemyHp(enemy.getHp());
@@ -196,7 +202,8 @@ public class GameActivity extends AppCompatActivity {
 
     public void onBlock(View view) {
         if (turnList.get(turn).equals(player) && !paused) {
-
+            player.setBlocking(true);
+            nextTurn();
         }
 
     }
@@ -236,6 +243,9 @@ public class GameActivity extends AppCompatActivity {
         editor.putInt("wis", player.getWis());
         editor.putInt("int", player.getInte());
         editor.putInt("spd", player.getSpd());
+        editor.putBoolean("blocking",player.getBlocking());
+        editor.putInt("xp", player.getXp());
+        editor.putInt("lv", player.getLv());
         editor.apply();
     }
 
@@ -252,6 +262,9 @@ public class GameActivity extends AppCompatActivity {
         int wis = sharedPref.getInt("wis", 1);
         int inte = sharedPref.getInt("int", 1);
         int spd = sharedPref.getInt("spd", 1);
+        int xp = sharedPref.getInt("xp",0);
+        int lv = sharedPref.getInt("lv",1);
+        boolean blocking = sharedPref.getBoolean("blocking", false);
 
         player = new Player(name, maxHp, maxSp, 1);
         player.setArmorClass(ac);
@@ -263,6 +276,9 @@ public class GameActivity extends AppCompatActivity {
         player.setWis(wis);
         player.setInte(inte);
         player.setSpd(spd);
+        player.setBlocking(blocking);
+        player.setXp(xp);
+        player.setLv(lv);
     }
 
     private void saveRoom() {
@@ -305,6 +321,7 @@ public class GameActivity extends AppCompatActivity {
         editor.putInt("eWis", enemy.getWis());
         editor.putInt("eInt", enemy.getInte());
         editor.putInt("eSpd", enemy.getSpd());
+        editor.putInt("eXp", enemy.getXp());
 
         System.out.println("enemy hp: " + enemy.getHp());
         System.out.println("enemy name: " + enemy.getName());
@@ -327,6 +344,7 @@ public class GameActivity extends AppCompatActivity {
         int wis = sharedPref.getInt("eWis", 1);
         int inte = sharedPref.getInt("eInt", 1);
         int spd = sharedPref.getInt("eSpd", 1);
+        int xp = sharedPref.getInt("eXp", 0);
 
         NPC enemy = new NPC(name, maxHp, maxSp);
 
@@ -339,6 +357,7 @@ public class GameActivity extends AppCompatActivity {
         enemy.setWis(wis);
         enemy.setInte(inte);
         enemy.setSpd(spd);
+        enemy.setXp(xp);
 
         enemy.setDialog(new ArrayList<>(sharedPref.getStringSet("eDialog", new HashSet<>())));
 
@@ -381,6 +400,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void nextRoom() {
+        paused = true;
         turnList.clear();
         int curRoomNum = curRoom.getRoomNum();
         if (curRoomNum + 1 != roomList.size()) { //not last level
@@ -389,6 +409,7 @@ public class GameActivity extends AppCompatActivity {
             turnSetup();
             notifyRoomChange();
             saveData();
+            paused = false;
             return;
         }
 
@@ -432,6 +453,9 @@ public class GameActivity extends AppCompatActivity {
             turn = 0;
         } else {
             ++turn;
+        }
+        if (player.getBlocking() == true && turnList.get(turn).equals(player)) {
+            player.setBlocking(false);
         }
     }
 
@@ -533,11 +557,14 @@ public class GameActivity extends AppCompatActivity {
 
                 if (npc.isDead()) {//completed room
                     turnList.remove(npc);
+                    turn = 0;
                     actLog.add(new Message(System.currentTimeMillis(), "Gained " + npc.getXp() + "xp"));
+                    sleepThread(1000);
                     if (player.addXP(npc.getXp())) {
                         actLog.add(new Message(System.currentTimeMillis(), "Congrats! Your character is now level " + player.getLv()));
                         updateMaxHp(player.getMaxHp());
                         updateMaxSp(player.getMaxSp());
+                        sleepThread(1000);
                     }
                     nextRoom();
                     return;
@@ -549,6 +576,14 @@ public class GameActivity extends AppCompatActivity {
                 actLog.add(new Message(System.currentTimeMillis(), text));
                 actLogAdapter.notifyItemInserted(actLog.size() - 1);
                 actLogScroll();
+
+                if (player.getBlocking()) {
+                    sleepThread(1000);
+                    actLog.add(new Message(System.currentTimeMillis(), player.getName() + " was blocking and takes reduced damage"));
+
+                    actLogAdapter.notifyItemInserted(actLog.size() - 1);
+                    actLogScroll();
+                }
 
                 nextTurn();
             }

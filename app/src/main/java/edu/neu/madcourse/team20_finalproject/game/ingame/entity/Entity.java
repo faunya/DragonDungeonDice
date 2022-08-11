@@ -86,6 +86,10 @@ public abstract class Entity {
         this.blocking = block;
     }
 
+    public boolean getBlocking() {
+        return this.blocking;
+    }
+
     public String getName() {
         return name;
     }

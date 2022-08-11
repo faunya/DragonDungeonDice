@@ -21,6 +21,14 @@ public class Player extends Entity {
         this.xp = 0;
     }
 
+    public void setXp(int xp) {
+        this.xp = xp;
+    }
+
+    public int getXp() {
+        return xp;
+    }
+
     /**
      *
      * @param gain
@@ -52,6 +60,10 @@ public class Player extends Entity {
 
     public int getLv() {
         return lv;
+    }
+
+    public void setLv(int lv) {
+        this.lv = lv;
     }
 
     public String getPClass() {
