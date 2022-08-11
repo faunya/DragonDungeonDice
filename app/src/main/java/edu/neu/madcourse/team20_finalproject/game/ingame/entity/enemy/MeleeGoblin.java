@@ -1,6 +1,9 @@
-package edu.neu.madcourse.team20_finalproject.game.ingame.entity;
+package edu.neu.madcourse.team20_finalproject.game.ingame.entity.enemy;
 
 import java.util.Random;
+
+import edu.neu.madcourse.team20_finalproject.game.ingame.entity.Entity;
+import edu.neu.madcourse.team20_finalproject.game.ingame.entity.NPC;
 
 public class MeleeGoblin extends NPC {
 

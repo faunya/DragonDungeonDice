@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Random;
 
 import edu.neu.madcourse.team20_finalproject.R;
+import edu.neu.madcourse.team20_finalproject.game.ingame.entity.enemy.MagicGoblin;
+import edu.neu.madcourse.team20_finalproject.game.ingame.entity.enemy.MeleeGoblin;
 
 public class NPC extends Entity {
     protected Random rand;

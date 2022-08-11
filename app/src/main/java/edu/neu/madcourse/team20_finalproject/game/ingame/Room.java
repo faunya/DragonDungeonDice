@@ -63,6 +63,7 @@ public class Room {
         List<Room> roomList = new ArrayList<>();
         roomList.add(room1());
         roomList.add(room2());
+        roomList.add(room3());
 
         return roomList;
     }
@@ -105,12 +106,32 @@ public class Room {
 
     public static Room room3() {
         List<String> desc = new ArrayList<>();
-        desc.add("");
+        desc.add("You continue on deeper into the forest.");
+        desc.add("After traveling a bit, you stop to take a quick rest and a drink.");
+        desc.add("A fireball shoots past you, nearly hitting your head.");
+        desc.add("You turn around and there stand a goblin in a tattered cloak, " +
+                "in the middle conjuring a second fireball");
 
         List<NPC> npc = new ArrayList<>();
         npc.add(NPC.createMagicGoblin());
         Room room = new Room(npc, desc);
         room.setRoomNum(2);
+
+        return room;
+    }
+
+    public static Room room4() {
+        List<String> desc = new ArrayList<>();
+        desc.add("You slay the goblin conjurer.");
+        desc.add("'A goblin that can use magic? Quite usual,' you think to youself.");
+        desc.add("Something seems off about that.");
+        desc.add("Goblins are too stupid and have a low affinity for traditional magic like the conjurer was using.");
+        desc.add("You continue on towards the ruins in order to investigate what may be the cause.");
+
+        List<NPC> npc = new ArrayList<>();
+
+        Room room = new Room(npc, desc);
+        room.setRoomNum(3);
 
         return room;
     }
