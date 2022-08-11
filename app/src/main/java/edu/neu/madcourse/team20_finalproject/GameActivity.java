@@ -54,7 +54,8 @@ public class GameActivity extends AppCompatActivity {
     private Button atkBtn;
     private Button abilBtn;
     private Button itmBtn;
-    private Button runBtn;
+    private Button blockBtn;
+    private Button restBtn;
 
     //views
     private TextView enemyNameTV;
@@ -86,7 +87,7 @@ public class GameActivity extends AppCompatActivity {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
                         diceResult = data.getIntExtra(ROLL, 0);
-                        finishedRolling = data.getBooleanExtra(FINISHED,true);
+                        finishedRolling = data.getBooleanExtra(FINISHED, true);
                     } else {
                         diceResult = 1;
                     }
@@ -104,7 +105,8 @@ public class GameActivity extends AppCompatActivity {
         atkBtn = findViewById(R.id.attackBtn);
         abilBtn = findViewById(R.id.ablBtn);
         itmBtn = findViewById(R.id.itemBtn);
-        runBtn = findViewById(R.id.runBtn);
+        blockBtn = findViewById(R.id.runBtn);
+        restBtn = findViewById(R.id.restBtn);
 
         //hp and sp views
         hpNumTV = findViewById(R.id.hpNum);
@@ -146,20 +148,23 @@ public class GameActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(getBaseContext(), DiceForGame.class);
                     intent.putExtra(TYPE, 2);
-                    intent.putExtra(AC_REQUIREMENT,ac);
+                    intent.putExtra(AC_REQUIREMENT, ac);
                     rollResultLauncher.launch(intent);
 
                     while (!finishedRolling) {
                         sleepThread(100);
                     }
 
-                    int dmg = diceResult;
-                    if (dmg <= 0) { //misses or dmg was 0
+                    int dmg = diceResult + Entity.calcModifier(player.getStr());
+                    if (dmg == 0) { //misses or dmg was 0
                         builder.append(player.getName() + "'s attack on " + enemy.getName() + " misses");
+                    } else if (dmg < 0) {
+                        builder.append(player.getName() + "'s attack is deflected");
                     } else { //attack hits
                         builder.append(player.getName() + " attacked " + enemy.getName()
                                 + " for " + dmg + "dmg");
                         player.attack(enemy, dmg);
+                        updateEnemyHp(enemy.getHp());
                     }
                     finishedRolling = false;
 
@@ -173,7 +178,6 @@ public class GameActivity extends AppCompatActivity {
                     });
                     actLogScroll();
 
-                    updateEnemyHp(enemy.getHp());
                     nextTurn();
                 }
             });
@@ -209,7 +213,55 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void onRest(View view) {
+        if (!paused) {
+            Thread restThead = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    StringBuilder builder = new StringBuilder();
 
+                    Intent intent = new Intent(getBaseContext(), DiceForGame.class);
+                    intent.putExtra(TYPE, 4);
+                    intent.putExtra(AC_REQUIREMENT, 0);
+                    rollResultLauncher.launch(intent);
+
+                    while (!finishedRolling) {
+                        sleepThread(100);
+                    }
+
+                    int hp = diceResult + Entity.calcModifier(player.getVit());
+                    player.heal(hp);
+                    player.setSp(player.getMaxSp());
+
+                    actLog.add(new Message(System.currentTimeMillis(),
+                            "You rest for a bit and heal " + String.valueOf(hp) + " hp"));
+                    finishedRolling = false;
+
+                    setRestVisible(false);
+                    nextRoom();
+                }
+            });
+            restThead.start();
+        }
+    }
+
+    private void setRestVisible(boolean visible) {
+        restBtn.post(() -> {
+            if (visible) {
+                atkBtn.setVisibility(View.GONE);
+                abilBtn.setVisibility(View.GONE);
+                itmBtn.setVisibility(View.GONE);
+                blockBtn.setVisibility(View.GONE);
+
+                restBtn.setVisibility(View.VISIBLE);
+            } else {
+                restBtn.setVisibility(View.GONE);
+
+                atkBtn.setVisibility(View.VISIBLE);
+                abilBtn.setVisibility(View.VISIBLE);
+                itmBtn.setVisibility(View.VISIBLE);
+                blockBtn.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     //save and load data----------------------------------------------------------------------------
@@ -243,7 +295,7 @@ public class GameActivity extends AppCompatActivity {
         editor.putInt("wis", player.getWis());
         editor.putInt("int", player.getInte());
         editor.putInt("spd", player.getSpd());
-        editor.putBoolean("blocking",player.getBlocking());
+        editor.putBoolean("blocking", player.getBlocking());
         editor.putInt("xp", player.getXp());
         editor.putInt("lv", player.getLv());
         editor.apply();
@@ -262,8 +314,8 @@ public class GameActivity extends AppCompatActivity {
         int wis = sharedPref.getInt("wis", 1);
         int inte = sharedPref.getInt("int", 1);
         int spd = sharedPref.getInt("spd", 1);
-        int xp = sharedPref.getInt("xp",0);
-        int lv = sharedPref.getInt("lv",1);
+        int xp = sharedPref.getInt("xp", 0);
+        int lv = sharedPref.getInt("lv", 1);
         boolean blocking = sharedPref.getBoolean("blocking", false);
 
         player = new Player(name, maxHp, maxSp, 1);
@@ -566,7 +618,7 @@ public class GameActivity extends AppCompatActivity {
                         updateMaxSp(player.getMaxSp());
                         sleepThread(1000);
                     }
-                    nextRoom();
+                    setRestVisible(true);
                     return;
                 }
 
