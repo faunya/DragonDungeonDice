@@ -61,6 +61,7 @@ public class Room {
 
     public static List<Room> getLevels() {
         List<Room> roomList = new ArrayList<>();
+        roomList.add(room0());
         roomList.add(room1());
         roomList.add(room2());
         roomList.add(room3());
@@ -68,7 +69,7 @@ public class Room {
         return roomList;
     }
 
-    public static Room room1() {
+    public static Room room0() {
         List<String> desc = new ArrayList<>();
         desc.add("You are an adventurer who has been doing quests for a while.");
         desc.add("Your latest quest has been to check out some ruins near the town.");
@@ -88,7 +89,7 @@ public class Room {
         return room;
     }
 
-    public static Room room2() {
+    public static Room room1() {
         List<String> desc = new ArrayList<>();
         desc.add("You manage to strike down the goblin.");
         desc.add("If your few adventures had taught you anything, if there is one goblin, " +
@@ -104,7 +105,7 @@ public class Room {
         return room;
     }
 
-    public static Room room3() {
+    public static Room room2() {
         List<String> desc = new ArrayList<>();
         desc.add("You continue on deeper into the forest.");
         desc.add("After traveling a bit, you stop to take a quick rest and a drink.");
@@ -120,19 +121,77 @@ public class Room {
         return room;
     }
 
-    public static Room room4() {
+    public static Room room3() {
         List<String> desc = new ArrayList<>();
         desc.add("You slay the goblin conjurer.");
         desc.add("'A goblin that can use magic? Quite usual,' you think to youself.");
         desc.add("Something seems off about that.");
         desc.add("Goblins are too stupid and have a low affinity for traditional magic like the conjurer was using.");
         desc.add("You continue on towards the ruins in order to investigate what may be the cause.");
+        desc.add("");
+        desc.add("You can see the ruins in the distance before you see two flashes in the corner of your eye.");
+        desc.add("Ducking, you manage to dodge two fireballs that were aimed at you.");
+        desc.add("There stands another goblin conjurer.");
 
         List<NPC> npc = new ArrayList<>();
-
+        npc.add(NPC.createMagicGoblin());
         Room room = new Room(npc, desc);
         room.setRoomNum(3);
 
+        return room;
+    }
+
+    public static Room room4() {
+        List<String> desc = new ArrayList<>();
+
+        List<NPC> npc = new ArrayList<>();
+        Room room = new Room(npc, desc);
+        room.setRoomNum(4);
+        return room;
+    }
+
+    public static Room room5() {
+        List<String> desc = new ArrayList<>();
+
+        List<NPC> npc = new ArrayList<>();
+        Room room = new Room(npc, desc);
+        room.setRoomNum(4);
+        return room;
+    }
+
+    public static Room room6() {
+        List<String> desc = new ArrayList<>();
+
+        List<NPC> npc = new ArrayList<>();
+        Room room = new Room(npc, desc);
+        room.setRoomNum(4);
+        return room;
+    }
+
+    public static Room room7() {
+        List<String> desc = new ArrayList<>();
+
+        List<NPC> npc = new ArrayList<>();
+        Room room = new Room(npc, desc);
+        room.setRoomNum(4);
+        return room;
+    }
+
+    public static Room room8() {
+        List<String> desc = new ArrayList<>();
+
+        List<NPC> npc = new ArrayList<>();
+        Room room = new Room(npc, desc);
+        room.setRoomNum(4);
+        return room;
+    }
+
+    public static Room room9() {
+        List<String> desc = new ArrayList<>();
+
+        List<NPC> npc = new ArrayList<>();
+        Room room = new Room(npc, desc);
+        room.setRoomNum(4);
         return room;
     }
 

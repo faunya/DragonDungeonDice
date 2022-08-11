@@ -584,7 +584,7 @@ public class GameActivity extends AppCompatActivity {
             roomList = Room.getLevels();
             if (sharedPref.getBoolean("firstStart", true)) {
                 createPlayer();
-                curRoom = Room.room1();
+                curRoom = Room.room0();
 
                 SharedPreferences.Editor prefEdit = sharedPref.edit();
                 prefEdit.putBoolean("firstStart", false);
