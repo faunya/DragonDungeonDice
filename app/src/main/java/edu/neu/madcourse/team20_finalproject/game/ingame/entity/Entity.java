@@ -1,5 +1,7 @@
 package edu.neu.madcourse.team20_finalproject.game.ingame.entity;
 
+import android.content.SharedPreferences;
+
 import edu.neu.madcourse.team20_finalproject.game.ingame.item.Armor;
 import edu.neu.madcourse.team20_finalproject.game.ingame.item.Weapon;
 

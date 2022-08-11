@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import edu.neu.madcourse.team20_finalproject.game.ingame.Room;
+import edu.neu.madcourse.team20_finalproject.game.ingame.ability.Ability;
 import edu.neu.madcourse.team20_finalproject.game.ingame.entity.Entity;
 import edu.neu.madcourse.team20_finalproject.game.ingame.entity.NPC;
 import edu.neu.madcourse.team20_finalproject.game.ingame.entity.Player;
@@ -35,9 +36,13 @@ public class GameActivity extends AppCompatActivity {
     private static final String AC_REQUIREMENT = "ac";
     private static final String ROLL = "roll";
     private static final String FINISHED = "finished";
+    private static final String ABILITY = "ability";
 
     private SharedPreferences sharedPref;
     private List<Room> roomList;
+
+    private ActivityResultLauncher abilityResultLauncher;
+    private int abilityChosen;
 
     private ActivityResultLauncher rollResultLauncher;
     private ActLogViewAdapter actLogAdapter;
@@ -46,6 +51,9 @@ public class GameActivity extends AppCompatActivity {
     private List<Entity> turnList;
     private int turn;
     private boolean finRest;
+
+    private List<Ability> abilityList;
+    private static boolean finishedActivity;
 
     private List<Message> actLog;
     private Player player;
@@ -92,6 +100,19 @@ public class GameActivity extends AppCompatActivity {
                         finishedRolling = data.getBooleanExtra(FINISHED, true);
                     } else {
                         diceResult = 1;
+                        finishedRolling = true;
+                    }
+                });
+
+        abilityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        Intent data = result.getData();
+                        abilityChosen = data.getIntExtra(ABILITY,-1);
+                        finishedActivity = data.getBooleanExtra(FINISHED, true);
+                    } else {
+                        abilityChosen = -1;
+                        finishedActivity = true;
                     }
                 });
 
@@ -149,7 +170,7 @@ public class GameActivity extends AppCompatActivity {
                     StringBuilder builder = new StringBuilder();
 
                     Intent intent = new Intent(getBaseContext(), DiceForGame.class);
-                    intent.putExtra(TYPE, 2);
+                    intent.putExtra(TYPE, 1);
                     intent.putExtra(AC_REQUIREMENT, ac);
                     rollResultLauncher.launch(intent);
 
@@ -192,7 +213,25 @@ public class GameActivity extends AppCompatActivity {
             return;
         }
         if (turnList.get(turn).equals(player) && !paused) {
-            Intent intent = new Intent(this, AbilityListActivity.class);
+            Thread abilThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    NPC enemy = curRoom.getNpcList().get(0);
+                    Intent intent = new Intent(getBaseContext(), AbilityListActivity.class);
+                    abilityResultLauncher.launch(intent);
+
+                    while (!finishedActivity) {
+                        sleepThread(100);
+                    }
+
+                    if (abilityChosen == -1) {
+                        return;
+                    } else {
+                        abilityList.get(abilityChosen).use(enemy, enemy.getArmorClass());
+                    }
+                }
+            });
+            abilThread.start();
         }
     }
 
@@ -230,9 +269,17 @@ public class GameActivity extends AppCompatActivity {
                         sleepThread(100);
                     }
 
-                    int hp = diceResult + Entity.calcModifier(player.getVit());
+                    int modifier = Entity.calcModifier(player.getVit());
+                    if (modifier < 0) {
+                        modifier = 0;
+                    }
+                    int hp = diceResult + modifier;
+
+                    System.out.println("before " +player.getHp());
                     player.heal(hp);
                     player.setSp(player.getMaxSp());
+                    System.out.println("after " + player.getHp());
+                    updateHP(player.getHp());
 
                     actLog.add(new Message(System.currentTimeMillis(),
                             "You rest for a bit and heal " + String.valueOf(hp) + " hp"));
@@ -378,7 +425,7 @@ public class GameActivity extends AppCompatActivity {
         editor.putInt("eSpd", enemy.getSpd());
         editor.putInt("eXp", enemy.getXp());
 
-        editor.putStringSet("eDialog", new HashSet<>(enemy.getDialog()));
+        //editor.putStringSet("eDialog", new HashSet<>(enemy.getDialog()));
 
         editor.apply();
     }
@@ -411,7 +458,7 @@ public class GameActivity extends AppCompatActivity {
         enemy.setSpd(spd);
         enemy.setXp(xp);
 
-        enemy.setDialog(new ArrayList<>(sharedPref.getStringSet("eDialog", new HashSet<>())));
+        //enemy.setDialog(new ArrayList<>(sharedPref.getStringSet("eDialog", new HashSet<>())));
 
         return enemy;
     }
@@ -602,6 +649,7 @@ public class GameActivity extends AppCompatActivity {
             updateMaxSp(player.getMaxSp());
             updateSp(player.getSp());
 
+            abilityList = Ability.genAbilList(player);
 
             notifyRoomChange();
 
@@ -610,7 +658,7 @@ public class GameActivity extends AppCompatActivity {
                 entityAI();
             }
             while (paused) {
-                System.out.println("paused");
+                //System.out.println("paused");
                 sleepThread(100);
             }
         }
@@ -619,7 +667,7 @@ public class GameActivity extends AppCompatActivity {
             Entity eTurn = turnList.get(turn);
 
             if (!eTurn.equals(player)) {
-                System.out.println("enemy turn");
+                //System.out.println("enemy turn");
                 NPC npc = (NPC) eTurn;
 
                 if (npc.isDead()) {//completed room

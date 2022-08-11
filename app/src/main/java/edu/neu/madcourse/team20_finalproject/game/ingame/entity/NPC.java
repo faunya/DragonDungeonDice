@@ -112,7 +112,7 @@ public class NPC extends Entity {
                 return name + " shoots a fireball but "
                         + target.getName() + " manages to dodge out of the way";
             }
-            return name + " launches a fireball at " + target.getName() + "but misses";
+            return name + " launches a fireball at " + target.getName() + " but misses";
         }
     }
 

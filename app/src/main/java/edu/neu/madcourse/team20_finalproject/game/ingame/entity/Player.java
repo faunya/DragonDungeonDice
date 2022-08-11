@@ -2,6 +2,9 @@ package edu.neu.madcourse.team20_finalproject.game.ingame.entity;
 
 import android.os.Parcel;
 
+import java.util.List;
+
+import edu.neu.madcourse.team20_finalproject.game.ingame.ability.Ability;
 import edu.neu.madcourse.team20_finalproject.game.ingame.item.Armor;
 import edu.neu.madcourse.team20_finalproject.game.ingame.item.Weapon;
 
