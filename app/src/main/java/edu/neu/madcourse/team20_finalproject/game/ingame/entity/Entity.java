@@ -164,6 +164,8 @@ public abstract class Entity {
         this.sp = sp;
         if (this.sp > maxSp) {
             this.sp = maxSp;
+        } else if (sp < 0) {
+            this.sp = 0;
         }
     }
 
@@ -238,5 +240,23 @@ public abstract class Entity {
 
     public Armor getBoots() {
         return boots;
+    }
+
+    public int getStat(int stat) {
+        switch (stat) {
+            case 0:
+                return str;
+            case 1:
+                return dex;
+            case 2:
+                return vit;
+            case 3:
+                return inte;
+            case 4:
+                return wis;
+            case 5:
+            default:
+                return spd;
+        }
     }
 }

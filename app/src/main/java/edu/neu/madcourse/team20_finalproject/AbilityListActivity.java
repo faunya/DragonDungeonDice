@@ -11,6 +11,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.View;
+
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -65,10 +69,25 @@ public class AbilityListActivity extends AppCompatActivity implements AbilListAd
                 });
     }
 
+    public void onExitClick(View view) {
+        selected = -1;
+        finish();
+    }
+
     @Override
     public void onItemClick(int pos) {
-        selected = pos;
-        finish();
+        if (player.getSp() >= abilityList.get(pos).getCost()) {
+            selected = pos;
+            player.setSp(player.getSp() - abilityList.get(pos).getCost());
+            System.out.println("SP " + player.getSp());
+            savePlayer();
+            finish();
+        } else {
+            Snackbar.make(findViewById(R.id.abilityScreen),
+                    "You don't have enough SP to use this", BaseTransientBottomBar.LENGTH_LONG)
+                    .show();
+
+        }
     }
 
     @Override

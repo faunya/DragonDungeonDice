@@ -217,17 +217,49 @@ public class GameActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     NPC enemy = curRoom.getNpcList().get(0);
-                    Intent intent = new Intent(getBaseContext(), AbilityListActivity.class);
-                    abilityResultLauncher.launch(intent);
+                    Intent abilIntent = new Intent(getBaseContext(), AbilityListActivity.class);
+                    abilityResultLauncher.launch(abilIntent);
 
                     while (!finishedActivity) {
                         sleepThread(100);
                     }
+                    finishedActivity = false;
 
-                    if (abilityChosen == -1) {
+                    if (abilityChosen == -1) { //canceled or closed out of activity without selecting
                         return;
-                    } else {
-                        abilityList.get(abilityChosen).use(enemy, enemy.getArmorClass());
+                    } else { //selected
+                        //loadPlayer();
+                        player.setSp(sharedPref.getInt("sp",10));
+                        updateSp(player.getSp());
+
+                        Ability selectedAbility = abilityList.get(abilityChosen);
+                        Intent rollIntent = new Intent(getBaseContext(), DiceForGame.class);
+                        rollIntent.putExtra(TYPE, selectedAbility.getDiceType());
+                        rollIntent.putExtra(AC_REQUIREMENT, enemy.getArmorClass() - Entity.calcModifier(player.getDex()));
+                        rollResultLauncher.launch(rollIntent);
+
+                        while (!finishedRolling) {
+                            sleepThread(100);
+                        }
+
+                        StringBuilder builder = new StringBuilder();
+                        builder.append(player.getName() + " uses " + selectedAbility.getName());
+
+                        int dmg = diceResult + Entity.calcModifier(player.getStat(selectedAbility.getStat()));
+                        if (diceResult == 0) {
+                            builder.append(" but misses");
+                        } else if (dmg <= 0) {
+                            builder.append(" but it is deflected");
+                        } else {
+                            selectedAbility.use(enemy, dmg);
+                            builder.append(" and does " + dmg + " dmg to " + enemy.getName());
+                        }
+                        finishedRolling = false;
+
+                        addLog(new Message(System.currentTimeMillis(), builder.toString()));
+                        updateEnemyHp(enemy.getHp());
+
+                        nextTurn();
                     }
                 }
             });
@@ -275,10 +307,8 @@ public class GameActivity extends AppCompatActivity {
                     }
                     int hp = diceResult + modifier;
 
-                    System.out.println("before " +player.getHp());
                     player.heal(hp);
                     player.setSp(player.getMaxSp());
-                    System.out.println("after " + player.getHp());
                     updateHP(player.getHp());
 
                     actLog.add(new Message(System.currentTimeMillis(),
@@ -506,8 +536,8 @@ public class GameActivity extends AppCompatActivity {
 
             curRoom = roomList.get(curRoomNum + 1);
             turnSetup();
-            notifyRoomChange();
             saveData();
+            notifyRoomChange();
             paused = false;
             return;
         }
@@ -654,11 +684,9 @@ public class GameActivity extends AppCompatActivity {
             notifyRoomChange();
 
             while (!paused) { //can change to variable so you can pause game later
-                //System.out.println("running");
                 entityAI();
             }
             while (paused) {
-                //System.out.println("paused");
                 sleepThread(100);
             }
         }
@@ -667,7 +695,6 @@ public class GameActivity extends AppCompatActivity {
             Entity eTurn = turnList.get(turn);
 
             if (!eTurn.equals(player)) {
-                //System.out.println("enemy turn");
                 NPC npc = (NPC) eTurn;
 
                 if (npc.isDead()) {//completed room
