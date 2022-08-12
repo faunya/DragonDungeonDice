@@ -335,7 +335,7 @@ public class GameActivity extends AppCompatActivity {
             if (visible) {
                 atkBtn.setVisibility(View.GONE);
                 abilBtn.setVisibility(View.GONE);
-                itmBtn.setVisibility(View.GONE);
+                //itmBtn.setVisibility(View.GONE);
                 blockBtn.setVisibility(View.GONE);
 
                 restBtn.setVisibility(View.VISIBLE);
@@ -344,7 +344,7 @@ public class GameActivity extends AppCompatActivity {
 
                 atkBtn.setVisibility(View.VISIBLE);
                 abilBtn.setVisibility(View.VISIBLE);
-                itmBtn.setVisibility(View.VISIBLE);
+                //itmBtn.setVisibility(View.VISIBLE);
                 blockBtn.setVisibility(View.VISIBLE);
             }
         });
