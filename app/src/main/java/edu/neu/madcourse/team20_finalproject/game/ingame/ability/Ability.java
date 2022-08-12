@@ -10,17 +10,12 @@ public abstract class Ability {
     protected int diceType; //type is an int from 0 to 5 (0 for D4, 1 for D6, 2 for D8, 3 for D10, 4 for D12, 5 for D20)
     protected int stat;
     protected int cost;
-    protected Entity user;
 
     public Ability(String name, int diceType, int stat, int cost) {
         this.name = name;
         this.diceType = diceType;
         this.stat = stat;
         this.cost = cost;
-    }
-
-    public void setUser(Entity user) {
-        this.user = user;
     }
 
     /**
@@ -32,8 +27,7 @@ public abstract class Ability {
 
     public static List<Ability> genAbilList(Entity user) {
         List<Ability> abilList = new ArrayList<>();
-        Slash slash = new Slash("Slash", 2, 0,2);
-        slash.setUser(user);
+        Slash slash = new Slash();
         abilList.add(slash);
         return abilList;
     }

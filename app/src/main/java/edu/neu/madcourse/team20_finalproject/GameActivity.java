@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -77,6 +78,7 @@ public class GameActivity extends AppCompatActivity {
     private TextView maxHpNumTV;
     private TextView spNumTV;
     private TextView maxSpNumTV;
+    private ImageView enemyIV;
 
     private boolean finishedRolling;
     private int diceResult;
@@ -143,6 +145,8 @@ public class GameActivity extends AppCompatActivity {
         enemyHPBar = findViewById(R.id.enemyHpBar);
         enemyNameTV = findViewById(R.id.enemyName);
 
+        enemyIV = findViewById(R.id.enemyPic);
+
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         new Thread(new GameThread()).start();
@@ -165,6 +169,7 @@ public class GameActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     player.setSp(player.getSp() + 1);
+                    updateSp(player.getSp());
                     NPC enemy = curRoom.getNpcList().get(0);
                     int ac = enemy.getArmorClass() - Entity.calcModifier(player.getDex());
                     StringBuilder builder = new StringBuilder();
@@ -454,6 +459,7 @@ public class GameActivity extends AppCompatActivity {
         editor.putInt("eInt", enemy.getInte());
         editor.putInt("eSpd", enemy.getSpd());
         editor.putInt("eXp", enemy.getXp());
+        editor.putInt("eImg", enemy.getImg());
 
         //editor.putStringSet("eDialog", new HashSet<>(enemy.getDialog()));
 
@@ -474,6 +480,7 @@ public class GameActivity extends AppCompatActivity {
         int inte = sharedPref.getInt("eInt", 1);
         int spd = sharedPref.getInt("eSpd", 1);
         int xp = sharedPref.getInt("eXp", 0);
+        int img = sharedPref.getInt("eImg", R.drawable.goblinsword);
 
         NPC enemy = new NPC(name, maxHp, maxSp);
 
@@ -487,6 +494,7 @@ public class GameActivity extends AppCompatActivity {
         enemy.setInte(inte);
         enemy.setSpd(spd);
         enemy.setXp(xp);
+        enemy.setImg(img);
 
         //enemy.setDialog(new ArrayList<>(sharedPref.getStringSet("eDialog", new HashSet<>())));
 
@@ -538,6 +546,7 @@ public class GameActivity extends AppCompatActivity {
             turnSetup();
             saveData();
             notifyRoomChange();
+            updateEnemyPic();
             paused = false;
             return;
         }
@@ -631,6 +640,15 @@ public class GameActivity extends AppCompatActivity {
         enemyHPBar.post(() -> enemyHPBar.setProgress(hp));
         enemyHPNumTv.post(() -> enemyHPNumTv.setText(String.valueOf(hp)));
     }
+
+    private void updateEnemyPic() {
+        enemyIV.post(new Runnable() {
+            @Override
+            public void run() {
+                enemyIV.setImageResource(curRoom.getNpcList().get(0).getImg());
+            }
+        });
+    }
     //----------------------------------------------------------------------------------------------
 
     private void sleepThread(long time) {
@@ -678,6 +696,8 @@ public class GameActivity extends AppCompatActivity {
             updateHP(player.getHp());
             updateMaxSp(player.getMaxSp());
             updateSp(player.getSp());
+
+            updateEnemyPic();
 
             abilityList = Ability.genAbilList(player);
 
