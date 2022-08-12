@@ -240,7 +240,7 @@ public class GameActivity extends AppCompatActivity {
                         Ability selectedAbility = abilityList.get(abilityChosen);
                         Intent rollIntent = new Intent(getBaseContext(), DiceForGame.class);
                         rollIntent.putExtra(TYPE, selectedAbility.getDiceType());
-                        rollIntent.putExtra(AC_REQUIREMENT, enemy.getArmorClass() - Entity.calcModifier(player.getDex()));
+                        rollIntent.putExtra(AC_REQUIREMENT, enemy.getArmorClass());// - Entity.calcModifier(player.getDex()));
                         rollResultLauncher.launch(rollIntent);
 
                         while (!finishedRolling) {
@@ -538,6 +538,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void nextRoom() {
+        System.out.println(curRoom.getRoomNum());
         paused = true;
         turnList.clear();
         int curRoomNum = curRoom.getRoomNum();

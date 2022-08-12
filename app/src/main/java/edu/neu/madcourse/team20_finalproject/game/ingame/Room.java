@@ -171,7 +171,7 @@ public class Room {
         List<NPC> npc = new ArrayList<>();
         npc.add(NPC.createWerewolf());
         Room room = new Room(npc, desc);
-        room.setRoomNum(4);
+        room.setRoomNum(5);
         return room;
     }
 
@@ -187,7 +187,7 @@ public class Room {
         List<NPC> npc = new ArrayList<>();
         npc.add(NPC.createGolem());
         Room room = new Room(npc, desc);
-        room.setRoomNum(4);
+        room.setRoomNum(6);
         return room;
     }
 
@@ -205,7 +205,7 @@ public class Room {
         List<NPC> npc = new ArrayList<>();
         npc.add(NPC.createDarkCultist());
         Room room = new Room(npc, desc);
-        room.setRoomNum(4);
+        room.setRoomNum(7);
         return room;
     }
 
@@ -225,7 +225,7 @@ public class Room {
         List<NPC> npc = new ArrayList<>();
         npc.add(NPC.createDjinn());
         Room room = new Room(npc, desc);
-        room.setRoomNum(4);
+        room.setRoomNum(8);
         return room;
     }
 
@@ -240,7 +240,7 @@ public class Room {
         List<NPC> npc = new ArrayList<>();
         npc.add(NPC.createDragon());
         Room room = new Room(npc, desc);
-        room.setRoomNum(4);
+        room.setRoomNum(9);
         return room;
     }
 
