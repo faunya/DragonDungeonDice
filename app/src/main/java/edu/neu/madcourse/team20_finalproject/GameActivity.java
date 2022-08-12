@@ -31,6 +31,8 @@ import edu.neu.madcourse.team20_finalproject.game.ingame.entity.NPC;
 import edu.neu.madcourse.team20_finalproject.game.ingame.entity.Player;
 import edu.neu.madcourse.team20_finalproject.game.system.Message;
 import edu.neu.madcourse.team20_finalproject.gameRecycler.ActLogViewAdapter;
+import edu.neu.madcourse.team20_finalproject.perfomance.Sound;
+import edu.neu.madcourse.team20_finalproject.perfomance.Vibration;
 
 public class GameActivity extends AppCompatActivity {
     private static final String TYPE = "type";
@@ -83,6 +85,18 @@ public class GameActivity extends AppCompatActivity {
     private boolean finishedRolling;
     private int diceResult;
     private boolean paused;
+
+    // sound and vibration
+    private static final String SETTINGS = "settings";
+    private static final String MUSIC = "music";
+    private static final String SOUND_EFFECT = "soundEffect";
+    private static final String VIBRATION = "vibration";
+    private Sound bgm;
+    private Sound se;
+    private Vibration vb;
+    private boolean muteBgm;
+    private boolean muteSe;
+    private boolean stopVb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,6 +174,10 @@ public class GameActivity extends AppCompatActivity {
 
     //action buttons--------------------------------------------------------------------------------
     public void onAttack(View view) {
+
+        vb.vibrate(stopVb);
+        se.playSound(muteSe, this, R.raw.click, false);
+
         if (turnList.size() == 0) {
             return;
         }
@@ -214,6 +232,10 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void onAbility(View view) {
+
+        vb.vibrate(stopVb);
+        se.playSound(muteSe, this, R.raw.click, false);
+
         if (turnList.size() == 0) {
             return;
         }
@@ -283,6 +305,10 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void onBlock(View view) {
+
+        vb.vibrate(stopVb);
+        se.playSound(muteSe, this, R.raw.click, false);
+
         if (turnList.get(turn).equals(player) && !paused) {
             player.setBlocking(true);
             nextTurn();
@@ -291,6 +317,10 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void onRest(View view) {
+
+        vb.vibrate(stopVb);
+        se.playSound(muteSe, this, R.raw.click, false);
+
         if (!paused) {
             Thread restThead = new Thread(new Runnable() {
                 @Override
@@ -780,6 +810,39 @@ public class GameActivity extends AppCompatActivity {
             }
         }
     }
+
+    // sound and vibration
+    public void setting(View view) {
+        se.playSound(muteSe, this, R.raw.click, false);
+        vb.vibrate(stopVb);
+        Intent intent = new Intent(GameActivity.this, Settings.class);
+        startActivity(intent);
+    }
+
+    private void loadSettings() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SETTINGS,MODE_PRIVATE);
+        muteBgm = sharedPreferences.getBoolean(MUSIC, false);
+        muteSe = sharedPreferences.getBoolean(SOUND_EFFECT, false);
+        stopVb = sharedPreferences.getBoolean(VIBRATION, false);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // sound and vibration
+        loadSettings();
+        bgm = new Sound();
+        se = new Sound();
+        vb = new Vibration(this);
+        bgm.playSound(muteBgm, this, R.raw.battle, true);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        bgm.stopSound();
+    }
+
 }
 
 
