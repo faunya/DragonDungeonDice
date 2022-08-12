@@ -67,6 +67,10 @@ public class Room {
         roomList.add(room3());
         roomList.add(room4());
         roomList.add(room5());
+        roomList.add(room6());
+        roomList.add(room7());
+        roomList.add(room8());
+        roomList.add(room9());
 
         return roomList;
     }
@@ -189,6 +193,14 @@ public class Room {
 
     public static Room room7() {
         List<String> desc = new ArrayList<>();
+        desc.add("The golem collapses after you defeat it.");
+        desc.add("You push forward and enter into the opening in the floor, stairs leading down.");
+        desc.add("It continues into a tunnel, dark and damp");
+        desc.add("You don't make it very far before you hear a voice behind you.");
+        desc.add("???: You made a mistake coming down here.");
+        desc.add("You turn around to see an elf cultist.");
+        desc.add("Dark Cultist: Unfortunately, you will have to die.");
+        desc.add("Dark Cultist: A sacrifice for my god.");
 
         List<NPC> npc = new ArrayList<>();
         npc.add(NPC.createDarkCultist());
@@ -199,6 +211,16 @@ public class Room {
 
     public static Room room8() {
         List<String> desc = new ArrayList<>();
+        desc.add("Dark Cultist: Ugh...");
+        desc.add("Dark Cultist: You may have defeated me but it is too late.");
+        desc.add("Dark Cultist: My god is already being summoned");
+        desc.add("The elf steps backwards and disappears into the darkness");
+        desc.add("You move further in the tunnel and enter into a large, domed room with a high ceiling.");
+        desc.add("There is an opening in the ceiling from which you can see the sky.");
+        desc.add("There is what looks like a conjuration circle on the center directly below the opening.");
+        desc.add("Another opening to a tunnel is on the other side of the room.");
+        desc.add("As you move forward, storm clouds quickly gather and swirl in the sky and lightning strikes down on the circle.");
+        desc.add("A djinn appears.");
 
         List<NPC> npc = new ArrayList<>();
         npc.add(NPC.createDjinn());
@@ -219,7 +241,12 @@ public class Room {
 
     public static List<String> getEpilogue() {
         List<String> epilogue = new ArrayList<>();
-        epilogue.add("the end");
+        epilogue.add("You manage to defeat the Abyssal Wyrm the cultist was trying to summon.");
+        epilogue.add("Returning to the town, you report the news and are celebrated as a hero.");
+        epilogue.add("The Adventurer's Guild promotes you and your tale becomes a local legend.");
+        epilogue.add("");
+        epilogue.add("Congrats! You finished the game.");
+        epilogue.add("This is not the end though. Future adventures await.");
         return epilogue;
     }
 }
