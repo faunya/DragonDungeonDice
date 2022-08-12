@@ -231,6 +231,11 @@ public class Room {
 
     public static Room room9() {
         List<String> desc = new ArrayList<>();
+        desc.add("The djinn begins floating upwards slowly and beams of light erupt from its body");
+        desc.add("Before it continue any further, a black dragon shoots out from the tunnel opposite of you.");
+        desc.add("It swallows the djinn whole before turning towards you.");
+        desc.add("The dark cultist limps out of the tunnel you came from.");
+        desc.add("Dark Cultist: It's over for you... Praise to the abyss...");
 
         List<NPC> npc = new ArrayList<>();
         npc.add(NPC.createDragon());

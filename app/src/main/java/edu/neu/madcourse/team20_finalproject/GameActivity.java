@@ -63,7 +63,7 @@ public class GameActivity extends AppCompatActivity {
     //buttons
     private Button atkBtn;
     private Button abilBtn;
-    private Button itmBtn;
+    //private Button itmBtn;
     private Button blockBtn;
     private Button restBtn;
 
@@ -129,7 +129,7 @@ public class GameActivity extends AppCompatActivity {
         //buttons
         atkBtn = findViewById(R.id.attackBtn);
         abilBtn = findViewById(R.id.ablBtn);
-        itmBtn = findViewById(R.id.itemBtn);
+        //itmBtn = findViewById(R.id.itemBtn);
         blockBtn = findViewById(R.id.runBtn);
         restBtn = findViewById(R.id.restBtn);
 

@@ -45,18 +45,6 @@
         tools:visibility="visible" />
 
     <Button
-        android:id="@+id/itemBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onItem"
-        android:text="@string/itm"
-        app:layout_constraintBottom_toBottomOf="@+id/runBtn"
-        app:layout_constraintEnd_toEndOf="@+id/attackBtn"
-        app:layout_constraintStart_toStartOf="@+id/attackBtn"
-        app:layout_constraintTop_toTopOf="@+id/runBtn"
-        tools:visibility="gone" />
-
-    <Button
         android:id="@+id/runBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
