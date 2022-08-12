@@ -311,9 +311,10 @@ public class GameActivity extends AppCompatActivity {
                         modifier = 0;
                     }
                     int hp = diceResult + modifier + Math.floorDiv(player.getMaxHp(), 4);
-
+                    int spModify = Math.max(Entity.calcModifier(player.getWis()), 0);
+                    int sp = player.getSp() + spModify;
                     player.heal(hp);
-                    player.setSp(player.getMaxSp());
+                    player.setSp(sp);
                     updateSp(player.getSp());
                     updateHP(player.getHp());
 
@@ -759,6 +760,20 @@ public class GameActivity extends AppCompatActivity {
 
                     actLogAdapter.notifyItemInserted(actLog.size() - 1);
                     actLogScroll();
+                } else if (player.isDead()) {
+                    paused = true;
+                    sleepThread(1000);
+                    addLog(new Message(System.currentTimeMillis(), "You have been slain by " + npc.getName()));
+                    sleepThread(1000);
+                    addLog(new Message(System.currentTimeMillis(), "Everything begins to fade to black"));
+                    sleepThread(1000);
+                    addLog(new Message(System.currentTimeMillis(), "???: Rise"));
+                    sleepThread(1000);
+                    addLog(new Message(System.currentTimeMillis(), "???: You shall not fall here"));
+                    sleepThread(1000);
+                    addLog(new Message(System.currentTimeMillis(), "Strength fills your body as you get up from the ground"));
+                    player.setHp(Math.floorDiv(player.getMaxHp(), 2));
+                    updateHP(player.getHp());
                 }
 
                 nextTurn();
