@@ -1,10 +1,15 @@
 package edu.neu.madcourse.team20_finalproject.game.ingame.entity;
 
+import java.io.DataInput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import edu.neu.madcourse.team20_finalproject.R;
+import edu.neu.madcourse.team20_finalproject.game.ingame.entity.enemy.DarkCultist;
+import edu.neu.madcourse.team20_finalproject.game.ingame.entity.enemy.Djinn;
+import edu.neu.madcourse.team20_finalproject.game.ingame.entity.enemy.Dragon;
+import edu.neu.madcourse.team20_finalproject.game.ingame.entity.enemy.Golem;
 import edu.neu.madcourse.team20_finalproject.game.ingame.entity.enemy.MagicGoblin;
 import edu.neu.madcourse.team20_finalproject.game.ingame.entity.enemy.MeleeGoblin;
 import edu.neu.madcourse.team20_finalproject.game.ingame.entity.enemy.Werewolf;
@@ -14,8 +19,8 @@ public class NPC extends Entity {
     protected List<String> dialog;
     protected int id;
     protected int img;
-
     protected int xp;
+    protected int counter;
 
     public NPC(String name, int maxHp, int maxMp) {
         super(name, maxHp, maxMp);
@@ -134,6 +139,28 @@ public class NPC extends Entity {
         }
     }
 
+    public String chargeAttack(Entity target, int ac) {
+        if (counter == 1) {
+            sp -= 3;
+            counter = 0;
+            int hit = rand.nextInt(20) + 1 + Entity.calcModifier(dex);
+            if (hit >= ac) {
+                int dmg = rand.nextInt(10) + 1 +Entity.calcModifier(str);
+                attack(target, dmg);
+                return name + " slams down on " + target.getName() + " for " + dmg + " dmg";
+            } else {
+                if (rand.nextInt(2) == 0) {
+                    return name + " tries to slam down on " + target.getName() + " but they manage to dodge";
+                } else {
+                    return name + " tries to slam down on " + target.getName() + " but misses";
+                }
+            }
+        } else {
+            counter = 1;
+            return name + " charges up";
+        }
+    }
+
     public static MeleeGoblin createMeleeGoblin() {
         MeleeGoblin goblin = new MeleeGoblin("Goblin", 7, 3);
         List<String> dialog = new ArrayList<>();
@@ -191,5 +218,73 @@ public class NPC extends Entity {
         werewolf.setImg(R.drawable.werewolf);
 
         return werewolf;
+    }
+
+    public static Golem createGolem() {
+        Golem golem = new Golem("Guardian Golem", 40, 10);
+
+        golem.setArmorClass(14);
+        golem.setStr(18);
+        golem.setDex(8);
+        golem.setVit(20);
+        golem.setInte(3);
+        golem.setWis(11);
+        golem.setSp(5);
+
+        golem.setXp(45);
+        golem.setImg(R.drawable.golem);
+
+        return golem;
+    }
+
+    public static DarkCultist createDarkCultist() {
+        DarkCultist darkCultist = new DarkCultist("Dark Cultist", 20, 10);
+
+        darkCultist.setArmorClass(12);
+        darkCultist.setStr(11);
+        darkCultist.setDex(14);
+        darkCultist.setVit(8);
+        darkCultist.setInte(10);
+        darkCultist.setWis(10);
+        darkCultist.setSpd(13);
+
+        darkCultist.setXp(53);
+        darkCultist.setImg(R.drawable.cultist_elf);
+
+        return darkCultist;
+    }
+
+    public static Djinn createDjinn() {
+        Djinn djinn = new Djinn("Storm Djinn", 30, 10);
+
+        djinn.setArmorClass(12);
+        djinn.setStr(8);
+        djinn.setDex(10);
+        djinn.setVit(8);
+        djinn.setInte(14);
+        djinn.setWis(15);
+        djinn.setSpd(14);
+
+        djinn.setXp(67);
+        djinn.setImg(R.drawable.djinn);
+
+        return djinn;
+    }
+
+    public static Dragon createDragon() {
+        Dragon dragon = new Dragon("Abyssal Wyrm", 60, 15);
+
+        dragon.setArmorClass(15);
+        dragon.setStr(20);
+        dragon.setDex(14);
+        dragon.setVit(15);
+        dragon.setInte(14);
+        dragon.setWis(16);
+        dragon.setSpd(13);
+
+        dragon.setXp(100);
+        dragon.setImg(R.drawable.dragon_dark);
+
+        return dragon;
     }
 }

@@ -65,6 +65,8 @@ public class Room {
         roomList.add(room1());
         roomList.add(room2());
         roomList.add(room3());
+        roomList.add(room4());
+        roomList.add(room5());
 
         return roomList;
     }
@@ -131,7 +133,7 @@ public class Room {
         desc.add("");
         desc.add("You can see the ruins in the distance before you see two flashes in the corner of your eye.");
         desc.add("Ducking, you manage to dodge two fireballs that were aimed at you.");
-        desc.add("There stands another goblin conjurer.");
+        desc.add("You turn around  and there stands another goblin conjurer.");
 
         List<NPC> npc = new ArrayList<>();
         npc.add(NPC.createMagicGoblin());
@@ -143,6 +145,10 @@ public class Room {
 
     public static Room room4() {
         List<String> desc = new ArrayList<>();
+        desc.add("As you continue on towards the ruins, a dark shadow leaps out at you.");
+        desc.add("You jump back in surprise to see it's a werewolf.");
+        desc.add("A werewolf this close to the goblin nest? Incredibly strange.");
+        desc.add("Snarling at you, it charges again, swinging its weapons.");
 
         List<NPC> npc = new ArrayList<>();
         npc.add(NPC.createWerewolf());
@@ -153,6 +159,10 @@ public class Room {
 
     public static Room room5() {
         List<String> desc = new ArrayList<>();
+        desc.add("The werewolf is at its last breath, glaring at you.");
+        desc.add("Before you can strike it down, it howls, the noice echoing through the trees.");
+        desc.add("The distant sound of something running gets louder.");
+        desc.add("Another werewolf leaps at you.");
 
         List<NPC> npc = new ArrayList<>();
         npc.add(NPC.createWerewolf());
@@ -163,8 +173,15 @@ public class Room {
 
     public static Room room6() {
         List<String> desc = new ArrayList<>();
+        desc.add("Werewolves and goblins together this close is strange.");
+        desc.add("Something may be gathering them together for some purpose");
+        desc.add("You continue to the ruins and finally arrive.");
+        desc.add("There appears to be an opening in the ground further in the ruins.");
+        desc.add("As you move towards it, you feel the ground start shaking.");
+        desc.add("A guardian golem which was hidden by rubble gets up and begins to approach you.");
 
         List<NPC> npc = new ArrayList<>();
+        npc.add(NPC.createGolem());
         Room room = new Room(npc, desc);
         room.setRoomNum(4);
         return room;
@@ -174,6 +191,7 @@ public class Room {
         List<String> desc = new ArrayList<>();
 
         List<NPC> npc = new ArrayList<>();
+        npc.add(NPC.createDarkCultist());
         Room room = new Room(npc, desc);
         room.setRoomNum(4);
         return room;
@@ -183,6 +201,7 @@ public class Room {
         List<String> desc = new ArrayList<>();
 
         List<NPC> npc = new ArrayList<>();
+        npc.add(NPC.createDjinn());
         Room room = new Room(npc, desc);
         room.setRoomNum(4);
         return room;
@@ -192,6 +211,7 @@ public class Room {
         List<String> desc = new ArrayList<>();
 
         List<NPC> npc = new ArrayList<>();
+        npc.add(NPC.createDragon());
         Room room = new Room(npc, desc);
         room.setRoomNum(4);
         return room;

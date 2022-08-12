@@ -310,7 +310,7 @@ public class GameActivity extends AppCompatActivity {
                     if (modifier < 0) {
                         modifier = 0;
                     }
-                    int hp = diceResult + modifier;
+                    int hp = diceResult + modifier + Math.floorDiv(player.getMaxHp(), 4);
 
                     player.heal(hp);
                     player.setSp(player.getMaxSp());
