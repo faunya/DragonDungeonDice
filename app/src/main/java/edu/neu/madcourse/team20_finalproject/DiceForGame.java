@@ -25,7 +25,7 @@ import pl.droidsonroids.gif.GifImageView;
  * type is an int from 0 to 5 (0 for D4, 1 for D6, 2 for D8, 3 for D10, 4 for D12, 5 for D20)
  * If ac doesn't exist or equals 0, roll once. Else roll twice.
  * If the first roll is less than ac, return 0.
- * If the activity finishes before the second roll, return the first roll.
+ * If the activity finishes before the second roll, return 0.
  */
 public class DiceForGame extends AppCompatActivity implements SensorEventListener {
 
@@ -181,6 +181,10 @@ public class DiceForGame extends AppCompatActivity implements SensorEventListene
         terminateRolling();
         result.setText("");
         status.setText("");
+        if (numberOfRolls == 1 && rolled) {
+            die = diceList.getDie(type);
+            rolled = false;
+        }
         gif.setImageResource(die.getRotateImgId());
         diceRoller = new Thread() {
             @Override
@@ -197,7 +201,7 @@ public class DiceForGame extends AppCompatActivity implements SensorEventListene
                             result.setText(String.valueOf(point));
                             if (numberOfRolls != 0) {
                                 if (point >= ACValue) {
-                                    status.setText("PASSED!");
+                                    status.setText("NEXT: " + diceList.getDie(type).toString());
                                     ACLabel.setText("KEEP ROLLING");
                                 } else {
                                     status.setText("FAILED!");
@@ -224,12 +228,12 @@ public class DiceForGame extends AppCompatActivity implements SensorEventListene
     }
 
     public void tap(View view) {
-        if (numberOfRolls != 0 && !rolled) {
+        if (numberOfRolls != 0) {
             roll();
-        } else if (numberOfRolls == 1 && rolled) {
-            die = diceList.getDie(type);
-            gif.setImageResource(die.getImgId());
-            rolled = false;
+//        } else if (numberOfRolls == 1 && rolled) {
+//            die = diceList.getDie(type);
+//            gif.setImageResource(die.getImgId());
+//            rolled = false;
         } else {
             finish();
         }
@@ -238,7 +242,7 @@ public class DiceForGame extends AppCompatActivity implements SensorEventListene
     @Override
     public void finish() {
         Intent data = new Intent();
-        if (failed) {
+        if (failed || numberOfRolls != 0) {
             data.putExtra(ROLL, 0);
             data.putExtra(FINISHED,true);
         } else {
