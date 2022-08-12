@@ -27,8 +27,8 @@ public abstract class Ability {
 
     public static List<Ability> genAbilList(Entity user) {
         List<Ability> abilList = new ArrayList<>();
-        Slash slash = new Slash();
-        abilList.add(slash);
+        abilList.add(new Slash());
+        abilList.add(new Fireball());
         return abilList;
     }
 

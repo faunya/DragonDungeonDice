@@ -314,6 +314,7 @@ public class GameActivity extends AppCompatActivity {
 
                     player.heal(hp);
                     player.setSp(player.getMaxSp());
+                    updateSp(player.getSp());
                     updateHP(player.getHp());
 
                     actLog.add(new Message(System.currentTimeMillis(),

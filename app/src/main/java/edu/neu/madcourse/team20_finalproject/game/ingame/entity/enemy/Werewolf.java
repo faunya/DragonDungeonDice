@@ -10,10 +10,12 @@ public class Werewolf extends NPC {
 
     @Override
     public String behavior(Entity target, int ac) {
-        int choice = rand.nextInt(2);
+        int choice = rand.nextInt(3);
 
-        if (choice == 0 && sp >= 4) {
-            return "";
+        if (choice == 0 && sp >= 3) {
+            return doubleAttack(target, ac);
+        } else if (choice == 1 && sp >= 3) {
+            return biteAttack(target, ac);
         } else {
             return regAttack(target, ac);
         }

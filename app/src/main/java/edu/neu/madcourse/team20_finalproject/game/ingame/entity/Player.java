@@ -57,7 +57,9 @@ public class Player extends Entity {
         wis += 1;
         inte += 1;
         spd += 1;
+        int oldHP = maxHp;
         maxHp = 20 + Entity.calcModifier(vit) + lv;
+        hp += maxHp - oldHP;
         maxSp = 10 + Entity.calcModifier(wis) + lv;
     }
 

@@ -2,14 +2,10 @@ package edu.neu.madcourse.team20_finalproject.game.ingame.ability;
 
 import edu.neu.madcourse.team20_finalproject.game.ingame.entity.Entity;
 
-public class Slash extends Ability {
+public class Fireball extends Ability {
 
-    public Slash(int diceType, int stat, int cost) {
-        super("slash", diceType, stat, cost);
-    }
-
-    public Slash() {
-        super("slash", 2,0,3);
+    public Fireball() {
+        super("Fireball", 1, 3, 2);
     }
 
     @Override

@@ -145,6 +145,7 @@ public class Room {
         List<String> desc = new ArrayList<>();
 
         List<NPC> npc = new ArrayList<>();
+        npc.add(NPC.createWerewolf());
         Room room = new Room(npc, desc);
         room.setRoomNum(4);
         return room;
@@ -154,6 +155,7 @@ public class Room {
         List<String> desc = new ArrayList<>();
 
         List<NPC> npc = new ArrayList<>();
+        npc.add(NPC.createWerewolf());
         Room room = new Room(npc, desc);
         room.setRoomNum(4);
         return room;

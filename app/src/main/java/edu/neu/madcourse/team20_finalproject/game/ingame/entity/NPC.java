@@ -7,6 +7,7 @@ import java.util.Random;
 import edu.neu.madcourse.team20_finalproject.R;
 import edu.neu.madcourse.team20_finalproject.game.ingame.entity.enemy.MagicGoblin;
 import edu.neu.madcourse.team20_finalproject.game.ingame.entity.enemy.MeleeGoblin;
+import edu.neu.madcourse.team20_finalproject.game.ingame.entity.enemy.Werewolf;
 
 public class NPC extends Entity {
     protected Random rand;
@@ -116,6 +117,23 @@ public class NPC extends Entity {
         }
     }
 
+    public String biteAttack(Entity target, int ac) {
+        sp -= 2;
+
+        int hit = rand.nextInt(20) + 1 + Entity.calcModifier(dex);
+        if (hit >= ac) {
+            int dmg = rand.nextInt(8) + 1 + Entity.calcModifier(str);
+            attack(target, dmg);
+            return name + " bites " + target.getName() + " for " + String.valueOf(dmg) + " dmg";
+        } else {
+            if (rand.nextInt(2) == 0) {
+                return name + " tries to bite "
+                        + target.getName() + " but is deflected";
+            }
+            return name + " tries " + target.getName() + " but misses";
+        }
+    }
+
     public static MeleeGoblin createMeleeGoblin() {
         MeleeGoblin goblin = new MeleeGoblin("Goblin", 7, 3);
         List<String> dialog = new ArrayList<>();
@@ -144,7 +162,7 @@ public class NPC extends Entity {
     public static MagicGoblin createMagicGoblin() {
         MagicGoblin goblin = new MagicGoblin("Goblin Conjurer", 7, 4);
 
-        goblin.setArmorClass(8);
+        goblin.setArmorClass(9);
         goblin.setStr(8);
         goblin.setDex(10);
         goblin.setVit(10);
@@ -156,5 +174,22 @@ public class NPC extends Entity {
         goblin.setImg(R.drawable.goblinmagic);
 
         return goblin;
+    }
+
+    public static Werewolf createWerewolf() {
+        Werewolf werewolf = new Werewolf("Werewolf", 15, 5);
+
+        werewolf.setArmorClass(12);
+        werewolf.setStr(15);
+        werewolf.setDex(13);
+        werewolf.setVit(14);
+        werewolf.setInte(10);
+        werewolf.setWis(11);
+        werewolf.setSp(12);
+
+        werewolf.setXp(28);
+        werewolf.setImg(R.drawable.werewolf);
+
+        return werewolf;
     }
 }
