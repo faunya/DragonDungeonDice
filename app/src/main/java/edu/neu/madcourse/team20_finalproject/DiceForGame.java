@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import edu.neu.madcourse.team20_finalproject.dice.DiceList;
 import edu.neu.madcourse.team20_finalproject.dice.Die;
+import edu.neu.madcourse.team20_finalproject.perfomance.Sound;
+import edu.neu.madcourse.team20_finalproject.perfomance.Vibration;
 import pl.droidsonroids.gif.GifImageView;
 
 /**
@@ -60,6 +62,14 @@ public class DiceForGame extends AppCompatActivity implements SensorEventListene
     private Long lastUpdatedTime;
     private static final int TIME_INTERVAL = 300;
 
+    private static final String SETTINGS = "settings";
+    private static final String SOUND_EFFECT = "soundEffect";
+    private static final String VIBRATION = "vibration";
+    private Sound rollingSound;
+    private Vibration vb;
+    private boolean muteSe;
+    private boolean stopVb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +85,9 @@ public class DiceForGame extends AppCompatActivity implements SensorEventListene
         info = "";
         point = 0;
 
+        rollingSound = new Sound();
+        vb = new Vibration(this);
+        loadData();
 
         Intent intent = getIntent();
         type = intent.getIntExtra(TYPE, 0);
@@ -104,6 +117,12 @@ public class DiceForGame extends AppCompatActivity implements SensorEventListene
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+    }
+
+    private void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SETTINGS,MODE_PRIVATE);
+        muteSe = sharedPreferences.getBoolean(SOUND_EFFECT, false);
+        stopVb = sharedPreferences.getBoolean(VIBRATION, false);
     }
 
     private void updateValuesFromBundle(Bundle savedInstanceState) {
@@ -153,6 +172,7 @@ public class DiceForGame extends AppCompatActivity implements SensorEventListene
         if (diceRoller != null) {
             diceRoller.interrupt();
             diceRoller = null;
+            rollingSound.stopSound();
         }
     }
 
@@ -181,6 +201,8 @@ public class DiceForGame extends AppCompatActivity implements SensorEventListene
         terminateRolling();
         result.setText("");
         status.setText("");
+        vb.vibrate(stopVb);
+        rollingSound.playSound(muteSe, this, R.raw.dice_sound, false);
         if (numberOfRolls == 1 && rolled) {
             die = diceList.getDie(type);
             rolled = false;
@@ -194,6 +216,7 @@ public class DiceForGame extends AppCompatActivity implements SensorEventListene
                     point = die.roll();
                     numberOfRolls -= 1;
                     rolled = true;
+                    vb.vibrate(stopVb);
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
