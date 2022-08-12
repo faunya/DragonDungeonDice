@@ -53,7 +53,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/runBtn"
         app:layout_constraintEnd_toEndOf="@+id/attackBtn"
         app:layout_constraintStart_toStartOf="@+id/attackBtn"
-        app:layout_constraintTop_toTopOf="@+id/runBtn" />
+        app:layout_constraintTop_toTopOf="@+id/runBtn"
+        tools:visibility="gone" />
 
     <Button
         android:id="@+id/runBtn"
@@ -63,7 +64,7 @@
         android:text="@string/block"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/ablBtn"
-        app:layout_constraintStart_toStartOf="@+id/ablBtn"
+        app:layout_constraintStart_toStartOf="@+id/attackBtn"
         app:layout_constraintTop_toBottomOf="@+id/ablBtn" />
 
     <ImageView

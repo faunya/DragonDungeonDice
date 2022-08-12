@@ -1,6 +1,5 @@
 package edu.neu.madcourse.team20_finalproject.game.ingame.entity;
 
-import java.io.DataInput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
