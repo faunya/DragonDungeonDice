@@ -774,6 +774,7 @@ public class GameActivity extends AppCompatActivity {
                     addLog(new Message(System.currentTimeMillis(), "Strength fills your body as you get up from the ground"));
                     player.setHp(Math.floorDiv(player.getMaxHp(), 2));
                     updateHP(player.getHp());
+                    paused = false;
                 }
 
                 nextTurn();
