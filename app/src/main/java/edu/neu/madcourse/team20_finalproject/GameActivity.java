@@ -31,6 +31,7 @@ import edu.neu.madcourse.team20_finalproject.game.ingame.entity.NPC;
 import edu.neu.madcourse.team20_finalproject.game.ingame.entity.Player;
 import edu.neu.madcourse.team20_finalproject.game.system.Message;
 import edu.neu.madcourse.team20_finalproject.gameRecycler.ActLogViewAdapter;
+import edu.neu.madcourse.team20_finalproject.perfomance.BGM;
 import edu.neu.madcourse.team20_finalproject.perfomance.Sound;
 import edu.neu.madcourse.team20_finalproject.perfomance.Vibration;
 
@@ -91,7 +92,6 @@ public class GameActivity extends AppCompatActivity {
     private static final String MUSIC = "music";
     private static final String SOUND_EFFECT = "soundEffect";
     private static final String VIBRATION = "vibration";
-    private Sound bgm;
     private Sound se;
     private Vibration vb;
     private boolean muteBgm;
@@ -831,16 +831,22 @@ public class GameActivity extends AppCompatActivity {
         super.onResume();
         // sound and vibration
         loadSettings();
-        bgm = new Sound();
         se = new Sound();
         vb = new Vibration(this);
-        bgm.playSound(muteBgm, this, R.raw.battle, true);
+        BGM.checkMute(muteBgm, this, R.raw.battle);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        BGM.playBGM(muteBgm, this, R.raw.battle);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        bgm.stopSound();
+        //bgm.stopSound();
+        BGM.stopBGM();
     }
 
 }

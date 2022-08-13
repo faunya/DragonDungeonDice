@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import edu.neu.madcourse.team20_finalproject.dice.DiceList;
 import edu.neu.madcourse.team20_finalproject.dice.Die;
+import edu.neu.madcourse.team20_finalproject.perfomance.BGM;
 import edu.neu.madcourse.team20_finalproject.perfomance.Sound;
 import edu.neu.madcourse.team20_finalproject.perfomance.Vibration;
 import pl.droidsonroids.gif.GifImageView;
@@ -65,10 +66,12 @@ public class DiceForGame extends AppCompatActivity implements SensorEventListene
     private static final String SETTINGS = "settings";
     private static final String SOUND_EFFECT = "soundEffect";
     private static final String VIBRATION = "vibration";
+    private static final String MUSIC = "music";
     private Sound rollingSound;
     private Vibration vb;
     private boolean muteSe;
     private boolean stopVb;
+    private boolean muteBgm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +126,7 @@ public class DiceForGame extends AppCompatActivity implements SensorEventListene
         SharedPreferences sharedPreferences = getSharedPreferences(SETTINGS,MODE_PRIVATE);
         muteSe = sharedPreferences.getBoolean(SOUND_EFFECT, false);
         stopVb = sharedPreferences.getBoolean(VIBRATION, false);
+        muteBgm = sharedPreferences.getBoolean(MUSIC, false);
     }
 
     private void updateValuesFromBundle(Bundle savedInstanceState) {
@@ -166,6 +170,18 @@ public class DiceForGame extends AppCompatActivity implements SensorEventListene
         terminateRolling();
 
         sensorManager.unregisterListener(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        BGM.playBGM(muteBgm, this, R.raw.battle);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        BGM.stopBGM();
     }
 
     private void terminateRolling() {
