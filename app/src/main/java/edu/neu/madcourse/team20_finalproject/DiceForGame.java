@@ -72,6 +72,7 @@ public class DiceForGame extends AppCompatActivity implements SensorEventListene
     private boolean muteSe;
     private boolean stopVb;
     private boolean muteBgm;
+    private boolean noBGM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,13 +89,12 @@ public class DiceForGame extends AppCompatActivity implements SensorEventListene
         info = "";
         point = 0;
 
-        rollingSound = new Sound();
-        vb = new Vibration(this);
-        loadData();
-
         Intent intent = getIntent();
         type = intent.getIntExtra(TYPE, 0);
         ACValue = intent.getIntExtra(AC_REQUIREMENT, 0);
+        if (intent.hasExtra("mute")) {
+            noBGM = true;
+        }
         if (ACValue == 0) {
             numberOfRolls = 1;
         } else {
@@ -118,6 +118,11 @@ public class DiceForGame extends AppCompatActivity implements SensorEventListene
         }
         gif.setImageResource(die.getImgId());
 
+
+        rollingSound = new Sound();
+        vb = new Vibration(this);
+        loadData();
+
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
     }
@@ -126,7 +131,11 @@ public class DiceForGame extends AppCompatActivity implements SensorEventListene
         SharedPreferences sharedPreferences = getSharedPreferences(SETTINGS,MODE_PRIVATE);
         muteSe = sharedPreferences.getBoolean(SOUND_EFFECT, false);
         stopVb = sharedPreferences.getBoolean(VIBRATION, false);
-        muteBgm = sharedPreferences.getBoolean(MUSIC, false);
+        if (noBGM) {
+            muteBgm = true;
+        } else {
+            muteBgm = sharedPreferences.getBoolean(MUSIC, false);
+        }
     }
 
     private void updateValuesFromBundle(Bundle savedInstanceState) {
