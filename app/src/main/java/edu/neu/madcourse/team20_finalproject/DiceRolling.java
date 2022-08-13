@@ -278,8 +278,8 @@ public class DiceRolling extends AppCompatActivity implements SensorEventListene
                     Intent intent = new Intent(DiceRolling.this, SkinActivity.class);
                     startActivity(intent);
                 } else if (item.getItemId() == R.id.menu_home) {
-                    Intent intent = new Intent(DiceRolling.this, MainActivity.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(DiceRolling.this, MainActivity.class);
+//                    startActivity(intent);
                     finish();
                 } else if (item.getItemId() == R.id.menu_settings) {
                     Intent intent = new Intent(DiceRolling.this, Settings.class);

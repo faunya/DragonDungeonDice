@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         vb.vibrate(stopVb);
         Intent intent = new Intent(MainActivity.this, DiceRolling.class);
         startActivity(intent);
-        finish();
+        //finish();
     }
 
     public void resumeGame(View view) {
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             intent = new Intent(this, GameActivity.class);
         }
         startActivity(intent);
-        finish();
+        //finish();
     }
 
     public void newGame(View view) {
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         vb.vibrate(stopVb);
         Intent intent = new Intent(MainActivity.this, CreatePlayerActivity.class);
         startActivity(intent);
-        finish();
+        //finish();
     }
 
     public void setting(View view) {

@@ -174,6 +174,7 @@ public class CreatePlayerActivity extends AppCompatActivity {
         Intent intent = new Intent(this, DiceForGame.class);
         intent.putExtra("type", 5);
         intent.putExtra("ac", 0);
+        intent.putExtra("mute", true);
         rollResultLauncher.launch(intent);
 
         setStat();
