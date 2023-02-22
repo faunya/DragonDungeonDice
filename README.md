@@ -4,7 +4,7 @@ Text based RPG Android app with a dice rolling mechanic.
 Collaborated with Yijing Zheng (yijingzheng) and Wanyue Wang (wanyuew).  
 All commits under imstuff and lokis-mochi are by me. One is an old username that wasn't changed locally and the other is an alt account.
 
-I designed the gameplay and coded the actual game portion of the app. It's pretty rough but I didn't have too much time to refine it.
+I designed the gameplay and coded the actual game portion of the app. 
 
 ## Gameplay  
 
